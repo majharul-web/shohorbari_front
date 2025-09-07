@@ -6,6 +6,7 @@ const links = [
   { name: "About", path: "/about" },
   { name: "Services", path: "/services" },
   { name: "Contact", path: "/contact" },
+  { name: "Login", path: "/login" },
 ];
 
 export const Navbar = () => {
