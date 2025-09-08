@@ -1,4 +1,5 @@
 import FloatingLabelInput from "@/components/ui/form/FloatingLabelInput";
+import { useUserLoginMutation } from "@/redux/api/authApi";
 import { Form, Formik } from "formik";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,18 +18,19 @@ const initialValues: LoginFormValues = {
 
 const validationSchema = Yup.object({
   email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string().min(6, "Password too short").required("Password is required"),
+  password: Yup.string().min(5, "Password too short").required("Password is required"),
 });
 
 const Login: React.FC = () => {
-  //   const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading }] = useUserLoginMutation();
   const navigate = useNavigate();
 
   const handleSubmit = async (values: LoginFormValues) => {
     try {
-      //   const res = await login(values).unwrap();
+      const res = await login(values).unwrap();
+      console.log("Response:", res);
       //   localStorage.setItem("token", res.token);
-      console.log("Login successful", values);
+      // console.log("Login successful", values);
       //   navigate("/dashboard");
     } catch (err: any) {
       alert(err?.data?.message || "Login failed");
