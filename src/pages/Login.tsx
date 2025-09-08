@@ -25,14 +25,20 @@ const Login: React.FC = () => {
   const [login, { isLoading }] = useUserLoginMutation();
   const navigate = useNavigate();
 
-  const handleSubmit = async (values: LoginFormValues) => {
+  const handleSubmit = async (
+    values: LoginFormValues,
+    { resetForm, setSubmitting }: { resetForm: () => void; setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
     try {
       const res = await login(values).unwrap();
       console.log("Response:", res);
       // localStorage.setItem("token", res.token);
-      // navigate("/dashboard");
+      navigate("/dashboard");
+      resetForm();
     } catch (err: any) {
       alert(err?.data?.message || "Login failed");
+    } finally {
+      setSubmitting(false);
     }
   };
 
