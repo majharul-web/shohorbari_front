@@ -1,10 +1,10 @@
-import FloatingLabelInput from "@/components/ui/form/FloatingLabelInput";
+import { Button } from "@/components/ui/button";
+import InputField from "@/components/ui/form/InputField";
 import { useUserLoginMutation } from "@/redux/api/authApi";
 import { Form, Formik } from "formik";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-// import { useLoginMutation } from "../store/api";
 
 interface LoginFormValues {
   email: string;
@@ -29,34 +29,45 @@ const Login: React.FC = () => {
     try {
       const res = await login(values).unwrap();
       console.log("Response:", res);
-      //   localStorage.setItem("token", res.token);
-      // console.log("Login successful", values);
-      //   navigate("/dashboard");
+      // localStorage.setItem("token", res.token);
+      // navigate("/dashboard");
     } catch (err: any) {
       alert(err?.data?.message || "Login failed");
     }
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center bg-gray-50'>
-      <div className='bg-white shadow-md rounded-lg p-8 w-full max-w-md'>
-        <h2 className='text-2xl font-bold mb-6 text-center text-primary'>Login</h2>
+    <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 px-4'>
+      <div className='w-full max-w-md bg-white/80 backdrop-blur-lg border border-gray-200 shadow-xl rounded-2xl p-8'>
+        <h2 className='text-3xl font-bold text-center text-primary mb-2'>Welcome Back</h2>
+        <p className='text-center text-gray-500 mb-6 text-sm'>Please sign in to your account</p>
 
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-          <Form className='space-y-4'>
-            {/* Email */}
-            <FloatingLabelInput label='Email' name='email' type='email' />
-            <FloatingLabelInput label='Password' name='password' type='password' />
+          {({ isValid, dirty }) => (
+            <Form className='space-y-5'>
+              <InputField label='Email' name='email' type='email' />
+              <InputField label='Password' name='password' type='password' />
 
-            {/* Submit */}
-            <button
-              type='submit'
-              className='w-full bg-primary text-white py-2 rounded-md hover:bg-primary/90 transition'
-              //   disabled={isLoading}
-            >
-              Login
-            </button>
-          </Form>
+              <Button
+                type='submit'
+                variant='default'
+                size='lg'
+                className='w-full'
+                disabled={isLoading || !(isValid && dirty)}
+              >
+                {isLoading ? "Logging in..." : "Login"}
+              </Button>
+
+              <div className='flex items-center justify-between text-sm text-gray-600 mt-4'>
+                <a href='/forgot-password' className='hover:text-primary'>
+                  Forgot password?
+                </a>
+                <a href='/register' className='hover:text-primary'>
+                  Create account
+                </a>
+              </div>
+            </Form>
+          )}
         </Formik>
       </div>
     </div>

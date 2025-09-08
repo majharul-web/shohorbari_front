@@ -1,3 +1,4 @@
+import { Menu, X } from "lucide-react"; // modern icons
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
@@ -13,37 +14,54 @@ export const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className='bg-white shadow-md sticky top-0 z-50'>
+    <nav className='bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center'>
+        {/* Logo */}
         <NavLink to='/' className='text-2xl font-bold text-primary'>
           MyBrand
         </NavLink>
 
-        <div className='hidden md:flex space-x-6'>
+        {/* Desktop links */}
+        <div className='hidden md:flex items-center gap-8'>
           {links.map((link) => (
             <NavLink
               key={link.name}
               to={link.path}
-              className={({ isActive }) => `block font-medium ${isActive ? "text-primary" : "text-gray-700"}`}
+              className={({ isActive }) =>
+                `relative text-sm font-medium transition-colors hover:text-primary ${
+                  isActive
+                    ? "text-primary after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-primary after:rounded-full"
+                    : "text-gray-600"
+                }`
+              }
             >
               {link.name}
             </NavLink>
           ))}
         </div>
 
-        <button className='md:hidden' onClick={() => setOpen(!open)}>
-          {open ? "✕" : "☰"}
+        {/* Mobile menu button */}
+        <button
+          className='md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100 transition'
+          onClick={() => setOpen(!open)}
+        >
+          {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
+      {/* Mobile dropdown */}
       {open && (
-        <div className='md:hidden bg-white px-4 py-2 space-y-2'>
+        <div className='md:hidden bg-white border-t shadow-md px-4 py-3 space-y-2 animate-in slide-in-from-top'>
           {links.map((link) => (
             <NavLink
               key={link.name}
               to={link.path}
               onClick={() => setOpen(false)}
-              className={({ isActive }) => `block font-medium ${isActive ? "text-primary" : "text-gray-700"}`}
+              className={({ isActive }) =>
+                `block rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-gray-50 ${
+                  isActive ? "text-primary bg-gray-50" : "text-gray-700"
+                }`
+              }
             >
               {link.name}
             </NavLink>
