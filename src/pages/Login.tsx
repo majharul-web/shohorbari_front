@@ -3,7 +3,7 @@ import InputField from "@/components/ui/form/InputField";
 import { useUserLoginMutation } from "@/redux/api/authApi";
 import { Form, Formik } from "formik";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 interface LoginFormValues {
@@ -59,12 +59,12 @@ const Login: React.FC = () => {
               </Button>
 
               <div className='flex items-center justify-between text-sm text-gray-600 mt-4'>
-                <a href='/forgot-password' className='hover:text-primary'>
+                <Link to='/forgot-password' className='hover:text-primary'>
                   Forgot password?
-                </a>
-                <a href='/register' className='hover:text-primary'>
+                </Link>
+                <Link to='/register' className='hover:text-primary'>
                   Create account
-                </a>
+                </Link>
               </div>
             </Form>
           )}

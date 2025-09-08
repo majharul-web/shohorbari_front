@@ -4,6 +4,7 @@ import MainLayout from "@/layouts/MainLayout";
 import Dashboard from "@/pages/Dashboard/Dashboard";
 import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login";
+import Register from "@/pages/Register";
 import { Route, Routes } from "react-router-dom";
 
 const AppRoutes: React.FC = () => {
@@ -13,6 +14,7 @@ const AppRoutes: React.FC = () => {
       <Route element={<MainLayout />}>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
       </Route>
 
       {/* Private Routes */}

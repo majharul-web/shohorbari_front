@@ -6,6 +6,14 @@ const VERIFY_URL = "v1/users";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+    createUser: build.mutation({
+      query: (userData) => ({
+        url: `${AUTH_URL}/users/`,
+        method: "POST",
+        data: userData,
+      }),
+    }),
+
     userLogin: build.mutation({
       query: (loginData) => ({
         url: `${AUTH_URL}/jwt/create/`,
@@ -101,6 +109,7 @@ export const authApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useCreateUserMutation,
   useUserLoginMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
