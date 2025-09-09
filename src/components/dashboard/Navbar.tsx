@@ -1,4 +1,5 @@
 // components/dashboard/Navbar.tsx
+import Avater from "@/layouts/Avater";
 import { Menu } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
@@ -26,10 +27,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpen }) => {
         <p className='text-base font-bold text-primary'>Dashboard</p>
 
         {/* Right side */}
-        <div className='flex items-center gap-4'>
-          <span className='hidden sm:block text-sm text-gray-600'>Welcome, User</span>
-          <img src='https://i.pravatar.cc/40' alt='avatar' className='w-10 h-10 rounded-full border' />
-        </div>
+        <Avater />
       </div>
     </header>
   );

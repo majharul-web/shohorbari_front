@@ -1,4 +1,5 @@
 // PrivateRoute.tsx
+import PageLoader from "@/components/ui/loader/PageLoader";
 import { useAppSelector } from "@/redux/hooks";
 import type { ReactNode } from "react";
 import React from "react";
@@ -14,7 +15,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
 
   if (user === null) {
     // Loading state while auth is being determined
-    return <p>Loading...</p>;
+    return <PageLoader />;
   }
 
   // If user exists, render children, else redirect to login

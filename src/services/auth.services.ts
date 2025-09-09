@@ -1,17 +1,32 @@
 import { userLoggedOut } from "@/redux/slice/authSlice";
 import axios from "axios";
-import { authKey } from "../constant/storageKey";
+import { authKey, refreshKey } from "../constant/storageKey";
 import { instance as axiosInstance } from "../helpers/axios/axiosInstance";
 import { getBaseUrl } from "../helpers/config/envConfig";
 import type { AppDispatch } from "../redux/store";
 import { getFromCookie, removeFromCookie, setToCookie } from "../utils/cookie";
 
-export const logout = (dispatch: AppDispatch, router?: any) => {
+import type { NavigateFunction } from "react-router-dom";
+
+/**
+ * Logout user: clears Redux state, cookies, and localStorage.
+ * Optionally redirects to login page.
+ */
+export const logout = (dispatch: AppDispatch, navigate?: NavigateFunction) => {
+  // Reset Redux auth state
   dispatch(userLoggedOut());
+
+  // Clear cookies
   removeFromCookie(authKey);
-  removeFromCookie("refreshToken");
+  removeFromCookie(refreshKey);
+
+  // Clear local storage
   localStorage.clear();
-  if (router) router.push("/login");
+
+  // Redirect if navigate function is provided
+  if (navigate) {
+    navigate("/login");
+  }
 };
 
 export const storeUserInfo = ({ accessToken }: { accessToken: string }) => {

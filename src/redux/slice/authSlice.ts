@@ -1,69 +1,59 @@
-import type { UserPayloadObject } from "@/interfaces";
-import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 interface AuthState {
-  userId: null | number;
+  userId: number | null;
   userName: string;
-  userEmail: null | string;
-  avatar: null | string;
-  role: Record<string, any>;
-  departmentId: null | number;
-  department: Record<string, any>;
-  phone: number | string;
-  address: string;
-  createdAt: string;
-  status: string;
+  userEmail: string | null;
+  avatar: string | null;
+  role: Record<string, any> | null;
+  phone: string | number | null;
+  address: string | null;
+  isActive: boolean | string; // since your API returns is_active as boolean
 }
 
 const initialState: AuthState = {
   userId: null,
   userName: "",
-  userEmail: "",
-  avatar: "",
-  role: {},
-  departmentId: null,
-  department: {},
-  phone: "",
-  address: "",
-  createdAt: "",
-  status: "",
+  userEmail: null,
+  avatar: null,
+  role: null,
+  phone: null,
+  address: null,
+  isActive: "",
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    userLoggedIn: (state, action: PayloadAction<UserPayloadObject>) => {
+    userLoggedIn: (
+      state,
+      action: PayloadAction<{
+        id: number;
+        name: string;
+        email: string;
+        phone: string;
+        photo: string;
+        isActive: boolean | string;
+        role: Record<string, any>;
+        address: string;
+      }>
+    ) => {
       state.userId = action.payload.id;
       state.userName = action.payload.name;
       state.userEmail = action.payload.email;
       state.avatar = action.payload.photo;
-      state.role = action.payload.role as unknown as Record<string, any>;
-      state.departmentId = action.payload.departmentId;
-      state.department = action.payload.department as unknown as Record<string, any>;
+      state.role = action.payload.role;
       state.phone = action.payload.phone;
       state.address = action.payload.address;
-      state.createdAt = action.payload.createdAt;
-      state.status = action.payload.status;
+      state.isActive = action.payload.isActive;
     },
     userLoggedOut: (state) => {
-      state.userId = null;
-      state.userName = "";
-      state.userEmail = "";
-      state.avatar = "";
-      state.role = {};
-      state.department = {};
-      state.departmentId = null;
-      state.phone = "";
-      state.address = "";
-      state.createdAt = "";
-      state.status = "";
+      Object.assign(state, initialState); // reset cleanly
     },
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { userLoggedIn, userLoggedOut } = authSlice.actions;
-
 export default authSlice.reducer;

@@ -1,6 +1,8 @@
+import { useAppSelector } from "@/redux/hooks";
 import { Menu, X } from "lucide-react"; // modern icons
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import Avater from "./Avater";
 
 const links = [
   { name: "Home", path: "/" },
@@ -13,6 +15,7 @@ const links = [
 
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const user = useAppSelector((state) => state.auth);
 
   return (
     <nav className='bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b'>
@@ -39,6 +42,7 @@ export const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
+          {user?.userId && <Avater />}
         </div>
 
         {/* Mobile menu button */}
@@ -67,6 +71,7 @@ export const Navbar = () => {
               {link.name}
             </NavLink>
           ))}
+          {user?.userId && <Avater />}
         </div>
       )}
     </nav>

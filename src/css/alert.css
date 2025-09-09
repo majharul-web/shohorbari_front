@@ -1,0 +1,110 @@
+/* sweet alert style */
+
+/* Warning icon */
+body .swal2-icon.swal2-warning {
+  color: #f87171; /* text-red-500 */
+  font-size: 20px;
+  border-color: #f87171; /* border-red-500 */
+}
+
+/* Popup title */
+body .swal2-popup .swal2-title {
+  font-family: "Nunito", sans-serif;
+  font-size: 20px;
+  color: #0c111f; /* text-gray-50 */
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Popup content */
+body div.swal2-container .swal2-html-container {
+  font-family: "Nunito", sans-serif;
+  font-size: 16px; /* text-base */
+  color: #0c111f;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Styled buttons */
+body .swal2-popup .swal2-styled {
+  margin: 0;
+}
+
+/* Custom title wrapper */
+.swal-title-wr {
+  text-align: left !important;
+  width: 91.666667%; /* 11/12 */
+  padding-inline-start: 0.125rem; /* ps-0.5 */
+  padding: 0;
+}
+
+/* Asking content */
+.swl-asking-content > div {
+  display: grid;
+  padding: 25px 22px !important;
+  border-radius: 10px !important;
+  width: 420px !important;
+}
+
+/* Common content */
+.swl-common-content > div {
+  padding: 40px 56px !important;
+  border-radius: 16px;
+  width: 480px !important;
+}
+
+/* Actions alignment */
+.swl-asking-content .swal2-actions {
+  justify-content: flex-start !important;
+  margin-left: 0 !important;
+}
+
+/* Buttons rounded */
+.swl-asking-content button {
+  border-radius: 0.5rem; /* rounded-lg */
+}
+
+/* Confirm button */
+.swl-asking-content .swal2-confirm {
+  background-color: #2563eb; /* bg-blue-600 */
+  color: white;
+}
+
+/* Cancel button */
+.swl-asking-content .swal2-cancel {
+  background-color: #f6f6f6; /* custom bg */
+  color: #6b7280; /* text-gray-500 */
+}
+
+/* Success title */
+.swal-success-title {
+  color: #19e1a5;
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 700;
+}
+
+/* Error title */
+.swal-error-title {
+  color: #f87171; /* red-500 */
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Image alignment */
+div.swal2-container img.swal2-image {
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+/* Popup padding */
+div.swal2-container div.swal2-popup {
+  padding: 0;
+}
+
+/* SweetAlert content */
+.swal-content {
+  color: #0c111f;
+  font-size: 20px;
+  font-weight: 400;
+  overflow: hidden;
+}

@@ -28,29 +28,28 @@ export const authApi = baseApi.injectEndpoints({
         dta: logoutData,
       }),
     }),
-    verifyToken: build.query({
+    getUserByToken: build.query({
       query: () => {
         return {
-          url: `${VERIFY_URL}/profile`,
+          url: `/auth/users/me`,
           method: "GET",
         };
       },
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result: Record<string, any> = await queryFulfilled;
+          console.log("Result:", result);
           const userData = {
-            id: result?.data?.ID,
-            name: result?.data?.Name,
-            email: result?.data?.Email,
-            phone: result?.data?.Phone,
-            photo: result?.data?.Photo,
-            status: result?.data?.Status,
-            role: result?.data?.Role,
-            departmentId: result?.data?.DepartmentID,
-            address: result?.data?.Address,
-            createdAt: result?.data?.CreatedAt,
-            department: result?.data?.Department,
+            id: result?.data?.id,
+            name: result?.data?.first_name + " " + result?.data?.last_name,
+            email: result?.data?.email,
+            phone: result?.data?.phone_number,
+            photo: result?.data?.profile_image,
+            isActive: result?.data?.is_active,
+            role: result?.data?.role,
+            address: result?.data?.address,
           };
+
           dispatch(userLoggedIn(userData));
         } catch (err) {
           // dispatch(userLoggedOut())
@@ -111,9 +110,9 @@ export const authApi = baseApi.injectEndpoints({
 export const {
   useCreateUserMutation,
   useUserLoginMutation,
+  useGetUserByTokenQuery,
   useForgotPasswordMutation,
   useResetPasswordMutation,
-  useVerifyTokenQuery,
   useVerifyResetPasswordTokenQuery,
   useUserLogoutMutation,
   useGetPermissionsQuery,

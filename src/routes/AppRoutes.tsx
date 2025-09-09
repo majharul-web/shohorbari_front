@@ -6,6 +6,7 @@ import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import { Route, Routes } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -21,10 +22,10 @@ const AppRoutes: React.FC = () => {
       <Route
         path='dashboard/*'
         element={
-          <DashboardLayout />
-          // <PrivateRoute>
-          //   <DashboardLayout />
-          // </PrivateRoute>
+          // <DashboardLayout />
+          <PrivateRoute>
+            <DashboardLayout />
+          </PrivateRoute>
         }
       >
         <Route index element={<Dashboard />} />

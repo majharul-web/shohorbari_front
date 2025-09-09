@@ -1,6 +1,10 @@
+import { Alert } from "@/components/ui/alert/Alert";
 import { Button } from "@/components/ui/button";
 import InputField from "@/components/ui/form/InputField";
+import { authKey } from "@/constant/storageKey";
 import { useUserLoginMutation } from "@/redux/api/authApi";
+import { toCapitalizeString } from "@/utils/common";
+import { setToCookie } from "@/utils/cookie";
 import { Form, Formik } from "formik";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -31,19 +35,23 @@ const Login: React.FC = () => {
   ) => {
     try {
       const res = await login(values).unwrap();
-      console.log("Response:", res);
-      // localStorage.setItem("token", res.token);
+      setToCookie(authKey, res.access);
       navigate("/dashboard");
       resetForm();
     } catch (err: any) {
-      alert(err?.data?.message || "Login failed");
+      console.log("Error:", err);
+      const errorMessage = err?.data?.detail || "Login failed";
+      Alert({
+        type: "error",
+        message: `${toCapitalizeString(errorMessage)}` || "Something went wrong",
+      });
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 px-4'>
+    <div className='min-h-[calc(100vh-10rem)] flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 px-4'>
       <div className='w-full max-w-md bg-white/80 backdrop-blur-lg border border-gray-200 shadow-xl rounded-2xl p-8'>
         <h2 className='text-3xl font-bold text-center text-primary mb-2'>Welcome Back</h2>
         <p className='text-center text-gray-500 mb-6 text-sm'>Please sign in to your account</p>

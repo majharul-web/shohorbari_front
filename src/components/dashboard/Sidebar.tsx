@@ -1,7 +1,9 @@
 // components/dashboard/Sidebar.tsx
+import { useAppDispatch } from "@/redux/hooks";
+import { logout } from "@/services/auth.services";
 import { Cross, Home, LogOut, Settings, ShoppingCart, User } from "lucide-react";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 
 interface SidebarProps {
@@ -17,14 +19,16 @@ const links = [
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   return (
     <aside
       className={`fixed inset-y-0 left-0 z-50 w-64 transform bg-white border-r shadow-md transition-transform duration-200 ease-in-out lg:static lg:translate-x-0 ${
         open ? "translate-x-0" : "-translate-x-full"
       }`}
     >
-      <div className='flex items-center justify-between p-4 border-b'>
-        <h2 className='text-lg font-bold text-primary'>MyBrand</h2>
+      <div className='flex items-center justify-between p-4 border-b backdrop-blur-md shadow-sm'>
+        <h2 className='text-lg font-bold text-primary'>ShohorBari</h2>
         <Button
           variant='ghost'
           size='icon'
@@ -60,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
 
       {/* Logout at bottom */}
       <div className='absolute bottom-4 w-full px-4'>
-        <Button variant='destructive' size='sm' fullWidth>
+        <Button variant='destructive' size='sm' fullWidth onClick={() => logout(dispatch, navigate)}>
           <LogOut size={18} /> Logout
         </Button>
       </div>
