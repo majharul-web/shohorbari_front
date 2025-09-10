@@ -14,7 +14,7 @@ interface SidebarProps {
 const links = [
   { name: "Dashboard", path: "/dashboard", icon: Home, exact: true }, // ✅ exact match
   { name: "Profile", path: "/dashboard/profile", icon: User },
-  { name: "Cart", path: "/dashboard/cart", icon: ShoppingCart },
+  { name: "Category", path: "/dashboard/category", icon: ShoppingCart },
   { name: "Settings", path: "/dashboard/settings", icon: Settings },
 ];
 
