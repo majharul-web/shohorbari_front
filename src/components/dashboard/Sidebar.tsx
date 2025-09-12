@@ -1,7 +1,7 @@
 // components/dashboard/Sidebar.tsx
 import { useAppDispatch } from "@/redux/hooks";
 import { logout } from "@/services/auth.services";
-import { Cross, Home, LogOut, Radar, Settings, User } from "lucide-react";
+import { Cross, Home, LayoutDashboard, LogOut, Radar, User } from "lucide-react";
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
@@ -12,11 +12,10 @@ interface SidebarProps {
 }
 
 const links = [
-  { name: "Dashboard", path: "/dashboard", icon: Home, exact: true }, // ✅ exact match
+  { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard, exact: true }, // ✅ exact match
   { name: "Category", path: "/dashboard/category", icon: Radar },
+  { name: "Ads", path: "/dashboard/ads", icon: Home },
   { name: "Profile", path: "/dashboard/profile", icon: User },
-
-  { name: "Settings", path: "/dashboard/settings", icon: Settings },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {

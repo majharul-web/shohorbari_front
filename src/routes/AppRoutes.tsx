@@ -1,6 +1,7 @@
 // AppRoutes.tsx
 import DashboardLayout from "@/layouts/DashboardLayout";
 import MainLayout from "@/layouts/MainLayout";
+import AdminAddList from "@/pages/Add/AdminAddList";
 import CategoryPage from "@/pages/Category/Category";
 import Dashboard from "@/pages/Dashboard/Dashboard";
 import Home from "@/pages/Home/Home";
@@ -29,7 +30,8 @@ const AppRoutes: React.FC = () => {
         }
       >
         <Route index element={<Dashboard />} />
-        <Route path='category' element={<CategoryPage />} /> {/* ✅ relative path */}
+        <Route path='category' element={<CategoryPage />} />
+        <Route path='ads' element={<AdminAddList />} />
       </Route>
     </Routes>
   );
