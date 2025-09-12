@@ -1,10 +1,14 @@
+import AdminDashboards from "@/components/dashboard/AdminDashboards";
+import UserDashboards from "@/components/dashboard/UserDashboards";
+import { useAppSelector } from "@/redux/hooks";
+
 const Dashboard = () => {
-  return (
-    <div>
-      <h1 className='text-2xl font-bold'>Dashboard</h1>
-      <p className='mt-4'>Welcome to your dashboard!</p>
-    </div>
-  );
+  const user: any = useAppSelector((state) => state.auth);
+  if (!user || user?.role !== "admin") {
+    return <UserDashboards />;
+  } else {
+    return <AdminDashboards />;
+  }
 };
 
 export default Dashboard;

@@ -1,5 +1,6 @@
 // components/dashboard/Navbar.tsx
 import Avater from "@/layouts/Avater";
+import { useAppSelector } from "@/redux/hooks";
 import { Menu } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
@@ -9,6 +10,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ setOpen }) => {
+  const user: any = useAppSelector((state) => state.auth);
   return (
     <header className='sticky top-0 z-40 w-full border-b bg-white/80 backdrop-blur-md shadow-sm'>
       <div className='flex h-[60px] items-center justify-between px-4'>
@@ -24,7 +26,9 @@ const Navbar: React.FC<NavbarProps> = ({ setOpen }) => {
         </Button>
 
         {/* Logo */}
-        <p className='text-base font-bold text-primary'>Dashboard</p>
+        <p className='text-base font-bold text-primary'>
+          {user.role === "admin" ? "Admin Dashboard" : "User Dashboard"}
+        </p>
 
         {/* Right side */}
         <Avater />
