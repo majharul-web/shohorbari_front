@@ -2,7 +2,6 @@ import { userLoggedIn } from "../slice/authSlice";
 import { baseApi } from "./baseApi";
 
 const AUTH_URL = "/auth";
-const VERIFY_URL = "v1/users";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -56,23 +55,7 @@ export const authApi = baseApi.injectEndpoints({
         }
       },
     }),
-    getPermissions: build.query({
-      query: () => {
-        return {
-          url: `${VERIFY_URL}/permission`,
-          method: "GET",
-        };
-      },
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        try {
-          const result: Record<string, any> = await queryFulfilled;
-          const permissionData = result?.data?.data;
-        } catch (err) {
-          // dispatch(userLoggedOut())
-        }
-      },
-      providesTags: [],
-    }),
+
     verifyResetPasswordToken: build.query({
       query: (payload) => {
         return {
@@ -115,6 +98,6 @@ export const {
   useResetPasswordMutation,
   useVerifyResetPasswordTokenQuery,
   useUserLogoutMutation,
-  useGetPermissionsQuery,
+
   useResetPasswordRequestMutation,
 } = authApi;
