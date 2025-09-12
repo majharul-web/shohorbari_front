@@ -1,7 +1,7 @@
 // components/dashboard/Sidebar.tsx
 import { useAppDispatch } from "@/redux/hooks";
 import { logout } from "@/services/auth.services";
-import { Cross, Home, LogOut, Settings, ShoppingCart, User } from "lucide-react";
+import { Cross, Home, LogOut, Radar, Settings, User } from "lucide-react";
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
@@ -13,8 +13,9 @@ interface SidebarProps {
 
 const links = [
   { name: "Dashboard", path: "/dashboard", icon: Home, exact: true }, // ✅ exact match
+  { name: "Category", path: "/dashboard/category", icon: Radar },
   { name: "Profile", path: "/dashboard/profile", icon: User },
-  { name: "Category", path: "/dashboard/category", icon: ShoppingCart },
+
   { name: "Settings", path: "/dashboard/settings", icon: Settings },
 ];
 

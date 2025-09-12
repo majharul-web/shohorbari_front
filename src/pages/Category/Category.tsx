@@ -1,6 +1,7 @@
 import CategoryModal from "@/components/category/CategoryModal";
 import { Alert } from "@/components/ui/alert/Alert";
 import { Button } from "@/components/ui/button";
+import Loader from "@/components/ui/loader/Loader";
 import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { formatDate, toCapitalizeString } from "@/utils/common";
 import React, { useState } from "react";
@@ -62,7 +63,7 @@ const CategoryPage: React.FC = () => {
             {isLoading ? (
               <tr>
                 <td colSpan={4} className='px-4 py-6 text-center'>
-                  Loading...
+                  <Loader />
                 </td>
               </tr>
             ) : isError ? (
