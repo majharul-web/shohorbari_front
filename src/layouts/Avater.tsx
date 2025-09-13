@@ -19,6 +19,9 @@ const Avater: React.FC = () => {
 
   const url = user?.avatar || "https://i.pravatar.cc/40";
 
+  const currentPath = window.location.pathname;
+  const isDashboard = currentPath.startsWith("/dashboard");
+
   return (
     <div className='flex items-center gap-4'>
       <DropdownMenu>
@@ -28,10 +31,17 @@ const Avater: React.FC = () => {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className='w-48' align='end'>
-          <DropdownMenuItem className='cursor-pointer' onClick={() => navigate("/dashboard")}>
-            <LayoutDashboardIcon className='mr-2 h-4 w-4' />
-            <span>Dashboard</span>
-          </DropdownMenuItem>
+          {isDashboard ? (
+            <DropdownMenuItem className='cursor-pointer' onClick={() => navigate("/")}>
+              <LayoutDashboardIcon className='mr-2 h-4 w-4' />
+              <span>Home</span>
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem className='cursor-pointer' onClick={() => navigate("/dashboard")}>
+              <LayoutDashboardIcon className='mr-2 h-4 w-4' />
+              <span>Dashboard</span>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem className='cursor-pointer' onClick={() => navigate("/dashboard/profile")}>
             <User className='mr-2 h-4 w-4' />
             <span>Profile</span>

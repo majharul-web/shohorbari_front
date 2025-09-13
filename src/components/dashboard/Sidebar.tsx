@@ -30,7 +30,9 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
       }`}
     >
       <div className='flex items-center justify-between p-4 border-b backdrop-blur-md shadow-sm'>
-        <h2 className='text-lg font-bold text-primary'>{APP_CONFIG.APP_NAME}</h2>
+        <h2 className='text-lg font-bold text-primary cursor-pointer' onClick={() => navigate("/dashboard")}>
+          {APP_CONFIG.APP_NAME}
+        </h2>
         <Button
           variant='ghost'
           size='icon'

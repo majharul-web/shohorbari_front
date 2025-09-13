@@ -22,7 +22,7 @@ export const Navbar = () => {
     <nav className='bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center'>
         {/* Logo */}
-        <NavLink to='/' className='text-2xl font-bold text-primary'>
+        <NavLink to='/' className='text-2xl font-bold !text-primary'>
           {APP_CONFIG.APP_NAME}
         </NavLink>
 
