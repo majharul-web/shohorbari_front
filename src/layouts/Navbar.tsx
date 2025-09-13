@@ -1,3 +1,4 @@
+import { APP_CONFIG } from "@/helpers/config/appconfig";
 import { useAppSelector } from "@/redux/hooks";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -22,7 +23,7 @@ export const Navbar = () => {
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center'>
         {/* Logo */}
         <NavLink to='/' className='text-2xl font-bold text-primary'>
-          MyBrand
+          {APP_CONFIG.APP_NAME}
         </NavLink>
 
         {/* Desktop links */}

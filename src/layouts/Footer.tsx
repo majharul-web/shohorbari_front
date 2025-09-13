@@ -1,5 +1,6 @@
-import React from "react";
 import { Separator } from "@/components/ui/separator";
+import { APP_CONFIG } from "@/helpers/config/appconfig";
+import React from "react";
 
 const Footer: React.FC = () => {
   return (
@@ -7,7 +8,8 @@ const Footer: React.FC = () => {
       <div className='container mx-auto px-6 py-8 flex flex-col items-center justify-between gap-4 md:flex-row'>
         {/* Branding */}
         <p className='text-sm text-gray-500 text-center md:text-left'>
-          © {new Date().getFullYear()} <span className='font-semibold'>MyBrand</span>. All rights reserved.
+          © {new Date().getFullYear()} <span className='font-semibold'>{APP_CONFIG.APP_NAME}</span>. All
+          rights reserved.
         </p>
 
         {/* Links */}

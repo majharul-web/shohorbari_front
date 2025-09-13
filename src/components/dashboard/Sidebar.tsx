@@ -1,7 +1,8 @@
 // components/dashboard/Sidebar.tsx
+import { APP_CONFIG } from "@/helpers/config/appconfig";
 import { useAppDispatch } from "@/redux/hooks";
 import { logout } from "@/services/auth.services";
-import { Cross, Home, LayoutDashboard, LogOut, Radar, User, FolderRoot } from "lucide-react";
+import { Cross, FolderRoot, Home, LayoutDashboard, LogOut, Radar, User } from "lucide-react";
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
@@ -29,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
       }`}
     >
       <div className='flex items-center justify-between p-4 border-b backdrop-blur-md shadow-sm'>
-        <h2 className='text-lg font-bold text-primary'>ShohorBari</h2>
+        <h2 className='text-lg font-bold text-primary'>{APP_CONFIG.APP_NAME}</h2>
         <Button
           variant='ghost'
           size='icon'
