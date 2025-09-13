@@ -1,7 +1,7 @@
 // components/dashboard/Avater.tsx
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/services/auth.services";
-import { LogOut, User } from "lucide-react";
+import { LayoutDashboardIcon, LogOut, User } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router";
 import {
@@ -28,11 +28,16 @@ const Avater: React.FC = () => {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className='w-48' align='end'>
-          <DropdownMenuItem onClick={() => navigate("/dashboard/profile")}>
+          <DropdownMenuItem className='cursor-pointer' onClick={() => navigate("/dashboard")}>
+            <LayoutDashboardIcon className='mr-2 h-4 w-4' />
+            <span>Dashboard</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem className='cursor-pointer' onClick={() => navigate("/dashboard/profile")}>
             <User className='mr-2 h-4 w-4' />
             <span>Profile</span>
           </DropdownMenuItem>
           <DropdownMenuItem
+            className='cursor-pointer'
             onClick={() => {
               logout(dispatch, navigate);
             }}

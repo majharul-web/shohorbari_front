@@ -1,21 +1,21 @@
 import { useAppSelector } from "@/redux/hooks";
-import { Menu, X } from "lucide-react"; // modern icons
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Avater from "./Avater";
 
-const links = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Services", path: "/services" },
-  { name: "Contact", path: "/contact" },
-  { name: "Login", path: "/login" },
-  { name: "Register", path: "/register" },
-];
-
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
   const user = useAppSelector((state) => state.auth);
+
+  const links = [
+    { name: "Home", path: "/", visible: true },
+    { name: "About", path: "/about", visible: true },
+    { name: "Services", path: "/services", visible: true },
+    { name: "Contact", path: "/contact", visible: true },
+    { name: "Login", path: "/login", visible: !user?.userId },
+    { name: "Register", path: "/register", visible: !user?.userId },
+  ];
 
   return (
     <nav className='bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b'>
@@ -27,21 +27,23 @@ export const Navbar = () => {
 
         {/* Desktop links */}
         <div className='hidden md:flex items-center gap-8'>
-          {links.map((link) => (
-            <NavLink
-              key={link.name}
-              to={link.path}
-              className={({ isActive }) =>
-                `relative text-sm font-medium transition-colors hover:text-primary ${
-                  isActive
-                    ? "text-primary after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-primary after:rounded-full"
-                    : "text-gray-600"
-                }`
-              }
-            >
-              {link.name}
-            </NavLink>
-          ))}
+          {links
+            .filter((link) => link.visible)
+            .map((link) => (
+              <NavLink
+                key={link.name}
+                to={link.path}
+                className={({ isActive }) =>
+                  `relative text-sm font-medium transition-colors hover:text-primary ${
+                    isActive
+                      ? "text-primary after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-primary after:rounded-full"
+                      : "text-gray-600"
+                  }`
+                }
+              >
+                {link.name}
+              </NavLink>
+            ))}
           {user?.userId && <Avater />}
         </div>
 
@@ -57,20 +59,22 @@ export const Navbar = () => {
       {/* Mobile dropdown */}
       {open && (
         <div className='md:hidden bg-white border-t shadow-md px-4 py-3 space-y-2 animate-in slide-in-from-top'>
-          {links.map((link) => (
-            <NavLink
-              key={link.name}
-              to={link.path}
-              onClick={() => setOpen(false)}
-              className={({ isActive }) =>
-                `block rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-gray-50 ${
-                  isActive ? "text-primary bg-gray-50" : "text-gray-700"
-                }`
-              }
-            >
-              {link.name}
-            </NavLink>
-          ))}
+          {links
+            .filter((link) => link.visible)
+            .map((link) => (
+              <NavLink
+                key={link.name}
+                to={link.path}
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  `block rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-gray-50 ${
+                    isActive ? "text-primary bg-gray-50" : "text-gray-700"
+                  }`
+                }
+              >
+                {link.name}
+              </NavLink>
+            ))}
           {user?.userId && <Avater />}
         </div>
       )}
