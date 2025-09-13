@@ -1,11 +1,13 @@
 // DashboardLayout.tsx
 import Navbar from "@/components/dashboard/Navbar";
 import Sidebar from "@/components/dashboard/Sidebar";
+import { useGetUserByTokenQuery } from "@/redux/api/authApi";
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 const DashboardLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { data: user } = useGetUserByTokenQuery({}, { refetchOnMountOrArgChange: true });
 
   return (
     <div className='flex min-h-screen bg-gray-50'>
