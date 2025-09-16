@@ -4,16 +4,16 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className='w-full border-t bg-white'>
-      <div className='container mx-auto px-6 py-8 flex flex-col items-center justify-between gap-4 md:flex-row'>
+    <footer className='w-full border-t border-border bg-background'>
+      <div className='max-w-7xl mx-auto px-6 py-6 md:py-8 flex flex-col md:flex-row items-center justify-between gap-4'>
         {/* Branding */}
-        <p className='text-sm text-gray-500 text-center md:text-left'>
-          © {new Date().getFullYear()} <span className='font-semibold'>{APP_CONFIG.APP_NAME}</span>. All
-          rights reserved.
+        <p className='text-sm text-muted-foreground text-center md:text-left'>
+          © {new Date().getFullYear()}{" "}
+          <span className='font-semibold text-primary'>{APP_CONFIG.APP_NAME}</span>. All rights reserved.
         </p>
 
         {/* Links */}
-        <div className='flex items-center gap-6 text-sm text-gray-500'>
+        <div className='flex items-center gap-4 md:gap-6 text-sm text-muted-foreground'>
           <a href='/privacy' className='hover:text-primary transition-colors'>
             Privacy Policy
           </a>

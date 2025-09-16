@@ -80,15 +80,17 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ mode, initialData }) => {
             <Form className='space-y-4'>
               <InputField label='Name' name='name' type='text' />
 
-              <Button type='submit' disabled={isSubmitting || isLoading}>
-                {isSubmitting || isLoading
-                  ? mode === "add"
-                    ? "Creating..."
-                    : "Updating..."
-                  : mode === "add"
-                  ? "Create"
-                  : "Update"}
-              </Button>
+              <div className='flex justify-end'>
+                <Button type='submit' disabled={isSubmitting || isLoading}>
+                  {isSubmitting || isLoading
+                    ? mode === "add"
+                      ? "Creating..."
+                      : "Updating..."
+                    : mode === "add"
+                    ? "Create"
+                    : "Update"}
+                </Button>
+              </div>
             </Form>
           )}
         </Formik>

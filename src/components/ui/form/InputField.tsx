@@ -3,6 +3,7 @@ import { mdiEyeOffOutline, mdiEyeOutline } from "@mdi/js";
 import type { FieldHookConfig } from "formik";
 import { ErrorMessage, Field } from "formik";
 import React, { useState } from "react";
+
 interface InputFieldProps extends FieldHookConfig<string> {
   label: string;
   type?: string;
@@ -17,7 +18,7 @@ const InputField: React.FC<InputFieldProps> = ({ label, type = "text", name, ...
 
   return (
     <div className='w-full mb-4'>
-      <label htmlFor={name} className='block text-gray-700 mb-1'>
+      <label htmlFor={name} className='block mb-1 text-foreground font-medium'>
         {label}
       </label>
 
@@ -27,7 +28,7 @@ const InputField: React.FC<InputFieldProps> = ({ label, type = "text", name, ...
           name={name}
           {...fieldProps}
           id={name}
-          className='block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-primary focus:ring-1 focus:ring-primary'
+          className='block w-full rounded-md px-3 py-2 shadow-sm border border-border focus:outline-none focus:border-primary  transition'
         />
 
         {/* Show/hide toggle for password */}
@@ -36,15 +37,15 @@ const InputField: React.FC<InputFieldProps> = ({ label, type = "text", name, ...
             <Icon
               path={showPassword ? mdiEyeOutline : mdiEyeOffOutline}
               w='w-10'
+              h='h-12'
               size={22}
-              h={"h-12"}
-              className='absolute top-0 right-0 z-10 text-secondary dark:text-slate-400 cursor-pointer'
+              className='absolute top-0 right-0 z-10 text-muted-foreground cursor-pointer'
             />
           </span>
         )}
       </div>
 
-      <ErrorMessage name={name} component='div' className='text-red-500 text-sm mt-1' />
+      <ErrorMessage name={name} component='div' className='text-destructive text-sm mt-1' />
     </div>
   );
 };

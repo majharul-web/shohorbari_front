@@ -1,45 +1,32 @@
 import CategoryModal from "@/components/category/CategoryModal";
 import { Alert } from "@/components/ui/alert/Alert";
-import { Button } from "@/components/ui/button";
+import ConfirmDialog from "@/components/ui/alert/ConfirmDialog";
 import Loader from "@/components/ui/loader/Loader";
+
 import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { formatDate, toCapitalizeString } from "@/utils/common";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const CategoryPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
 
-  // RTK Query fetch categories
-  const { data, isLoading, isError } = useGetAllCategoriesQuery({
-    page: page,
-    limit: rowsPerPage,
-  });
-
+  const { data, isLoading, isError } = useGetAllCategoriesQuery({ page, limit: rowsPerPage });
   const categories = data?.results || [];
 
   const [deleteCategory, { isLoading: isDeleting }] = useDeleteCategoryMutation();
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this category?")) {
-      try {
-        setDeletingId(id);
-        await deleteCategory(id).unwrap();
-        Alert({
-          type: "success",
-          message: "Category deleted successfully",
-        });
-      } catch (err: any) {
-        console.error("Error:", err);
-        const errorMessage = err?.data?.detail || "Category deletion failed";
-        Alert({
-          type: "error",
-          message: `${toCapitalizeString(errorMessage)}`,
-        });
-      } finally {
-        setDeletingId(null);
-      }
+    try {
+      setDeletingId(id);
+      await deleteCategory(id).unwrap();
+      Alert({ type: "success", message: "Category deleted successfully" });
+    } catch (err: any) {
+      const errorMessage = err?.data?.detail || "Category deletion failed";
+      Alert({ type: "error", message: toCapitalizeString(errorMessage) });
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -47,20 +34,19 @@ const CategoryPage: React.FC = () => {
     <div className='space-y-6'>
       {/* Header */}
       <div className='flex items-center justify-between'>
-        <p className='text-lg font-bold'>Category Page</p>
-        {/* Add Modal */}
+        <p className='text-xl font-bold text-foreground'>Category Page</p>
         <CategoryModal mode='add' />
       </div>
 
       {/* Table */}
-      <div className='overflow-x-auto rounded-lg border bg-white shadow-sm'>
+      <div className='overflow-x-auto rounded-lg border bg-card shadow-sm'>
         <table className='w-full border-collapse text-left'>
-          <thead className='bg-gray-50'>
+          <thead className='bg-muted'>
             <tr>
-              <th className='px-4 py-2 text-sm font-medium text-gray-600'>#</th>
-              <th className='px-4 py-2 text-sm font-medium text-gray-600'>Name</th>
-              <th className='px-4 py-2 text-sm font-medium text-gray-600'>Created At</th>
-              <th className='px-4 py-2 text-sm font-medium text-gray-600'>Action</th>
+              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>#</th>
+              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>Name</th>
+              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>Created At</th>
+              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -72,33 +58,37 @@ const CategoryPage: React.FC = () => {
               </tr>
             ) : isError ? (
               <tr>
-                <td colSpan={4} className='px-4 py-6 text-center text-red-500'>
+                <td colSpan={4} className='px-4 py-6 text-center text-destructive'>
                   Failed to load categories
                 </td>
               </tr>
-            ) : categories?.length === 0 ? (
+            ) : categories.length === 0 ? (
               <tr>
-                <td colSpan={4} className='px-4 py-6 text-center text-gray-500'>
+                <td colSpan={4} className='px-4 py-6 text-center text-muted-foreground'>
                   No categories found
                 </td>
               </tr>
             ) : (
-              categories?.map((cat: any, idx: number) => (
-                <tr key={cat.id} className='border-t'>
+              categories.map((cat: Record<string, any>, idx: number) => (
+                <tr key={cat.id} className='border-t border-border'>
                   <td className='px-4 py-2'>{(page - 1) * rowsPerPage + idx + 1}</td>
-                  <td className='px-4 py-2'>{cat.name}</td>
-                  <td className='px-4 py-2'>{formatDate(cat.created_at)}</td>
+                  <td className='px-4 py-2 text-foreground'>{cat.name}</td>
+                  <td className='px-4 py-2 text-foreground'>{formatDate(cat.created_at)}</td>
                   <td className='px-4 py-2'>
                     <div className='flex gap-x-2.5'>
-                      {/* Edit Modal */}
+                      {/* Edit */}
                       <CategoryModal mode='edit' initialData={{ id: cat.id, name: cat.name }} />
-                      <Button
-                        onClick={() => handleDelete(cat.id)}
-                        className='text-red-500'
-                        disabled={isDeleting && deletingId == cat.id}
-                      >
-                        {isDeleting && deletingId === cat.id ? "Deleting..." : "Delete"}
-                      </Button>
+
+                      {/* Delete using ConfirmDialog */}
+                      <ConfirmDialog
+                        triggerLabel={isDeleting && deletingId === cat.id ? "Deleting..." : "Delete"}
+                        title='Delete Category'
+                        description={`Are you sure you want to delete "${cat.name}"? This action cannot be undone.`}
+                        onConfirm={() => handleDelete(cat.id)}
+                        loading={isDeleting && deletingId === cat.id}
+                        variant='destructive'
+                        confirmLabel='Confirm Delete'
+                      />
                     </div>
                   </td>
                 </tr>

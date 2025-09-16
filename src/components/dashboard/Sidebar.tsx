@@ -13,7 +13,7 @@ interface SidebarProps {
 }
 
 const links = [
-  { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard, exact: true }, // ✅ exact match
+  { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard, exact: true },
   { name: "Category", path: "/dashboard/category", icon: Radar },
   { name: "Ads", path: "/dashboard/ads", icon: Home },
   { name: "Profile", path: "/dashboard/profile", icon: User },
@@ -23,27 +23,30 @@ const links = [
 const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-50 w-64 transform bg-white border-r shadow-md transition-transform duration-200 ease-in-out lg:static lg:translate-x-0 ${
+      className={`fixed inset-y-0 left-0 z-50 w-64 transform bg-background border-r border-border shadow-md transition-transform duration-200 ease-in-out lg:static lg:translate-x-0 ${
         open ? "translate-x-0" : "-translate-x-full"
       }`}
     >
-      <div className='flex items-center justify-between p-4 border-b backdrop-blur-md shadow-sm'>
+      {/* Header */}
+      <div className='flex items-center justify-between p-4 border-b border-border backdrop-blur-md shadow-sm'>
         <h2 className='text-lg font-bold text-primary cursor-pointer' onClick={() => navigate("/dashboard")}>
           {APP_CONFIG.APP_NAME}
         </h2>
         <Button
           variant='ghost'
           size='icon'
-          className='md:hidden'
+          className='md:hidden text-muted-foreground'
           aria-label='Toggle Menu'
           onClick={() => setOpen((prev) => !prev)}
         >
-          <Cross size={24} className='text-gray-500' />
+          <Cross size={24} />
         </Button>
       </div>
 
+      {/* Navigation */}
       <nav className='flex flex-col gap-1 p-4'>
         {links.map((link) => {
           const Icon = link.icon;
@@ -51,10 +54,12 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
             <NavLink
               key={link.name}
               to={link.path}
-              end={link.exact} // ✅ exact matching only for Dashboard
+              end={link.exact}
               className={({ isActive }) =>
                 `flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive ? "bg-primary text-white" : "text-gray-700 hover:bg-gray-100"
+                  isActive
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                 }`
               }
               onClick={() => setOpen(false)}
@@ -66,9 +71,9 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
         })}
       </nav>
 
-      {/* Logout at bottom */}
+      {/* Logout */}
       <div className='absolute bottom-4 w-full px-4'>
-        <Button variant='destructive' size='sm' fullWidth onClick={() => logout(dispatch, navigate)}>
+        <Button variant='destructive' size='sm' className='w-full' onClick={() => logout(dispatch, navigate)}>
           <LogOut size={18} /> Logout
         </Button>
       </div>

@@ -1,5 +1,5 @@
 import { Alert } from "@/components/ui/alert/Alert";
-import { Button } from "@/components/ui/button";
+import ConfirmDialog from "@/components/ui/alert/ConfirmDialog";
 import Loader from "@/components/ui/loader/Loader";
 import { useDeleteAdMutation, useGetAllAdsQuery } from "@/redux/api/adsApi";
 import { formatDate, toCapitalizeString } from "@/utils/common";
@@ -21,40 +21,38 @@ const AdminAddList: React.FC = () => {
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this ad?")) {
-      try {
-        setDeletingId(id);
-        await deleteAd(id).unwrap();
-        Alert({
-          type: "success",
-          message: "Ad deleted successfully",
-        });
-      } catch (err: any) {
-        console.error("Error:", err);
-        const errorMessage = err?.data?.detail || "Ad deletion failed";
-        Alert({
-          type: "error",
-          message: `${toCapitalizeString(errorMessage)}`,
-        });
-      } finally {
-        setDeletingId(null);
-      }
+    try {
+      setDeletingId(id);
+      await deleteAd(id).unwrap();
+      Alert({
+        type: "success",
+        message: "Ad deleted successfully",
+      });
+    } catch (err: any) {
+      console.error("Error:", err);
+      const errorMessage = err?.data?.detail || "Ad deletion failed";
+      Alert({
+        type: "error",
+        message: `${toCapitalizeString(errorMessage)}`,
+      });
+    } finally {
+      setDeletingId(null);
     }
   };
 
   return (
     <div>
-      <h1 className='text-lg font-semibold mb-4'>Admin Ads List</h1>
+      <h1 className='text-lg font-semibold mb-4 text-foreground'>Admin Ads List</h1>
 
-      <div className='overflow-x-auto rounded-lg border bg-white shadow-sm'>
+      <div className='overflow-x-auto rounded-lg border border-border bg-card shadow-sm'>
         <table className='w-full border-collapse text-left'>
-          <thead className='bg-gray-50'>
+          <thead className='bg-muted/40'>
             <tr>
-              <th className='px-4 py-2 text-sm font-medium text-gray-600'>#</th>
-              <th className='px-4 py-2 text-sm font-medium text-gray-600'>Title</th>
-              <th className='px-4 py-2 text-sm font-medium text-gray-600'>Price</th>
-              <th className='px-4 py-2 text-sm font-medium text-gray-600'>Created At</th>
-              <th className='px-4 py-2 text-sm font-medium text-gray-600'>Action</th>
+              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>#</th>
+              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>Title</th>
+              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>Price</th>
+              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>Created At</th>
+              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -66,32 +64,43 @@ const AdminAddList: React.FC = () => {
               </tr>
             ) : isError ? (
               <tr>
-                <td colSpan={5} className='px-4 py-6 text-center text-red-500'>
+                <td colSpan={5} className='px-4 py-6 text-center text-destructive'>
                   Failed to load ads
                 </td>
               </tr>
             ) : ads.length === 0 ? (
               <tr>
-                <td colSpan={5} className='px-4 py-6 text-center text-gray-500'>
+                <td colSpan={5} className='px-4 py-6 text-center text-muted-foreground'>
                   No ads found
                 </td>
               </tr>
             ) : (
               ads.map((ad: any, idx: number) => (
-                <tr key={ad.id} className='border-t'>
+                <tr key={ad.id} className='border-t border-border'>
                   <td className='px-4 py-2'>{(page - 1) * rowsPerPage + idx + 1}</td>
                   <td className='px-4 py-2'>{ad.title}</td>
                   <td className='px-4 py-2'>{ad.price}</td>
                   <td className='px-4 py-2'>{formatDate(ad.created_at)}</td>
                   <td className='px-4 py-2'>
                     <div className='flex gap-x-2.5'>
-                      <Button
+                      {/* <Button
+                        variant='destructive'
+                        size='sm'
                         onClick={() => handleDelete(ad.id)}
-                        className='text-red-500'
-                        disabled={isDeleting && deletingId == ad.id}
+                        disabled={isDeleting && deletingId === ad.id}
                       >
                         {isDeleting && deletingId === ad.id ? "Deleting..." : "Delete"}
-                      </Button>
+                      </Button> */}
+
+                      <ConfirmDialog
+                        triggerLabel={isDeleting && deletingId === ad.id ? "Deleting..." : "Delete"}
+                        title='Delete Ad'
+                        description={`Are you sure you want to delete "${ad.title}"? This action cannot be undone.`}
+                        onConfirm={() => handleDelete(ad.id)}
+                        loading={isDeleting && deletingId === ad.id}
+                        variant='destructive'
+                        confirmLabel='Confirm Delete'
+                      />
                     </div>
                   </td>
                 </tr>

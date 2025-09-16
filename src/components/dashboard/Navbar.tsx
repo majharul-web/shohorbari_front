@@ -1,4 +1,3 @@
-// components/dashboard/Navbar.tsx
 import Avater from "@/layouts/Avater";
 import { useAppSelector } from "@/redux/hooks";
 import { Menu } from "lucide-react";
@@ -11,27 +10,30 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ setOpen }) => {
   const user: any = useAppSelector((state) => state.auth);
+
   return (
-    <header className='sticky top-0 z-40 w-full border-b bg-white/80 backdrop-blur-md shadow-sm'>
-      <div className='flex h-[60px] items-center justify-between px-4'>
+    <header className='sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur-md shadow-sm'>
+      <div className='max-w-7xl mx-auto flex h-[60px] items-center justify-between px-4 sm:px-6 lg:px-8'>
         {/* Mobile menu button */}
         <Button
           variant='ghost'
           size='icon'
-          className='md:hidden'
+          className='md:hidden text-muted-foreground'
           aria-label='Toggle Menu'
           onClick={() => setOpen((prev) => !prev)}
         >
-          <Menu size={24} className='text-gray-500' />
+          <Menu size={24} />
         </Button>
 
-        {/* Logo */}
-        <p className='text-base font-bold text-primary'>
+        {/* Logo / Title */}
+        <p className='text-lg font-bold text-primary'>
           {user.role === "admin" ? "Admin Dashboard" : "User Dashboard"}
         </p>
 
         {/* Right side */}
-        <Avater />
+        <div className='flex items-center gap-4'>
+          <Avater />
+        </div>
       </div>
     </header>
   );
