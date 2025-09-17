@@ -1,110 +1,132 @@
-/* sweet alert style */
+/* 🌟 SweetAlert2 with Theme Variables */
 
-/* Warning icon */
-body .swal2-icon.swal2-warning {
-  color: #f87171; /* text-red-500 */
-  font-size: 20px;
-  border-color: #f87171; /* border-red-500 */
+/* Popup container */
+div.swal2-container div.swal2-popup {
+  background: var(--color-card);
+  color: var(--color-card-foreground);
+  border-radius: var(--radius-lg);
+  padding: 0;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
 }
 
-/* Popup title */
+/* Title */
 body .swal2-popup .swal2-title {
-  font-family: "Nunito", sans-serif;
-  font-size: 20px;
-  color: #0c111f; /* text-gray-50 */
-  font-weight: 600;
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 700;
   margin: 0;
+  color: var(--color-foreground);
 }
 
-/* Popup content */
+/* Content */
 body div.swal2-container .swal2-html-container {
   font-family: "Nunito", sans-serif;
-  font-size: 16px; /* text-base */
-  color: #0c111f;
-  margin: 0;
-  font-weight: 600;
-}
-
-/* Styled buttons */
-body .swal2-popup .swal2-styled {
+  font-size: 1rem; /* text-base */
+  font-weight: 500;
+  color: var(--color-muted-foreground);
   margin: 0;
 }
 
-/* Custom title wrapper */
+/* Title wrapper */
 .swal-title-wr {
   text-align: left !important;
   width: 91.666667%; /* 11/12 */
-  padding-inline-start: 0.125rem; /* ps-0.5 */
+  padding-inline-start: 0.125rem;
   padding: 0;
 }
 
 /* Asking content */
 .swl-asking-content > div {
   display: grid;
-  padding: 25px 22px !important;
-  border-radius: 10px !important;
+  padding: 24px 22px !important;
+  border-radius: var(--radius-md) !important;
   width: 420px !important;
+  background: var(--color-card);
 }
 
 /* Common content */
 .swl-common-content > div {
   padding: 40px 56px !important;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   width: 480px !important;
+  background: var(--color-card);
 }
 
-/* Actions alignment */
+/* Actions */
 .swl-asking-content .swal2-actions {
   justify-content: flex-start !important;
   margin-left: 0 !important;
+  gap: 0.5rem;
 }
 
-/* Buttons rounded */
+/* Buttons */
 .swl-asking-content button {
-  border-radius: 0.5rem; /* rounded-lg */
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
 }
 
 /* Confirm button */
 .swl-asking-content .swal2-confirm {
-  background-color: #2563eb; /* bg-blue-600 */
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  transition: background 0.2s;
+}
+.swl-asking-content .swal2-confirm:hover {
+  background-color: color-mix(in oklch, var(--color-primary) 90%, black);
 }
 
 /* Cancel button */
 .swl-asking-content .swal2-cancel {
-  background-color: #f6f6f6; /* custom bg */
-  color: #6b7280; /* text-gray-500 */
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-foreground);
+}
+.swl-asking-content .swal2-cancel:hover {
+  background-color: color-mix(in oklch, var(--color-secondary) 90%, black);
 }
 
-/* Success title */
+/* Icons */
+body .swal2-icon.swal2-warning {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-muted);
+}
+
+body .swal2-icon.swal2-success {
+  border-color: var(--color-chart-2);
+  color: var(--color-chart-2);
+  background: var(--color-muted);
+}
+
+body .swal2-icon.swal2-error {
+  border-color: var(--color-destructive);
+  color: var(--color-destructive);
+  background: var(--color-muted);
+}
+
+/* Titles for states */
 .swal-success-title {
-  color: #19e1a5;
-  font-size: 1.5rem; /* text-2xl */
+  color: var(--color-chart-2);
+  font-size: 1.5rem;
   font-weight: 700;
 }
-
-/* Error title */
 .swal-error-title {
-  color: #f87171; /* red-500 */
+  color: var(--color-destructive);
   font-size: 1.5rem;
   font-weight: 700;
 }
 
-/* Image alignment */
+/* Image */
 div.swal2-container img.swal2-image {
   margin: 0 auto;
-  padding-bottom: 40px;
+  padding-bottom: 32px;
+  width: 80px;
+  height: auto;
 }
 
-/* Popup padding */
-div.swal2-container div.swal2-popup {
-  padding: 0;
-}
-
-/* SweetAlert content */
+/* Extra content */
 .swal-content {
-  color: #0c111f;
-  font-size: 20px;
+  color: var(--color-foreground);
+  font-size: 1.125rem; /* text-lg */
   font-weight: 400;
   overflow: hidden;
 }

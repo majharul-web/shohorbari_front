@@ -51,7 +51,10 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className='min-h-[calc(100vh-10rem)] flex items-center justify-center px-4'>
+    <div className='min-h-[calc(100vh-10rem)] flex items-center px-4 py-10 md:py-0'>
+      <div className='hidden md:block w-1/2'>
+        <img src='/public/login.png' alt='Login Illustration' className='w-fit h-auto' />
+      </div>
       <div className='w-full max-w-md bg-white/80 backdrop-blur-lg border border-gray-200 shadow-xl rounded-2xl p-8'>
         <h2 className='text-3xl font-bold text-center text-primary mb-2'>Welcome Back</h2>
         <p className='text-center text-gray-500 mb-6 text-sm'>Please sign in to your account</p>
@@ -66,8 +69,8 @@ const Login: React.FC = () => {
                 type='submit'
                 variant='default'
                 size='lg'
-                className='w-full'
-                disabled={isLoading || !(isValid && dirty)}
+                className='w-full font-bold'
+                disabled={isLoading}
               >
                 {isLoading ? "Logging in..." : "Login"}
               </Button>

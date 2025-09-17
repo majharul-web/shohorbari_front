@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import "../../../css/alert.css";
 
 interface IProps {
   type: "error" | "success" | "warning";
@@ -36,10 +37,9 @@ export const Alert = ({
   let imageUrl;
 
   if (type === "success") {
-    // imageUrl = 'https://aerotrip-dev.s3.ap-southeast-1.amazonaws.com/static/book-seccess-main.png'
-    imageUrl = "https://aerotrip-dev.s3.ap-southeast-1.amazonaws.com/user/2yzMQTXftNP3RSPixIoU4L2hcEy.png";
+    imageUrl = "https://i.ibb.co/8DXq6qPC/success.png";
   } else if (type === "error") {
-    imageUrl = "https://aerotrip-dev.s3.ap-southeast-1.amazonaws.com/static/error.svg";
+    imageUrl = "https://i.ibb.co/d4B9V6mt/error.png";
   } else {
     imageUrl = "";
   }
