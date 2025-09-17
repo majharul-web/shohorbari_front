@@ -1,6 +1,7 @@
 // AppRoutes.tsx
 import DashboardLayout from "@/layouts/DashboardLayout";
 import MainLayout from "@/layouts/MainLayout";
+import ActivateAccount from "@/pages/ActivateAccount";
 import AdminAddList from "@/pages/Add/AdminAddList";
 import CategoryPage from "@/pages/Category/Category";
 import Dashboard from "@/pages/Dashboard/Dashboard";
@@ -19,6 +20,7 @@ const AppRoutes: React.FC = () => {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='activate/:uid/:token' element={<ActivateAccount />} />
         <Route path='*' element={<NotFound />} /> {/* Catch-all 404 */}
       </Route>
 

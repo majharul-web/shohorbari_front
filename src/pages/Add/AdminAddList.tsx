@@ -46,7 +46,7 @@ const AdminAddList: React.FC = () => {
 
       <div className='overflow-x-auto rounded-lg border border-border bg-card shadow-sm'>
         <table className='w-full border-collapse text-left'>
-          <thead className='bg-muted/40'>
+          <thead className='bg-muted'>
             <tr>
               <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>#</th>
               <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>Title</th>

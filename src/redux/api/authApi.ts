@@ -56,6 +56,14 @@ export const authApi = baseApi.injectEndpoints({
       },
     }),
 
+    activateAccount: build.mutation({
+      query: (payload) => ({
+        url: `${AUTH_URL}/users/activation/`,
+        method: "POST",
+        data: payload,
+      }),
+    }),
+
     verifyResetPasswordToken: build.query({
       query: (payload) => {
         return {
@@ -94,6 +102,7 @@ export const {
   useCreateUserMutation,
   useUserLoginMutation,
   useGetUserByTokenQuery,
+  useActivateAccountMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useVerifyResetPasswordTokenQuery,
