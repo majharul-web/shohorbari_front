@@ -41,43 +41,68 @@ const ActivateAccount: React.FC = () => {
   }, [uid, token, activateAccount]);
 
   return (
-    <div className='relative min-h-[calc(100vh-10rem)] flex items-center justify-center px-4 py-10 bg-background'>
-      {/* Illustration (absolute in desktop with framer motion) */}
+    <div className='min-h-[calc(100vh-10rem)] flex flex-col-reverse md:flex-row items-center px-4 py-10 md:py-0 gap-10 bg-background'>
+      {/* Left Image Section with animation */}
       <motion.div
-        className='hidden md:block absolute left-0 top-[80px]'
+        className='flex-1'
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.7 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <img src='/public/email_activation.png' alt='Account Activation' className='max-w-sm w-full h-auto' />
+        <img src='/public/email_activation.png' alt='Account Activation' className='mw-fit h-auto' />
       </motion.div>
 
-      {/* Card */}
+      {/* Activation Card with animation */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        className='flex-1 w-full max-w-md'
+        initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className='w-full max-w-md z-10'
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <Card className='border border-border shadow-xl rounded-2xl bg-card'>
           <CardHeader className='text-center'>
-            <div className='flex justify-center mb-4'>
+            <motion.div
+              className='flex justify-center mb-4'
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 }}
+            >
               {isSuccessFull ? (
                 <CheckCircle2 className='h-16 w-16 text-green-600 animate-bounce' />
               ) : (
                 <XCircle className='h-16 w-16 text-destructive animate-pulse' />
               )}
-            </div>
-            <CardTitle
-              className={`text-2xl font-bold ${isSuccessFull ? "text-green-600" : "text-destructive"}`}
-            >
-              {isSuccessFull ? "Account Activated!" : "Activation Failed"}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className='text-center space-y-6 px-6'>
-            <p className='text-muted-foreground text-sm md:text-base'>{message}</p>
+            </motion.div>
 
-            <div className='flex flex-col md:flex-row gap-3 md:gap-4 justify-center'>
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <CardTitle
+                className={`text-2xl font-bold ${isSuccessFull ? "text-green-600" : "text-destructive"}`}
+              >
+                {isSuccessFull ? "Account Activated!" : "Activation Failed"}
+              </CardTitle>
+            </motion.div>
+          </CardHeader>
+
+          <CardContent className='text-center space-y-6 px-6'>
+            <motion.p
+              className='text-muted-foreground text-sm md:text-base'
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              {message}
+            </motion.p>
+
+            <motion.div
+              className='flex flex-col md:flex-row gap-3 md:gap-4 justify-center'
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
               {isSuccessFull ? (
                 <Link to='/login' className='flex-1'>
                   <Button className='w-full font-semibold'>Go to Login</Button>
@@ -89,7 +114,7 @@ const ActivateAccount: React.FC = () => {
                   </Button>
                 </Link>
               )}
-            </div>
+            </motion.div>
           </CardContent>
         </Card>
       </motion.div>
