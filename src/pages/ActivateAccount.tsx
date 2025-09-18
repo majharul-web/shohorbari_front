@@ -49,7 +49,7 @@ const ActivateAccount: React.FC = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <img src='/public/email_activation.png' alt='Account Activation' className='mw-fit h-auto' />
+        <img src='/email_activation.png' alt='Account Activation' className='mw-fit h-auto' />
       </motion.div>
 
       {/* Activation Card with animation */}

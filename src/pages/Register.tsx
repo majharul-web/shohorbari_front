@@ -67,7 +67,7 @@ const Register: React.FC = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <img src='/public/register.png' alt='Register' className='w-fit h-auto' />
+        <img src='/register.png' alt='Register' className='w-fit h-auto' />
       </motion.div>
 
       {/* Animated Form Card */}
