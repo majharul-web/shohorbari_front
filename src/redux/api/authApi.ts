@@ -58,7 +58,14 @@ export const authApi = baseApi.injectEndpoints({
 
     activateAccount: build.mutation({
       query: (payload) => ({
-        url: `${AUTH_URL}/users/activation/`,
+        url: `${AUTH_URL}/users/resend_activation/`,
+        method: "POST",
+        data: payload,
+      }),
+    }),
+    resendActivation: build.mutation({
+      query: (payload) => ({
+        url: `${AUTH_URL}/users/resend_activation/`,
         method: "POST",
         data: payload,
       }),
@@ -103,6 +110,7 @@ export const {
   useUserLoginMutation,
   useGetUserByTokenQuery,
   useActivateAccountMutation,
+  useResendActivationMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useVerifyResetPasswordTokenQuery,

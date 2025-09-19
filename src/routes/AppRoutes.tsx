@@ -9,6 +9,7 @@ import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
 import Register from "@/pages/Register";
+import ResendActivation from "@/pages/ResendActivation";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 
@@ -21,6 +22,7 @@ const AppRoutes: React.FC = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='activate/:uid/:token' element={<ActivateAccount />} />
+        <Route path='resend-activation' element={<ResendActivation />} />
         <Route path='*' element={<NotFound />} /> {/* Catch-all 404 */}
       </Route>
 

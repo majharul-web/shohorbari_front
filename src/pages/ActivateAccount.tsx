@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Loader from "@/components/ui/loader/Loader";
 import { useActivateAccountMutation } from "@/redux/api/authApi";
 import { isSuccess } from "@/utils/common";
 import { motion } from "framer-motion";
@@ -9,7 +10,7 @@ import { Link, useParams } from "react-router-dom";
 
 const ActivateAccount: React.FC = () => {
   const { uid, token } = useParams<{ uid: string; token: string }>();
-  const [activateAccount] = useActivateAccountMutation();
+  const [activateAccount, { isLoading }] = useActivateAccountMutation();
 
   const [isSuccessFull, setIsSuccessFull] = useState<boolean | null>(null);
   const [message, setMessage] = useState<string>("");
@@ -40,6 +41,7 @@ const ActivateAccount: React.FC = () => {
     activate();
   }, [uid, token, activateAccount]);
 
+  if (isLoading) return <Loader />;
   return (
     <div className='min-h-[calc(100vh-10rem)] flex flex-col-reverse md:flex-row items-center px-4 py-10 md:py-0 gap-10 bg-background'>
       {/* Left Image Section with animation */}
