@@ -8,10 +8,12 @@ import Dashboard from "@/pages/Dashboard/Dashboard";
 import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
+import PasswordResetEmail from "@/pages/PasswordResetEmail";
 import Register from "@/pages/Register";
 import ResendActivation from "@/pages/ResendActivation";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
+import PasswordResetConfirm from "@/pages/PasswprdResetConfirm";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -23,6 +25,8 @@ const AppRoutes: React.FC = () => {
         <Route path='/register' element={<Register />} />
         <Route path='activate/:uid/:token' element={<ActivateAccount />} />
         <Route path='resend-activation' element={<ResendActivation />} />
+        <Route path='forgot-password' element={<PasswordResetEmail />} />
+        <Route path='password-reset/:uid/:token' element={<PasswordResetConfirm />} />
         <Route path='*' element={<NotFound />} /> {/* Catch-all 404 */}
       </Route>
 

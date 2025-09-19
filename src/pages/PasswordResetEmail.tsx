@@ -1,49 +1,52 @@
 import { Alert } from "@/components/ui/alert/Alert";
 import { Button } from "@/components/ui/button";
 import InputField from "@/components/ui/form/InputField";
-import { useResendActivationMutation } from "@/redux/api/authApi";
-import { isSuccess } from "@/utils/common";
+import { useResetPasswordEmailMutation } from "@/redux/api/authApi";
+import { toCapitalizeString } from "@/utils/common";
 import { Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import * as Yup from "yup";
 
-// ✅ Validation Schema
+interface PasswordResetFormValues {
+  email: string;
+}
+
+const initialValues: PasswordResetFormValues = {
+  email: "",
+};
+
 const validationSchema = Yup.object({
-  email: Yup.string().email("Invalid email address").required("Email is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
 });
 
-const ResendActivation: React.FC = () => {
-  const [resendActivation, { isLoading }] = useResendActivationMutation();
-
-  const initialValues = { email: "" };
+const PasswordResetEmail: React.FC = () => {
+  const [sendResetEmail, { isLoading }] = useResetPasswordEmailMutation();
   const navigate = useNavigate();
 
   const handleSubmit = async (
-    values: typeof initialValues,
+    values: PasswordResetFormValues,
     { resetForm }: import("formik").FormikHelpers<typeof initialValues>
   ) => {
     try {
-      const res = await resendActivation(values).unwrap();
-      if (isSuccess(res.status)) {
-        Alert({
-          type: "success",
-          message: "Activation link has been sent to your email.",
-        });
-      }
+      const res: any = await sendResetEmail(values).unwrap();
+      Alert({
+        type: "success",
+        message: res?.message || "Password reset email sent successfully.",
+      });
       resetForm();
       navigate("/login");
     } catch (err: any) {
       Alert({
         type: "error",
-        message: err?.data?.detail || "Failed to resend activation link.",
+        message: toCapitalizeString(err?.data?.detail || "Failed to send reset email"),
       });
     }
   };
 
   return (
-    <div className='min-h-[calc(100vh-10rem)] flex flex-col-reverse md:flex-row items-center px-4 py-10 md:py-0 gap-10'>
+    <div className='min-h-[calc(100vh-10rem)] flex items-center px-4 py-10 md:py-0 bg-background'>
       {/* Left Image Section */}
       <motion.div
         className='hidden md:block w-1/2'
@@ -51,10 +54,10 @@ const ResendActivation: React.FC = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <img src='/email_activation.png' alt='Resend Activation' className='w-fit h-auto' />
+        <img src='/email_activation.png' alt='Password Reset' className='w-fit h-auto' />
       </motion.div>
 
-      {/* Resend Activation Card */}
+      {/* Form Card */}
       <motion.div
         className='w-full max-w-md bg-white/80 backdrop-blur-lg border border-gray-200 shadow-xl rounded-2xl p-8'
         initial={{ opacity: 0, y: 50 }}
@@ -67,20 +70,19 @@ const ResendActivation: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          Resend Activation Link
+          Reset Password
         </motion.h2>
-
         <motion.p
           className='text-center text-gray-500 mb-6 text-sm'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
         >
-          Enter your email to receive a new activation link
+          Enter your email to receive a password reset link
         </motion.p>
 
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-          {({ isValid, dirty }) => (
+          {() => (
             <Form className='space-y-5'>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -95,8 +97,14 @@ const ResendActivation: React.FC = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.8 }}
               >
-                <Button type='submit' size='lg' className='w-full font-bold' disabled={isLoading}>
-                  {isLoading ? "Sending..." : "Resend Activation Link"}
+                <Button
+                  type='submit'
+                  variant='default'
+                  size='lg'
+                  className='w-full font-bold'
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Sending..." : "Send Reset Link"}
                 </Button>
               </motion.div>
 
@@ -106,9 +114,10 @@ const ResendActivation: React.FC = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}
               >
-                <Link to='/login' className='hover:text-primary'>
-                  Back to Login
-                </Link>
+                <span>Remembered your password? </span>
+                <a href='/login' className='ml-1 text-primary hover:underline'>
+                  Login
+                </a>
               </motion.div>
             </Form>
           )}
@@ -118,4 +127,4 @@ const ResendActivation: React.FC = () => {
   );
 };
 
-export default ResendActivation;
+export default PasswordResetEmail;

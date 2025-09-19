@@ -70,36 +70,25 @@ export const authApi = baseApi.injectEndpoints({
         data: payload,
       }),
     }),
-
-    verifyResetPasswordToken: build.query({
-      query: (payload) => {
-        return {
-          url: `${AUTH_URL}/verify-password-reset-token`,
-          method: "GET",
-          params: payload,
-        };
-      },
-    }),
-
-    resetPassword: build.mutation({
-      query: (resetPasswordPayload) => ({
-        url: `${AUTH_URL}/password-reset`,
+    resetPasswordEmail: build.mutation({
+      query: (payload) => ({
+        url: `${AUTH_URL}/users/reset_password/`,
         method: "POST",
-        data: resetPasswordPayload,
+        data: payload,
       }),
     }),
-    forgotPassword: build.mutation({
-      query: (forgotPasswordPayload) => ({
-        url: `${AUTH_URL}/forgot-password`,
+    resetPasswordConfirm: build.mutation({
+      query: (payload) => ({
+        url: `${AUTH_URL}/users/reset_password_confirm/`,
         method: "POST",
-        data: forgotPasswordPayload,
+        data: payload,
       }),
     }),
-    resetPasswordRequest: build.mutation({
-      query: (forgotPasswordPayload) => ({
-        url: `${AUTH_URL}/reset-password-request`,
+    changePassword: build.mutation({
+      query: (payload) => ({
+        url: `${AUTH_URL}/users/set_password/`,
         method: "POST",
-        data: forgotPasswordPayload,
+        data: payload,
       }),
     }),
   }),
@@ -111,10 +100,8 @@ export const {
   useGetUserByTokenQuery,
   useActivateAccountMutation,
   useResendActivationMutation,
-  useForgotPasswordMutation,
-  useResetPasswordMutation,
-  useVerifyResetPasswordTokenQuery,
   useUserLogoutMutation,
-
-  useResetPasswordRequestMutation,
+  useResetPasswordEmailMutation,
+  useResetPasswordConfirmMutation,
+  useChangePasswordMutation,
 } = authApi;
