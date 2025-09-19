@@ -1,4 +1,5 @@
 import { userLoggedIn } from "../slice/authSlice";
+import { tagTypes } from "../tag-types";
 import { baseApi } from "./baseApi";
 
 const AUTH_URL = "/auth";
@@ -26,34 +27,6 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         dta: logoutData,
       }),
-    }),
-    getUserByToken: build.query({
-      query: () => {
-        return {
-          url: `/auth/users/me`,
-          method: "GET",
-        };
-      },
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        try {
-          const result: Record<string, any> = await queryFulfilled;
-
-          const userData = {
-            id: result?.data?.id,
-            name: result?.data?.first_name + " " + result?.data?.last_name,
-            email: result?.data?.email,
-            phone: result?.data?.phone_number,
-            photo: result?.data?.profile_image,
-            isActive: result?.data?.is_active,
-            role: result?.data?.role,
-            address: result?.data?.address,
-          };
-
-          dispatch(userLoggedIn(userData));
-        } catch (err) {
-          // dispatch(userLoggedOut())
-        }
-      },
     }),
 
     activateAccount: build.mutation({
@@ -91,6 +64,64 @@ export const authApi = baseApi.injectEndpoints({
         data: payload,
       }),
     }),
+    getUserByToken: build.query({
+      query: () => {
+        return {
+          url: `/auth/users/me/`,
+          method: "GET",
+        };
+      },
+      providesTags: [tagTypes.ads],
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result: Record<string, any> = await queryFulfilled;
+          console.log(result);
+
+          const userData = {
+            id: result?.data?.id,
+            name: result?.data?.first_name + " " + result?.data?.last_name,
+            email: result?.data?.email,
+            phone: result?.data?.phone_number,
+            photo: result?.data?.profile_image,
+            isActive: result?.data?.is_active,
+            role: result?.data?.role,
+            address: result?.data?.address,
+          };
+
+          dispatch(userLoggedIn(userData));
+        } catch (err) {
+          // dispatch(userLoggedOut())
+        }
+      },
+    }),
+    updateUserProfile: build.mutation({
+      query: (payload) => ({
+        url: `${AUTH_URL}/users/me/`,
+        method: "PATCH",
+        data: payload,
+        contentType: "multipart/form-data",
+      }),
+      invalidatesTags: [tagTypes.ads],
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result: Record<string, any> = await queryFulfilled;
+
+          const userData = {
+            id: result?.data?.id,
+            name: result?.data?.first_name + " " + result?.data?.last_name,
+            email: result?.data?.email,
+            phone: result?.data?.phone_number,
+            photo: result?.data?.profile_image,
+            isActive: result?.data?.is_active,
+            role: result?.data?.role,
+            address: result?.data?.address,
+          };
+          dispatch(userLoggedIn(userData));
+        } catch (err) {
+          // dispatch(userLoggedOut())
+        }
+      },
+    }),
   }),
 });
 
@@ -104,4 +135,5 @@ export const {
   useResetPasswordEmailMutation,
   useResetPasswordConfirmMutation,
   useChangePasswordMutation,
+  useUpdateUserProfileMutation,
 } = authApi;

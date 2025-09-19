@@ -2,7 +2,7 @@ import React from "react";
 
 const NotFound: React.FC = () => {
   return (
-    <div className='flex flex-col items-center justify-center min-h-[calc(100vh-150px)] px-4 bg-background text-foreground'>
+    <div className='flex flex-col items-center justify-center min-h-[calc(100vh-150px)] px-4  text-foreground'>
       <h1 className='text-9xl font-extrabold text-primary md:text-[12rem] md:leading-[12rem] animate-pulse text-center'>
         404
       </h1>

@@ -8,9 +8,10 @@ interface InputFieldProps extends FieldHookConfig<string> {
   label: string;
   type?: string;
   name: string;
+  onChange?: (e: React.ChangeEvent<any>) => void; // optional external onChange
 }
 
-const InputField: React.FC<InputFieldProps> = ({ label, type = "text", name, ...fieldProps }) => {
+const InputField: React.FC<InputFieldProps> = ({ label, type = "text", name, onChange, ...fieldProps }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const isPassword = type === "password";
@@ -23,23 +24,31 @@ const InputField: React.FC<InputFieldProps> = ({ label, type = "text", name, ...
       </label>
 
       <div className='relative'>
-        <Field
-          type={inputType}
-          name={name}
-          {...fieldProps}
-          id={name}
-          className='block w-full rounded-md px-3 py-2 shadow-sm border border-border focus:outline-none focus:border-primary  transition'
-        />
+        <Field name={name}>
+          {({ field, form }: any) => (
+            <input
+              {...field}
+              {...fieldProps}
+              type={inputType}
+              id={name}
+              onChange={(e) => {
+                field.onChange(e); // Formik internal change
+                if (onChange) onChange(e); // call external onChange if provided
+              }}
+              className='block w-full rounded-md px-3 py-2 shadow-sm border border-border focus:outline-none focus:border-primary transition'
+            />
+          )}
+        </Field>
 
         {/* Show/hide toggle for password */}
         {isPassword && (
-          <span onClick={() => setShowPassword(!showPassword)} className='cursor-pointer'>
+          <span onClick={() => setShowPassword(!showPassword)} className='absolute top-2 right-2 z-10'>
             <Icon
               path={showPassword ? mdiEyeOutline : mdiEyeOffOutline}
               w='w-10'
               h='h-12'
               size={22}
-              className='absolute top-0 right-0 z-10 text-muted-foreground cursor-pointer'
+              className='text-muted-foreground cursor-pointer'
             />
           </span>
         )}
