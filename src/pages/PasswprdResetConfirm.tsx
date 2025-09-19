@@ -144,7 +144,13 @@ const PasswordResetConfirm: React.FC = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.8 }}
                     >
-                      <Button type='submit' variant='default' size='lg' className='w-full font-bold'>
+                      <Button
+                        type='submit'
+                        variant='default'
+                        size='lg'
+                        className='w-full font-bold'
+                        disabled={isLoading}
+                      >
                         {isLoading ? "Resetting..." : "Reset Password"}
                       </Button>
                     </motion.div>
