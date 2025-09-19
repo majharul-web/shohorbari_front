@@ -41,8 +41,8 @@ const AdminAddList: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1 className='text-lg font-semibold mb-4 text-foreground'>Admin Ads List</h1>
+    <div className='space-y-6'>
+      <p className='text-xl font-bold text-foreground'>Admin Ads List</p>
 
       <div className='overflow-x-auto rounded-lg border border-border bg-card shadow-sm'>
         <table className='w-full border-collapse text-left'>
