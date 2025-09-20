@@ -2,6 +2,7 @@ import Icon from "@/components/icons/Icon";
 import { Alert } from "@/components/ui/alert/Alert";
 import { Button } from "@/components/ui/button";
 import InputField from "@/components/ui/form/InputField";
+import { APP_CONFIG } from "@/helpers/config/appconfig";
 import {
   mdiEmail,
   mdiFacebook,
@@ -67,15 +68,15 @@ const Contact: React.FC = () => {
         <div className='space-y-4'>
           <div className='flex items-center space-x-3'>
             <Icon path={mdiMapMarker} size={24} className='text-primary' />
-            <span>123 Main Street, Dhaka, Bangladesh</span>
+            <span>{APP_CONFIG.ADDRESS}</span>
           </div>
           <div className='flex items-center space-x-3'>
             <Icon path={mdiEmail} size={24} className='text-primary' />
-            <span>support@company.com</span>
+            <span>{APP_CONFIG.EMAIL}</span>
           </div>
           <div className='flex items-center space-x-3'>
             <Icon path={mdiPhone} size={24} className='text-primary' />
-            <span>+880 1747 615 357</span>
+            <span>{APP_CONFIG.PHONE}</span>
           </div>
         </div>
 

@@ -12,9 +12,11 @@ import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
 import PasswordResetEmail from "@/pages/PasswordResetEmail";
 import PasswordResetConfirm from "@/pages/PasswprdResetConfirm";
+import TermsOfService from "@/pages/PrivacyPolicy";
 import ProfilePage from "@/pages/Profile";
 import Register from "@/pages/Register";
 import ResendActivation from "@/pages/ResendActivation";
+import PrivacyPolicy from "@/pages/TermsOfService";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 
@@ -33,6 +35,8 @@ const AppRoutes: React.FC = () => {
         <Route path='profile' element={<ProfilePage />} />
         <Route path='contact-us' element={<ContactPage />} />
         <Route path='about' element={<About />} />
+        <Route path='privacy' element={<PrivacyPolicy />} />
+        <Route path='terms' element={<TermsOfService />} />
         <Route path='*' element={<NotFound />} /> {/* Catch-all 404 */}
       </Route>
 
