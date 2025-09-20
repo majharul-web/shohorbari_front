@@ -15,6 +15,7 @@ import PasswordResetConfirm from "@/pages/PasswprdResetConfirm";
 import TermsOfService from "@/pages/PrivacyPolicy";
 import ProfilePage from "@/pages/Profile";
 import Register from "@/pages/Register";
+import Rents from "@/pages/Rents/Rents";
 import ResendActivation from "@/pages/ResendActivation";
 import PrivacyPolicy from "@/pages/TermsOfService";
 import { Route, Routes } from "react-router-dom";
@@ -26,6 +27,8 @@ const AppRoutes: React.FC = () => {
       {/* Public Routes */}
       <Route element={<MainLayout />}>
         <Route path='/' element={<Home />} />
+        <Route path='/home' element={<Home />} />
+        <Route path='rents' element={<Rents />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='activate/:uid/:token' element={<ActivateAccount />} />
