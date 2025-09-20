@@ -15,14 +15,24 @@ export const adsApi = baseApi.injectEndpoints({
     }),
 
     getAllAds: build.query({
-      query: () => {
+      query: (args) => {
         return {
           url: `${BASE_URL}/`,
           method: "GET",
+          params: args,
         };
       },
       providesTags: [tagTypes.ads],
     }),
+
+    getAdById: build.query({
+      query: ({ id }) => ({
+        url: `${BASE_URL}/${id}/`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.ads],
+    }),
+
     updateAd: build.mutation({
       query: ({ id, ...payload }) => ({
         url: `${BASE_URL}/${id}/`,
@@ -38,7 +48,22 @@ export const adsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.ads],
     }),
+    giveReview: build.mutation({
+      query: ({ adId, ...payload }) => ({
+        url: `${BASE_URL}/${adId}/reviews/`,
+        method: "POST",
+        data: payload,
+      }),
+      invalidatesTags: [tagTypes.ads],
+    }),
   }),
 });
 
-export const { useCreateAdMutation, useGetAllAdsQuery, useDeleteAdMutation, useUpdateAdMutation } = adsApi;
+export const {
+  useCreateAdMutation,
+  useGetAllAdsQuery,
+  useDeleteAdMutation,
+  useUpdateAdMutation,
+  useGetAdByIdQuery,
+  useGiveReviewMutation,
+} = adsApi;

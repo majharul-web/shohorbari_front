@@ -19,7 +19,7 @@ const SelectField: React.FC<SelectFieldProps> = ({ label, options, value, onChan
       <select
         value={value}
         onChange={onChange}
-        className='block w-full rounded-md px-3 py-2 shadow-sm border border-border bg-card-foreground text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition'
+        className='bg-white block w-full rounded-md px-3 py-2 shadow-sm border border-border text-foreground focus:outline-none focus:ring focus:ring-primary transition'
       >
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>

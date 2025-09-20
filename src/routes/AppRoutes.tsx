@@ -20,6 +20,7 @@ import ResendActivation from "@/pages/ResendActivation";
 import PrivacyPolicy from "@/pages/TermsOfService";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
+import RentDetails from "@/pages/Rents/RentDetails";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -29,6 +30,7 @@ const AppRoutes: React.FC = () => {
         <Route path='/' element={<Home />} />
         <Route path='/home' element={<Home />} />
         <Route path='rents' element={<Rents />} />
+        <Route path='rents/:id' element={<RentDetails />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='activate/:uid/:token' element={<ActivateAccount />} />

@@ -11,7 +11,10 @@ const CategoryPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
 
-  const { data, isLoading, isError } = useGetAllCategoriesQuery({ page, limit: rowsPerPage });
+  const { data, isLoading, isError } = useGetAllCategoriesQuery(
+    { page, limit: rowsPerPage },
+    { refetchOnMountOrArgChange: true }
+  );
   const categories = data?.results || [];
 
   const [deleteCategory, { isLoading: isDeleting }] = useDeleteCategoryMutation();

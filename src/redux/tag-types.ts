@@ -3,8 +3,15 @@ export const tagTypes = {
   category: "category",
   dashboard: "dashboard",
   ads: "ads",
+  wishlist: "wishlist",
 } as const;
 
 export type TagTypes = (typeof tagTypes)[keyof typeof tagTypes];
 
-export const tagTypesList: TagTypes[] = [tagTypes.user, tagTypes.dashboard, tagTypes.category, tagTypes.ads];
+export const tagTypesList: TagTypes[] = [
+  tagTypes.user,
+  tagTypes.dashboard,
+  tagTypes.category,
+  tagTypes.ads,
+  tagTypes.wishlist,
+];

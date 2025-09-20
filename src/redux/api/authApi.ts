@@ -3,6 +3,7 @@ import { tagTypes } from "../tag-types";
 import { baseApi } from "./baseApi";
 
 const AUTH_URL = "/auth";
+const WISH_URL = "/favorites";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -122,6 +123,28 @@ export const authApi = baseApi.injectEndpoints({
         }
       },
     }),
+    addToWishlist: build.mutation({
+      query: (payload) => ({
+        url: `${WISH_URL}/`,
+        method: "POST",
+        data: payload,
+      }),
+      invalidatesTags: [tagTypes.wishlist],
+    }),
+    removeFromWishlist: build.mutation({
+      query: (adId) => ({
+        url: `${WISH_URL}/${adId}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.wishlist],
+    }),
+    getWishlist: build.query({
+      query: () => ({
+        url: `${WISH_URL}/`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.wishlist],
+    }),
   }),
 });
 
@@ -136,4 +159,7 @@ export const {
   useResetPasswordConfirmMutation,
   useChangePasswordMutation,
   useUpdateUserProfileMutation,
+  useAddToWishlistMutation,
+  useRemoveFromWishlistMutation,
+  useGetWishlistQuery,
 } = authApi;

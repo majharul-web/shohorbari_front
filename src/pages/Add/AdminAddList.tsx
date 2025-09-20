@@ -10,10 +10,13 @@ const AdminAddList: React.FC = () => {
   const rowsPerPage = 10;
 
   // RTK Query fetch ads
-  const { data, isLoading, isError } = useGetAllAdsQuery({
-    page: page,
-    limit: rowsPerPage,
-  });
+  const { data, isLoading, isError } = useGetAllAdsQuery(
+    {
+      page: page,
+      limit: rowsPerPage,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
 
   const ads = data?.results || [];
 

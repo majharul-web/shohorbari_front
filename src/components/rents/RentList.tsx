@@ -1,32 +1,87 @@
+import { authKey } from "@/constant/storageKey";
+import { useGetAllAdsQuery } from "@/redux/api/adsApi";
+import { useAddToWishlistMutation } from "@/redux/api/authApi";
+import { getFromCookie } from "@/utils/cookie";
 import { motion } from "framer-motion";
 import React from "react";
-const demoListings = [1, 2, 3, 4, 5, 6];
+import { useNavigate } from "react-router-dom";
+import { Alert } from "../ui/alert/Alert";
+import { Button } from "../ui/button";
+import NoDataFound from "../ui/error/NoDataFound";
+import Loader from "../ui/loader/Loader";
 
 interface IProps {
   title?: string;
   clsses?: string;
+  query?: Record<string, any>;
 }
 
-const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses }) => {
+export interface IRentListItem {
+  id: number;
+  title: string;
+  price: number;
+  location: string;
+  imageUrl: string;
+  description: string;
+}
+
+const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query }) => {
+  const { data, isLoading } = useGetAllAdsQuery(query, {
+    refetchOnMountOrArgChange: true,
+  });
+  const dataList = data?.results || [];
+  const navigate = useNavigate();
+
+  const [addToWishlist, { isLoading: adding }] = useAddToWishlistMutation();
+
+  if (isLoading) return <Loader />;
+  if (dataList.length === 0) return <NoDataFound />;
+
+  const handleWishlist = async (id: number) => {
+    const auth = getFromCookie(authKey);
+    if (!auth) {
+      Alert({ type: "error", message: "Please login to add to wishlist ❌" });
+      return;
+    }
+    try {
+      await addToWishlist({ advertisement: id }).unwrap();
+      Alert({ type: "success", message: "Added to wishlist ❤" });
+    } catch (err: any) {
+      const errMessage = err?.data?.detail || "Failed to add to wishlist ❌";
+      Alert({ type: "error", message: errMessage });
+    }
+  };
+
   return (
     <section className={clsses}>
-      <h2 className='text-2xl md:text-3xl font-bold mb-8 '>{title}</h2>
+      <h2 className='text-2xl md:text-3xl font-bold mb-8'>{title}</h2>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8'>
-        {demoListings.map((item) => (
+        {dataList?.map((item: IRentListItem) => (
           <motion.div
-            key={item}
+            key={item.id}
             whileHover={{ scale: 1.03 }}
-            className='border border-border rounded-lg overflow-hidden bg-card'
+            className='border border-border rounded-lg overflow-hidden bg-card flex flex-col'
           >
-            <img
-              src={`/demo-house-${item}.jpg`}
-              alt={`House ${item}`}
-              className='w-full h-48 md:h-56 object-cover'
-            />
-            <div className='p-4'>
-              <h3 className='font-semibold text-lg mb-1'>Beautiful Apartment {item}</h3>
-              <p className='text-sm text-muted-foreground mb-2'>Dhaka, Bangladesh</p>
-              <p className='font-bold text-primary'>৳ {50_000 + item * 1000}/month</p>
+            <img src={`/hero1.jpg`} alt={`House ${item.id}`} className='w-full h-48 md:h-56 object-cover' />
+            <div className='p-4 flex-1 flex flex-col'>
+              <h3 className='font-semibold text-lg mb-1'>{item.title}</h3>
+              <p className='text-sm text-muted-foreground mb-2'>{item.location}</p>
+              <p className='font-bold text-primary mb-4'>৳ {item.price}/month</p>
+              <p className='text-sm text-muted-foreground mb-2'>{item.description.slice(0, 100)}...</p>
+
+              <div className='mt-auto flex gap-2'>
+                <Button onClick={() => navigate(`/rents/${item.id}`)} variant='outline' className='w-1/2'>
+                  Details
+                </Button>
+                <Button
+                  onClick={() => handleWishlist(item.id)}
+                  disabled={adding}
+                  className='w-1/2'
+                  loading={adding}
+                >
+                  {"❤ Wishlist"}
+                </Button>
+              </div>
             </div>
           </motion.div>
         ))}
