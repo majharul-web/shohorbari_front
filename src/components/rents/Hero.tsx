@@ -65,7 +65,7 @@ const Hero = () => {
                 <select
                   value={selectedCategory ?? ""}
                   onChange={(e) => setSelectedCategory(Number(e.target.value))}
-                  className='px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary bg-white text-gray-700 w-full md:w-1/3'
+                  className='px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-primary bg-white text-gray-700 w-full md:w-1/3'
                 >
                   <option value=''>All Categories</option>
                   <option value='1'>Apartment</option>
@@ -78,7 +78,7 @@ const Hero = () => {
                   placeholder='Search city, neighborhood...'
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className='flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary bg-white text-gray-700 w-full md:w-2/3'
+                  className='flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-primary bg-white text-gray-700 w-full md:w-2/3'
                 />
 
                 <button

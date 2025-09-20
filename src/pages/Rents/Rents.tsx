@@ -45,7 +45,7 @@ const Rents = () => {
           <select
             value={category ?? ""}
             onChange={(e) => setCategory(Number(e.target.value))}
-            className='block w-full rounded-md px-3 py-2 shadow-sm border border-border focus:outline-none focus:border-primary transition'
+            className='w-full md:w-1/3 rounded-md px-3 py-2 shadow-sm border border-border focus:outline-none focus:border-primary transition'
           >
             <option value=''>All Categories</option>
             <option value='1'>Apartment</option>
@@ -58,7 +58,7 @@ const Rents = () => {
             placeholder='Search city, neighborhood...'
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className='block w-full rounded-md px-3 py-2 shadow-sm border border-border focus:outline-none focus:border-primary transition'
+            className='w-full md:w-1/4 rounded-md px-3 py-2 shadow-sm border border-border focus:outline-none focus:border-primary transition'
           />
 
           <button
