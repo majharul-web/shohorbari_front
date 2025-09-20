@@ -56,6 +56,13 @@ export const adsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.ads],
     }),
+    approveAd: build.mutation({
+      query: (id) => ({
+        url: `${BASE_URL}/${id}/approve/`,
+        method: "POST",
+      }),
+      invalidatesTags: [tagTypes.ads],
+    }),
   }),
 });
 
@@ -66,4 +73,5 @@ export const {
   useUpdateAdMutation,
   useGetAdByIdQuery,
   useGiveReviewMutation,
+  useApproveAdMutation,
 } = adsApi;

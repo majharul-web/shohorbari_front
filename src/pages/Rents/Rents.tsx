@@ -73,14 +73,6 @@ const Rents = () => {
         </div>
         <div className='flex justify-end pb-6'>
           <RentModal mode='add' />
-          {/* <Button
-            type='button'
-            variant='default'
-            className='px-6 py-6 flex'
-            // disabled={isLoading}
-          >
-            Add Rents
-          </Button> */}
         </div>
       </div>
 

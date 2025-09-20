@@ -15,12 +15,12 @@ import PasswordResetConfirm from "@/pages/PasswprdResetConfirm";
 import TermsOfService from "@/pages/PrivacyPolicy";
 import ProfilePage from "@/pages/Profile";
 import Register from "@/pages/Register";
+import RentDetails from "@/pages/Rents/RentDetails";
 import Rents from "@/pages/Rents/Rents";
 import ResendActivation from "@/pages/ResendActivation";
 import PrivacyPolicy from "@/pages/TermsOfService";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
-import RentDetails from "@/pages/Rents/RentDetails";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -57,6 +57,7 @@ const AppRoutes: React.FC = () => {
         <Route index element={<Dashboard />} />
         <Route path='category' element={<CategoryPage />} />
         <Route path='ads' element={<AdminAddList />} />
+        <Route path='ads/:id' element={<RentDetails />} />
         <Route path='profile' element={<ProfilePage />} />
         <Route path='*' element={<NotFound />} /> {/* Catch-all 404 */}
       </Route>
