@@ -15,6 +15,7 @@ import Register from "@/pages/Register";
 import ResendActivation from "@/pages/ResendActivation";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
+import ContactPage from "@/pages/ContactUs";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -29,6 +30,7 @@ const AppRoutes: React.FC = () => {
         <Route path='forgot-password' element={<PasswordResetEmail />} />
         <Route path='password-reset/:uid/:token' element={<PasswordResetConfirm />} />
         <Route path='profile' element={<ProfilePage />} />
+        <Route path='contact-us' element={<ContactPage />} />
         <Route path='*' element={<NotFound />} /> {/* Catch-all 404 */}
       </Route>
 
