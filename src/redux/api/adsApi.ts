@@ -63,6 +63,16 @@ export const adsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.ads],
     }),
+    uploadAdditionalImages: build.mutation({
+      query: ({ adId, formData }) => ({
+        url: `${BASE_URL}/${adId}/images/`,
+        method: "POST",
+        data: formData,
+        contentType: "multipart/form-data",
+        // send FormData directly
+      }),
+      invalidatesTags: [tagTypes.ads],
+    }),
   }),
 });
 
@@ -74,4 +84,5 @@ export const {
   useGetAdByIdQuery,
   useGiveReviewMutation,
   useApproveAdMutation,
+  useUploadAdditionalImagesMutation,
 } = adsApi;

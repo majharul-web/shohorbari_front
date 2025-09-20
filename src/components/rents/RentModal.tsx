@@ -2,15 +2,15 @@ import { Alert } from "@/components/ui/alert/Alert";
 import { Button } from "@/components/ui/button";
 import InputField from "@/components/ui/form/InputField";
 import SelectField from "@/components/ui/form/SelectField";
+import TextAreaField from "@/components/ui/form/TextAreaField";
 import CustomModal from "@/components/ui/modal/CustomModal";
-import { toCapitalizeString } from "@/utils/common";
-import { Form, Formik } from "formik";
-import * as Yup from "yup";
-
 import { useCreateAdMutation, useUpdateAdMutation } from "@/redux/api/adsApi";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
-import { useMemo } from "react";
-import TextAreaField from "../ui/form/TextAreaField";
+import { toCapitalizeString } from "@/utils/common";
+import { Form, Formik } from "formik";
+import { useMemo, useState } from "react";
+import * as Yup from "yup";
+import UploadImagesModal from "./UploadImagesModal";
 
 const RentSchema = Yup.object().shape({
   category: Yup.string().required("Category is required"),
@@ -37,6 +37,7 @@ const RentModal: React.FC<RentModalProps> = ({ mode, initialData }) => {
   const [createRent, { isLoading: creating }] = useCreateAdMutation();
   const [updateRent, { isLoading: updating }] = useUpdateAdMutation();
   const { data, isLoading: catLoading } = useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
+  const [createdAdId, setCreatedAdId] = useState<string | null>(null);
 
   const categories = useMemo(
     () =>
@@ -49,108 +50,105 @@ const RentModal: React.FC<RentModalProps> = ({ mode, initialData }) => {
 
   const isLoading = creating || updating;
 
-  // ✅ handle add / edit
   const handleSubmit = async (
-    values: {
-      category: string;
-      title: string;
-      description: string;
-      price: number;
-    },
+    values: { category: string; title: string; description: string; price: number },
     {
       resetForm,
       setSubmitting,
       closeModal,
-    }: {
-      resetForm: () => void;
-      setSubmitting: (isSubmitting: boolean) => void;
-      closeModal: () => void;
-    }
+    }: { resetForm: () => void; setSubmitting: (isSubmitting: boolean) => void; closeModal: () => void }
   ) => {
     try {
+      let res;
       if (mode === "add") {
-        const res = await createRent(values).unwrap();
-        Alert({
-          type: "success",
-          message: `Rent "${res.title}" created successfully`,
-        });
+        res = await createRent(values).unwrap();
+        Alert({ type: "success", message: `Rent "${res.title}" created successfully` });
       } else {
         if (!initialData?.id) throw new Error("Rent ID is required for editing");
-        const res = await updateRent({ id: initialData.id, ...values }).unwrap();
-        Alert({
-          type: "success",
-          message: `Rent "${res.title}" updated successfully`,
-        });
+        res = await updateRent({ id: initialData.id, ...values }).unwrap();
+        Alert({ type: "success", message: `Rent "${res.title}" updated successfully` });
       }
+
+      // Store the created/updated ad ID to trigger image upload
+      setCreatedAdId(res.id.toString());
+
       resetForm();
       closeModal();
     } catch (err: any) {
       console.error("Error:", err);
       const errorMessage = err?.data?.detail || "Rent operation failed";
-      Alert({
-        type: "error",
-        message: `${toCapitalizeString(errorMessage)}`,
-      });
+      Alert({ type: "error", message: `${toCapitalizeString(errorMessage)}` });
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <CustomModal
-      triggerLabel={mode === "add" ? "Add Rent" : "Edit Rent"}
-      title={mode === "add" ? "Add New Rent" : "Edit Rent"}
-    >
-      {({ closeModal }) => (
-        <Formik
-          initialValues={{
-            category: initialData?.category || "",
-            title: initialData?.title || "",
-            description: initialData?.description || "",
-            price: initialData?.price || "",
-          }}
-          enableReinitialize
-          validationSchema={RentSchema}
-          onSubmit={(values, formikHelpers) =>
-            handleSubmit({ ...values, price: Number(values.price) }, { ...formikHelpers, closeModal })
-          }
-        >
-          {({ isSubmitting, values, handleChange }) => (
-            <Form className='space-y-4'>
-              <SelectField
-                label='Category'
-                options={categories}
-                value={values.category}
-                onChange={handleChange("category")}
-              />
+    <>
+      <CustomModal
+        triggerLabel={mode === "add" ? "Add Rent" : "Edit Rent"}
+        title={mode === "add" ? "Add New Rent" : "Edit Rent"}
+      >
+        {({ closeModal }) => (
+          <Formik
+            initialValues={{
+              category: initialData?.category?.toString() || "",
+              title: initialData?.title || "",
+              description: initialData?.description || "",
+              price: initialData?.price || "",
+            }}
+            enableReinitialize
+            validationSchema={RentSchema}
+            onSubmit={(values, formikHelpers) =>
+              handleSubmit({ ...values, price: Number(values.price) }, { ...formikHelpers, closeModal })
+            }
+          >
+            {({ isSubmitting, values, setFieldValue }) => (
+              <Form className='space-y-4'>
+                <SelectField
+                  label='Category'
+                  options={categories}
+                  value={values.category}
+                  onChange={(val) => setFieldValue("category", val)}
+                />
 
-              <InputField label='Title' name='title' type='text' />
+                <InputField label='Title' name='title' type='text' />
+                <TextAreaField
+                  label='Description'
+                  name='description'
+                  rows={4}
+                  placeholder='Enter description'
+                />
+                <InputField label='Price' name='price' type='number' />
 
-              <TextAreaField
-                label='Description'
-                name='description'
-                rows={4}
-                placeholder='Enter description'
-              />
+                <div className='flex justify-end'>
+                  <Button type='submit' disabled={isSubmitting || isLoading}>
+                    {isSubmitting || isLoading
+                      ? mode === "add"
+                        ? "Creating..."
+                        : "Updating..."
+                      : mode === "add"
+                      ? "Create"
+                      : "Update"}
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        )}
+      </CustomModal>
 
-              <InputField label='Price' name='price' type='number' />
-
-              <div className='flex justify-end'>
-                <Button type='submit' disabled={isSubmitting || isLoading}>
-                  {isSubmitting || isLoading
-                    ? mode === "add"
-                      ? "Creating..."
-                      : "Updating..."
-                    : mode === "add"
-                    ? "Create"
-                    : "Update"}
-                </Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
+      {/* Trigger image upload modal only if ad is created/updated */}
+      {createdAdId && (
+        <div className='mt-4'>
+          <UploadImagesModal
+            adId={createdAdId}
+            onUploaded={(images) => console.log("Uploaded images:", images)}
+            // onClose={() => setCreatedAdId(null)}
+          />
+        </div>
       )}
-    </CustomModal>
+    </>
   );
 };
 
