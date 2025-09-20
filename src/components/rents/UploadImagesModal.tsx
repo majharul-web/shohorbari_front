@@ -42,12 +42,7 @@ const UploadImagesModal: React.FC<UploadImagesModalProps> = ({
   };
 
   return (
-    <CustomModal
-      triggerLabel={triggerLabel}
-      title='Upload Additional Images'
-      isOpen={isOpen} // controlled prop
-      onClose={onClose} // controlled callback
-    >
+    <CustomModal triggerLabel={triggerLabel} title='Upload Additional Images'>
       {({ closeModal }) => (
         <Formik
           initialValues={initialValues}
