@@ -1,9 +1,11 @@
 // AppRoutes.tsx
 import DashboardLayout from "@/layouts/DashboardLayout";
 import MainLayout from "@/layouts/MainLayout";
+import About from "@/pages/About";
 import ActivateAccount from "@/pages/ActivateAccount";
 import AdminAddList from "@/pages/Add/AdminAddList";
 import CategoryPage from "@/pages/Category/Category";
+import ContactPage from "@/pages/ContactUs";
 import Dashboard from "@/pages/Dashboard/Dashboard";
 import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login";
@@ -15,7 +17,6 @@ import Register from "@/pages/Register";
 import ResendActivation from "@/pages/ResendActivation";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
-import ContactPage from "@/pages/ContactUs";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -31,6 +32,7 @@ const AppRoutes: React.FC = () => {
         <Route path='password-reset/:uid/:token' element={<PasswordResetConfirm />} />
         <Route path='profile' element={<ProfilePage />} />
         <Route path='contact-us' element={<ContactPage />} />
+        <Route path='about' element={<About />} />
         <Route path='*' element={<NotFound />} /> {/* Catch-all 404 */}
       </Route>
 

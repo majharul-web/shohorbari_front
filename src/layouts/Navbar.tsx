@@ -11,8 +11,8 @@ export const Navbar = () => {
 
   const links = [
     { name: "Home", path: "/", visible: true },
-    { name: "About", path: "/about", visible: true },
     { name: "Services", path: "/services", visible: true },
+    { name: "About", path: "/about", visible: true },
     { name: "Contact", path: "/contact-us", visible: true },
     { name: "Login", path: "/login", visible: !user?.userId },
     { name: "Register", path: "/register", visible: !user?.userId },

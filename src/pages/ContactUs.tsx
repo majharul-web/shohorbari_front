@@ -85,7 +85,7 @@ const Contact: React.FC = () => {
             <motion.a
               key={idx}
               href='#'
-              className='p-2 rounded-full border border-gray-300 hover:bg-primary hover:text-white transition'
+              className='w-12 h-12 flex justify-center items-center rounded-full border border-gray-300 hover:bg-primary hover:text-white transition'
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
