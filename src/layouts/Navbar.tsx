@@ -1,6 +1,6 @@
 import { APP_CONFIG } from "@/helpers/config/appconfig";
 import { useAppSelector } from "@/redux/hooks";
-import { Menu, X } from "lucide-react";
+import { Heart, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Avater from "./Avater";
@@ -16,6 +16,7 @@ export const Navbar = () => {
     { name: "Contact", path: "/contact-us", visible: true },
     { name: "Login", path: "/login", visible: !user?.userId },
     { name: "Register", path: "/register", visible: !user?.userId },
+    { name: "", icon: <Heart className='text-destructive' />, path: "/wishlist", visible: !!user?.userId },
   ];
 
   return (
@@ -42,7 +43,8 @@ export const Navbar = () => {
                   }`
                 }
               >
-                {link.name}
+                {link?.name}
+                {link?.icon && link.icon}
               </NavLink>
             ))}
           {user?.userId && <Avater />}

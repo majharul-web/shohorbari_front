@@ -19,6 +19,7 @@ import RentDetails from "@/pages/Rents/RentDetails";
 import Rents from "@/pages/Rents/Rents";
 import ResendActivation from "@/pages/ResendActivation";
 import PrivacyPolicy from "@/pages/TermsOfService";
+import WishList from "@/pages/WishList";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 
@@ -42,6 +43,7 @@ const AppRoutes: React.FC = () => {
         <Route path='about' element={<About />} />
         <Route path='privacy' element={<PrivacyPolicy />} />
         <Route path='terms' element={<TermsOfService />} />
+        <Route path='/wishlist' element={<WishList />} />
         <Route path='*' element={<NotFound />} /> {/* Catch-all 404 */}
       </Route>
 
