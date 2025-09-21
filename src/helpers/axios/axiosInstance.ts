@@ -16,7 +16,7 @@ instance.interceptors.request.use(
     // Do something before request is sent
     const accessToken = getFromCookie(authKey);
     if (accessToken) {
-      config.headers.Authorization = `JWT ${accessToken}`;
+      // config.headers.Authorization = `JWT ${accessToken}`;
     }
     return config;
   },
