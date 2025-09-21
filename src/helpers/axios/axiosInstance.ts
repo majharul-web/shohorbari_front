@@ -1,4 +1,5 @@
 import { authKey } from "@/constant/storageKey";
+import { refreshAccessToken } from "@/services/auth.services";
 import { getFromCookie } from "@/utils/cookie";
 import axios from "axios";
 
@@ -17,7 +18,6 @@ instance.interceptors.request.use(
     if (accessToken) {
       config.headers.Authorization = `JWT ${accessToken}`;
     }
-
     return config;
   },
   function (error) {
@@ -48,18 +48,18 @@ instance.interceptors.response.use(
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    // if (error.response && error.response.status === 401) {
-    //   try {
-    //     const newAccessToken = await refreshAccessToken();
-    //     // Retry the failed request with the new access token
-    //     error.config.headers.Authorization = `Bearer ${newAccessToken}`;
-    //     return axios.request(error.config);
-    //   } catch (refreshError) {
-    //     // Handle refresh token error gracefully or redirect to login
-    //     console.error("Error refreshing token:", refreshError);
-    //     // Redirect to login or handle authentication failure
-    //   }
-    // }
+    if (error.response && error.response.status === 401) {
+      try {
+        const newAccessToken = await refreshAccessToken();
+        // Retry the failed request with the new access token
+        error.config.headers.Authorization = `JWT ${newAccessToken}`;
+        return axios.request(error.config);
+      } catch (refreshError) {
+        // Handle refresh token error gracefully or redirect to login
+        console.error("Error refreshing token:", refreshError);
+        // Redirect to login or handle authentication failure
+      }
+    }
     return Promise.reject(error);
   }
 );

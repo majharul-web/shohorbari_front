@@ -55,11 +55,13 @@ export const removeUserInfo = () => {
 // Function to refresh the access token
 export const refreshAccessToken = async () => {
   try {
-    const refreshToken = getFromCookie("refreshToken");
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_ADMIN_API}v1/auth/refresh-token`, {
-      refreshToken,
+    const refreshToken = getFromCookie(refreshKey);
+
+    const response = await axios.post(`${getBaseUrl()}/auth/jwt/refresh/`, {
+      refresh: refreshToken,
     });
-    const newAccessToken = response.data.access_token;
+    const newAccessToken = response.data.access;
+
     setToCookie(authKey, newAccessToken as string);
     return newAccessToken;
   } catch (error) {

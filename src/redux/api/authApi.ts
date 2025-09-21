@@ -76,7 +76,6 @@ export const authApi = baseApi.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result: Record<string, any> = await queryFulfilled;
-          console.log(result);
 
           const userData = {
             id: result?.data?.id,

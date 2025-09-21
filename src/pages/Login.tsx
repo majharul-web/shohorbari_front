@@ -1,15 +1,15 @@
 import { Alert } from "@/components/ui/alert/Alert";
 import { Button } from "@/components/ui/button";
 import InputField from "@/components/ui/form/InputField";
-import { authKey } from "@/constant/storageKey";
+import { authKey, refreshKey } from "@/constant/storageKey";
 import { useUserLoginMutation } from "@/redux/api/authApi";
 import { toCapitalizeString } from "@/utils/common";
 import { setToCookie } from "@/utils/cookie";
 import { Form, Formik } from "formik";
+import { motion } from "framer-motion";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { motion } from "framer-motion";
 
 interface LoginFormValues {
   email: string;
@@ -37,6 +37,7 @@ const Login: React.FC = () => {
     try {
       const res = await login(values).unwrap();
       setToCookie(authKey, res.access);
+      setToCookie(refreshKey, res.refresh);
       navigate("/dashboard");
       resetForm();
     } catch (err: any) {
