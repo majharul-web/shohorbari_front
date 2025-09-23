@@ -1,11 +1,31 @@
+import { Button } from "@/components/ui/button";
 import Loader from "@/components/ui/loader/Loader";
 import { useGetAllPaymentsQuery } from "@/redux/api/paymentsApi";
 import { formatDate, toCapitalizeString } from "@/utils/common";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+
+export const getStatusClass = (status: string) => {
+  switch (status) {
+    case "initiated":
+      return "text-gray-500";
+    case "pending":
+      return "text-yellow-500";
+    case "success":
+      return "text-green-600";
+    case "failed":
+      return "text-red-600";
+    case "cancelled":
+      return "text-orange-500";
+    default:
+      return "text-foreground";
+  }
+};
 
 const TransactionPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
+  const navigate = useNavigate();
 
   const { data, isLoading, isError } = useGetAllPaymentsQuery(
     { page, limit: rowsPerPage },
@@ -61,11 +81,22 @@ const TransactionPage: React.FC = () => {
                     {payment.amount} {payment.currency}
                   </td>
                   <td className='px-4 py-2 text-foreground'>{payment.user?.name || "Unknown User"}</td>
-                  <td className='px-4 py-2 text-foreground capitalize'>
+                  <td className={`px-4 py-2 capitalize ${getStatusClass(payment.status)}`}>
                     {toCapitalizeString(payment.status)}
                   </td>
+
                   <td className='px-4 py-2 text-foreground'>{payment.transaction_id}</td>
                   <td className='px-4 py-2 text-foreground'>{formatDate(payment.created_at)}</td>
+                  <td className='px-4 py-2 text-foreground'>
+                    <div className='flex gap-x-2'>
+                      <Button
+                        variant='outline'
+                        onClick={() => navigate(`/rents/${payment?.rent_request?.advertisement?.id}`)}
+                      >
+                        View Details
+                      </Button>
+                    </div>
+                  </td>
                 </tr>
               ))
             )}
