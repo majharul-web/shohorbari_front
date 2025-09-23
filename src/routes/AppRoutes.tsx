@@ -5,6 +5,7 @@ import About from "@/pages/About";
 import ActivateAccount from "@/pages/ActivateAccount";
 import AdRequestPage from "@/pages/Add/Add-Request";
 import AdminAddList from "@/pages/Add/AdminAddList";
+import MyRequestsPage from "@/pages/Add/MyRequests";
 import CategoryPage from "@/pages/Category/Category";
 import ContactPage from "@/pages/ContactUs";
 import Dashboard from "@/pages/Dashboard/Dashboard";
@@ -45,6 +46,7 @@ const AppRoutes: React.FC = () => {
         <Route path='privacy' element={<PrivacyPolicy />} />
         <Route path='terms' element={<TermsOfService />} />
         <Route path='/wishlist' element={<WishList />} />
+        <Route path='/my-requests' element={<MyRequestsPage />} />
         <Route path='*' element={<NotFound />} /> {/* Catch-all 404 */}
       </Route>
 

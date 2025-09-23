@@ -20,7 +20,7 @@ const AdRequestPage: React.FC = () => {
 
   // ✅ Fetch ad requests
   const { data, isLoading, isError } = useGetAllAddRequestsQuery(
-    { page, limit: rowsPerPage },
+    { page, limit: rowsPerPage, type: "received" },
     { refetchOnMountOrArgChange: true }
   );
 

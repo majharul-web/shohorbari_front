@@ -53,6 +53,14 @@ const Avater: React.FC = () => {
 
           <DropdownMenuItem
             className='cursor-pointer hover:bg-accent hover:text-accent-foreground'
+            onClick={() => navigate("/my-requests")}
+          >
+            <User className='mr-2 h-4 w-4' />
+            My Request
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            className='cursor-pointer hover:bg-accent hover:text-accent-foreground'
             onClick={() => navigate("profile")}
           >
             <User className='mr-2 h-4 w-4' />
