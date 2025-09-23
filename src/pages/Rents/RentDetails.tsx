@@ -1,3 +1,4 @@
+import RentRequestModal from "@/components/rents/RentRequestModal";
 import ReviewModal from "@/components/rents/ReviewModal";
 import ReviewSlider from "@/components/rents/ReviewSlider";
 import { Alert } from "@/components/ui/alert/Alert";
@@ -92,12 +93,13 @@ const RentDetails = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
       >
-        <Button onClick={() => handleWishlist(adData.id)} disabled={adding} className='flex-1'>
+        <Button onClick={() => handleWishlist(adData.id)} disabled={adding}>
           ❤ Wishlist
         </Button>
-        <Button variant='outline' className='flex-1'>
+        <RentRequestModal adId={adData.id} />
+        {/* <Button variant='outline' className='flex-1'>
           Request for Get
-        </Button>
+        </Button> */}
       </motion.div>
 
       {/* Reviews */}
