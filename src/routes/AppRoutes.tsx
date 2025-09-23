@@ -6,9 +6,10 @@ import ActivateAccount from "@/pages/ActivateAccount";
 import AdRequestPage from "@/pages/Add/Add-Request";
 import AdminAddList from "@/pages/Add/AdminAddList";
 import MyRequestsPage from "@/pages/Add/MyRequests";
+import Dashboard from "@/pages/Admin/Dashboard";
+import Transaction from "@/pages/Admin/Transaction";
 import CategoryPage from "@/pages/Category/Category";
 import ContactPage from "@/pages/ContactUs";
-import Dashboard from "@/pages/Dashboard/Dashboard";
 import Home from "@/pages/Home/Home";
 import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
@@ -17,6 +18,7 @@ import PasswordResetConfirm from "@/pages/PasswprdResetConfirm";
 import TermsOfService from "@/pages/PrivacyPolicy";
 import ProfilePage from "@/pages/Profile";
 import Register from "@/pages/Register";
+import MyOrdersPage from "@/pages/Rents/MyOrdersPage";
 import RentDetails from "@/pages/Rents/RentDetails";
 import Rents from "@/pages/Rents/Rents";
 import ResendActivation from "@/pages/ResendActivation";
@@ -47,6 +49,7 @@ const AppRoutes: React.FC = () => {
         <Route path='terms' element={<TermsOfService />} />
         <Route path='/wishlist' element={<WishList />} />
         <Route path='/my-requests' element={<MyRequestsPage />} />
+        <Route path='/my-orders' element={<MyOrdersPage />} />
         <Route path='*' element={<NotFound />} /> {/* Catch-all 404 */}
       </Route>
 
@@ -64,6 +67,7 @@ const AppRoutes: React.FC = () => {
         <Route path='ads' element={<AdminAddList />} />
         <Route path='ads/:id' element={<RentDetails />} />
         <Route path='add-request' element={<AdRequestPage />} />
+        <Route path='transactions' element={<Transaction />} />
         <Route path='profile' element={<ProfilePage />} />
         <Route path='*' element={<NotFound />} /> {/* Catch-all 404 */}
       </Route>

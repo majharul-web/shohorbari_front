@@ -5,6 +5,7 @@ export const tagTypes = {
   ads: "ads",
   ads_requests: "ads_requests",
   wishlist: "wishlist",
+  payments: "payments",
 } as const;
 
 export type TagTypes = (typeof tagTypes)[keyof typeof tagTypes];
