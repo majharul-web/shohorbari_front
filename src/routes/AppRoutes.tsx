@@ -15,6 +15,9 @@ import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
 import PasswordResetEmail from "@/pages/PasswordResetEmail";
 import PasswordResetConfirm from "@/pages/PasswprdResetConfirm";
+import InitiatePaymentPage from "@/pages/Payments/InitiatePaymentPage";
+import PaymentFailed from "@/pages/Payments/PaymentFailed";
+import PaymentSuccess from "@/pages/Payments/PaymentSuccess";
 import TermsOfService from "@/pages/PrivacyPolicy";
 import ProfilePage from "@/pages/Profile";
 import Register from "@/pages/Register";
@@ -26,6 +29,7 @@ import PrivacyPolicy from "@/pages/TermsOfService";
 import WishList from "@/pages/WishList";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
+import PaymentCancelled from "@/pages/Payments/PaymentCancelled";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -50,6 +54,10 @@ const AppRoutes: React.FC = () => {
         <Route path='/wishlist' element={<WishList />} />
         <Route path='/my-requests' element={<MyRequestsPage />} />
         <Route path='/my-orders' element={<MyOrdersPage />} />
+        <Route path='/payment-initiate' element={<InitiatePaymentPage />} />
+        <Route path='/payment-success' element={<PaymentSuccess />} />
+        <Route path='/payment-failed' element={<PaymentFailed />} />
+        <Route path='/payment-cancelled' element={<PaymentCancelled />} />
         <Route path='*' element={<NotFound />} /> {/* Catch-all 404 */}
       </Route>
 

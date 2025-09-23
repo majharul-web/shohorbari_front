@@ -40,11 +40,11 @@ const MyRequestsPage = () => {
 
   // Dummy payment handler
   const handlePayment = (id: number, adId: number, amount: number) => {
-    navigate(`/payment/${id}`); // example route
+    navigate(`/payment-initiate?amount=${amount}&orderId=${id}`); // example route
   };
 
   // Map status to badge styles
-  const statusVariant = (status: string) => {
+   const statusVariant = (status: string) => {
     switch (status) {
       case "accepted":
         return "bg-green-100 text-green-700 border-green-300";
