@@ -2,7 +2,7 @@
 import { APP_CONFIG } from "@/helpers/config/appconfig";
 import { useAppDispatch } from "@/redux/hooks";
 import { logout } from "@/services/auth.services";
-import { Cross, FolderRoot, Home, LayoutDashboard, LogOut, Radar, User } from "lucide-react";
+import { Cross, FolderRoot, GitPullRequest, Home, LayoutDashboard, LogOut, Radar, User } from "lucide-react";
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
@@ -16,6 +16,7 @@ const links = [
   { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard, exact: true },
   { name: "Category", path: "/dashboard/category", icon: Radar },
   { name: "Ads", path: "/dashboard/ads", icon: Home },
+  { name: "Add Request", path: "/dashboard/add-request", icon: GitPullRequest },
   { name: "Profile", path: "/dashboard/profile", icon: User },
   { name: "Home", path: "/", icon: FolderRoot },
 ];

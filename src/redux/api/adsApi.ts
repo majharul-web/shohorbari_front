@@ -5,6 +5,36 @@ const BASE_URL = "/ads";
 
 export const adsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+    // requests
+    getAllAddRequests: build.query({
+      query: (args) => {
+        return {
+          url: `/my-requests/`,
+          method: "GET",
+          params: args,
+        };
+      },
+      providesTags: [tagTypes.ads_requests],
+    }),
+
+    deleteAdRequest: build.mutation({
+      query: (args: Record<string, any>) => ({
+        url: `${BASE_URL}/${args.add_id}/requests/${args.id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.ads_requests],
+    }),
+    updateAdsStatus: build.mutation({
+      query: (args: Record<string, any>) => ({
+        url: `${BASE_URL}/${args.add_id}/requests/${args.id}/change_status/`,
+        method: "POST",
+        data: { status: args.status },
+      }),
+      invalidatesTags: [tagTypes.ads_requests],
+    }),
+
+    // ads
+
     createAd: build.mutation({
       query: (payload) => ({
         url: `${BASE_URL}/`,
@@ -85,4 +115,7 @@ export const {
   useGiveReviewMutation,
   useApproveAdMutation,
   useUploadAdditionalImagesMutation,
+  useGetAllAddRequestsQuery,
+  useDeleteAdRequestMutation,
+  useUpdateAdsStatusMutation,
 } = adsApi;

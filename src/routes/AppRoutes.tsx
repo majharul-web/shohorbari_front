@@ -3,6 +3,7 @@ import DashboardLayout from "@/layouts/DashboardLayout";
 import MainLayout from "@/layouts/MainLayout";
 import About from "@/pages/About";
 import ActivateAccount from "@/pages/ActivateAccount";
+import AdRequestPage from "@/pages/Add/Add-Request";
 import AdminAddList from "@/pages/Add/AdminAddList";
 import CategoryPage from "@/pages/Category/Category";
 import ContactPage from "@/pages/ContactUs";
@@ -60,6 +61,7 @@ const AppRoutes: React.FC = () => {
         <Route path='category' element={<CategoryPage />} />
         <Route path='ads' element={<AdminAddList />} />
         <Route path='ads/:id' element={<RentDetails />} />
+        <Route path='add-request' element={<AdRequestPage />} />
         <Route path='profile' element={<ProfilePage />} />
         <Route path='*' element={<NotFound />} /> {/* Catch-all 404 */}
       </Route>

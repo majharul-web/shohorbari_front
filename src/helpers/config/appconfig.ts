@@ -3,4 +3,5 @@ export const APP_CONFIG = {
   ADDRESS: "123 Main St, Khilgaon, Dhaka, Bangladesh",
   EMAIL: "info@shohorbari.com",
   PHONE: "+88009644677977",
+  DEFAULT_PROFILE_IMAGE: "https://i.pravatar.cc/40",
 };

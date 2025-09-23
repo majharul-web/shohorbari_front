@@ -3,6 +3,7 @@ export const tagTypes = {
   category: "category",
   dashboard: "dashboard",
   ads: "ads",
+  ads_requests: "ads_requests",
   wishlist: "wishlist",
 } as const;
 

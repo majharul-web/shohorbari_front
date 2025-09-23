@@ -16,7 +16,7 @@ export const Navbar = () => {
     { name: "Contact", path: "/contact-us", visible: true },
     { name: "Login", path: "/login", visible: !user?.userId },
     { name: "Register", path: "/register", visible: !user?.userId },
-    { name: "", icon: <Heart className='text-destructive' />, path: "/wishlist", visible: !!user?.userId },
+    { name: "", icon: <Heart />, path: "/wishlist", visible: !!user?.userId },
   ];
 
   return (
