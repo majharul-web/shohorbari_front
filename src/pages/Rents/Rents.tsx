@@ -3,13 +3,21 @@ import RentModal from "@/components/rents/RentModal";
 import { useDebounced } from "@/hooks/useDebounced";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Rents = () => {
-  const { data, isLoading, isError } = useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
-  const cats = data?.results || [];
+  const location = useLocation();
 
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("");
+  // Parse query params from URL
+  const params = new URLSearchParams(location.search);
+  const initialSearch = params.get("q") || "";
+  const initialCategory = params.get("category") || "";
+
+  const [search, setSearch] = useState(initialSearch);
+  const [category, setCategory] = useState(initialCategory);
+
+  const { data } = useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
+  const cats = data?.results || [];
 
   const query: Record<string, any> = {};
 
@@ -18,7 +26,7 @@ const Rents = () => {
     delay: 600,
   });
 
-  if (!!debouncedTerm) {
+  if (debouncedTerm) {
     query["title"] = debouncedTerm;
   }
 
@@ -29,9 +37,10 @@ const Rents = () => {
     [cats]
   );
 
+  // Keep URL in sync when search/category changes
   useEffect(() => {
     const params = new URLSearchParams();
-    if (search) params.set("search", search);
+    if (search) params.set("q", search);
     if (category) params.set("category", category);
 
     const queryString = params.toString();
@@ -44,8 +53,6 @@ const Rents = () => {
 
   return (
     <div className='py-6'>
-      {/* Header Button */}
-
       <div className='flex justify-between flex-col md:flex-row'>
         {/* Filters */}
         <div className='flex flex-col md:flex-row gap-3 w-full pb-6'>

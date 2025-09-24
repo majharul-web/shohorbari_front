@@ -1,3 +1,4 @@
+import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { motion } from "framer-motion";
 import { Radar } from "lucide-react";
 import { useState } from "react";
@@ -13,14 +14,18 @@ const heroSlides = [
 ];
 
 const Hero = () => {
+  const { data } = useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
+  const cats = data?.results || [];
+
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   const handleSearch = () => {
-    const params: any = {};
+    const params: Record<string, string> = {};
     if (search) params.q = search;
     if (selectedCategory) params.category = selectedCategory;
+
     navigate({
       pathname: "/rents",
       search: new URLSearchParams(params).toString(),
@@ -63,14 +68,16 @@ const Hero = () => {
               {/* Search & Category */}
               <div className='flex flex-col md:flex-row gap-3 w-full max-w-2xl mx-auto'>
                 <select
-                  value={selectedCategory ?? ""}
-                  onChange={(e) => setSelectedCategory(Number(e.target.value))}
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
                   className='px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-primary bg-white text-gray-700 w-full md:w-1/3'
                 >
                   <option value=''>All Categories</option>
-                  <option value='1'>Apartment</option>
-                  <option value='2'>House</option>
-                  <option value='3'>Plot</option>
+                  {cats.map((cat: Record<string, any>) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.name}
+                    </option>
+                  ))}
                 </select>
 
                 <input
