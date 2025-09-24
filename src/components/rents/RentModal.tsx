@@ -8,9 +8,9 @@ import { useCreateAdMutation, useUpdateAdMutation } from "@/redux/api/adsApi";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { toCapitalizeString } from "@/utils/common";
 import { Form, Formik } from "formik";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useNavigate } from "react-router";
 import * as Yup from "yup";
-import UploadImagesModal from "./UploadImagesModal";
 
 const RentSchema = Yup.object().shape({
   category: Yup.string().required("Category is required"),
@@ -37,7 +37,6 @@ const RentModal: React.FC<RentModalProps> = ({ mode, initialData }) => {
   const [createRent, { isLoading: creating }] = useCreateAdMutation();
   const [updateRent, { isLoading: updating }] = useUpdateAdMutation();
   const { data, isLoading: catLoading } = useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
-  const [createdAdId, setCreatedAdId] = useState<string | null>(null);
 
   const categories = useMemo(
     () =>
@@ -49,6 +48,8 @@ const RentModal: React.FC<RentModalProps> = ({ mode, initialData }) => {
   );
 
   const isLoading = creating || updating;
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (
     values: { category: string; title: string; description: string; price: number },
@@ -68,12 +69,9 @@ const RentModal: React.FC<RentModalProps> = ({ mode, initialData }) => {
         res = await updateRent({ id: initialData.id, ...values }).unwrap();
         Alert({ type: "success", message: `Rent "${res.title}" updated successfully` });
       }
-
-      // Store the created/updated ad ID to trigger image upload
-      setCreatedAdId(res.id.toString());
-
       resetForm();
       closeModal();
+      navigate(`/dashboard/ads/advance/${res.id}`);
     } catch (err: any) {
       console.error("Error:", err);
       const errorMessage = err?.data?.detail || "Rent operation failed";
@@ -138,17 +136,6 @@ const RentModal: React.FC<RentModalProps> = ({ mode, initialData }) => {
           </Formik>
         )}
       </CustomModal>
-
-      {/* Trigger image upload modal only if ad is created/updated */}
-      {createdAdId && (
-        <div className='mt-4'>
-          <UploadImagesModal
-            adId={createdAdId}
-            onUploaded={(images) => console.log("Uploaded images:", images)}
-            // onClose={() => setCreatedAdId(null)}
-          />
-        </div>
-      )}
     </>
   );
 };

@@ -1,6 +1,8 @@
+import SkeletonTopCategories from "@/components/category/SkeletonTopCategories";
 import Hero from "@/components/rents/Hero";
 import RentList from "@/components/rents/RentList";
 import ReviewSlider from "@/components/rents/ReviewSlider";
+import SkeletonReviewSlider from "@/components/rents/SkeletonReviewSliderProps";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { useGetAllReviewsQuery } from "@/redux/api/commonApi";
 import { motion } from "framer-motion";
@@ -11,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 const staticIcons = ["🏢", "🏡", "🏠", "🏬"];
 
 const HomePage: React.FC = () => {
-  const { data } = useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
+  const { data, isLoading } = useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
   const cats = data?.results || [];
   const navigate = useNavigate();
 
@@ -41,25 +43,29 @@ const HomePage: React.FC = () => {
       <Hero />
 
       {/* Categories */}
-      <section className='max-w-7xl mx-auto px-6 py-16'>
+      <section className='max-w-7xl mx-auto sm:px-4 py-16'>
         <h2 className='text-2xl md:text-3xl font-bold mb-8 text-center'>Top Categories</h2>
-        <div className='grid grid-cols-2 sm:grid-cols-4 gap-6 md:gap-8'>
-          {topCategories.map((cat: Record<string, any>) => (
-            <motion.div
-              key={cat.id}
-              whileHover={{ scale: 1.05 }}
-              className='flex flex-col items-center justify-center p-6 rounded-xl cursor-pointer border border-border bg-card hover:bg-primary hover:text-white transition'
-              onClick={() => handleCategoryClick(cat.id)}
-            >
-              <span className='text-4xl mb-2'>{cat.icon}</span>
-              <span className='font-semibold text-center'>{cat.name}</span>
-            </motion.div>
-          ))}
-        </div>
+        {isLoading ? (
+          <SkeletonTopCategories />
+        ) : (
+          <div className='grid grid-cols-2 sm:grid-cols-4 gap-6 md:gap-8'>
+            {topCategories.map((cat: Record<string, any>) => (
+              <motion.div
+                key={cat.id}
+                whileHover={{ scale: 1.05 }}
+                className='flex flex-col items-center justify-center p-6 rounded-xl cursor-pointer border border-border bg-card hover:bg-primary hover:text-white transition'
+                onClick={() => handleCategoryClick(cat.id)}
+              >
+                <span className='text-4xl mb-2'>{cat.icon}</span>
+                <span className='font-semibold text-center'>{cat.name}</span>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Featured Listings */}
-      <RentList clsses='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16' />
+      <RentList clsses='max-w-7xl mx-auto  m:px-4 lg:px-8 py-16' />
 
       {/* How it Works Section */}
       <section className='bg-muted p-16'>
@@ -82,13 +88,16 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      <ReviewSlider reviews={reviews?.results} />
+      {loadingReviews ? <SkeletonReviewSlider count={3} /> : <ReviewSlider reviews={reviews?.results} />}
 
       {/* Call to Action */}
-      <section className='bg-primary text-white py-16 text-center'>
+      <section className='bg-primary text-white py-16 text-center max-w-7xl mx-auto px-6 md:px-0 rounded-2xl mb-16'>
         <h2 className='text-3xl md:text-4xl font-bold mb-4'>List Your Property Today</h2>
         <p className='mb-6'>Reach thousands of potential renters in minutes</p>
-        <button className='px-6 py-3 rounded-lg bg-white text-primary font-semibold hover:bg-gray-100 transition'>
+        <button
+          className='px-6 py-3 rounded-lg bg-white text-primary font-semibold hover:bg-gray-100 transition cursor-pointer'
+          onClick={() => navigate("/rents")}
+        >
           Get Started
         </button>
       </section>

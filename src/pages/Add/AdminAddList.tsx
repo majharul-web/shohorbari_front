@@ -4,16 +4,25 @@ import ConfirmDialog from "@/components/ui/alert/ConfirmDialog";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/ui/loader/Loader";
 import { useApproveAdMutation, useDeleteAdMutation, useGetAllAdsQuery } from "@/redux/api/adsApi";
+import { useAppSelector } from "@/redux/hooks";
 import { formatDate, toCapitalizeString } from "@/utils/common";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 
 const AdminAddList: React.FC = () => {
+  const user = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const [loadingId, setLoadingId] = useState<string | null>(null);
 
+  const query: Record<string, any> = { page, limit: rowsPerPage };
+
+  const isAdmin = user && typeof user.role === "string" && user.role === "admin";
+
+  if (!isAdmin) {
+    query["my"] = true;
+  }
   // RTK Query fetch ads
   const { data, isLoading, isError } = useGetAllAdsQuery(
     {
@@ -123,14 +132,18 @@ const AdminAddList: React.FC = () => {
                       {ad.approved ? (
                         <span className='text-green-600 font-semibold'>Published</span>
                       ) : (
-                        <Button
-                          variant='default'
-                          size='sm'
-                          onClick={() => handleApprove(ad.id)}
-                          disabled={(isApproving && loadingId === ad.id) || ad.approved}
-                        >
-                          {isApproving && loadingId === ad.id ? "Approving..." : "Approve"}
-                        </Button>
+                        <>
+                          {isAdmin && (
+                            <Button
+                              variant='default'
+                              size='sm'
+                              onClick={() => handleApprove(ad.id)}
+                              disabled={(isApproving && loadingId === ad.id) || ad.approved}
+                            >
+                              {isApproving && loadingId === ad.id ? "Approving..." : "Approve"}
+                            </Button>
+                          )}
+                        </>
                       )}
 
                       {/* Delete Button */}
@@ -145,10 +158,15 @@ const AdminAddList: React.FC = () => {
                       />
 
                       {/* Edit Button */}
-                      <RentModal mode='edit' initialData={ad} />
+                      {/* <RentModal mode='edit' initialData={ad} />
+                      <UploadImagesModal adId={ad.id} /> */}
 
                       {/* details */}
-                      <Button variant='outline' size='sm' onClick={() => navigate(`/dashboard/ads/${ad.id}`)}>
+                      <Button
+                        variant='outline'
+                        size='sm'
+                        onClick={() => navigate(`/dashboard/ads/advance/${ad.id}`)}
+                      >
                         Details
                       </Button>
                     </div>

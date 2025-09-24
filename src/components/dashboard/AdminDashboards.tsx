@@ -2,12 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGetAllStatesQuery } from "@/redux/api/dashboardApi";
 import { BarChart, CheckCircle, Clock } from "lucide-react";
 import NoDataFound from "../ui/error/NoDataFound";
-import Loader from "../ui/loader/Loader";
+import SkeletonDashboard from "./DashBoardSkellton";
 
 const AdminDashboards: React.FC = () => {
   const { data, error, isLoading } = useGetAllStatesQuery({}, { refetchOnMountOrArgChange: true });
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <SkeletonDashboard />;
   if (error) return <NoDataFound message='Something went wrong!' />;
   if (!data) return <NoDataFound message='No data found!' />;
 

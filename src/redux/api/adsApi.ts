@@ -40,6 +40,13 @@ export const adsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.ads_requests],
     }),
+    getAdRequest: build.query({
+      query: (payload: Record<string, any>) => ({
+        url: `${BASE_URL}/${payload.add_id}/requests/`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.ads_requests],
+    }),
 
     // reviews
     giveReview: build.mutation({
@@ -142,4 +149,5 @@ export const {
   useUpdateAdsStatusMutation,
   useCreateAdRequestMutation,
   useGetProductReviewsQuery,
+  useGetAdRequestQuery,
 } = adsApi;

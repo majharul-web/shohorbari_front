@@ -1,6 +1,6 @@
 // components/dashboard/Sidebar.tsx
 import { APP_CONFIG } from "@/helpers/config/appconfig";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/services/auth.services";
 import {
   Cross,
@@ -16,25 +16,31 @@ import {
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
+import SidebarSkeleton from "./SidebarSkeleton";
 
 interface SidebarProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const links = [
-  { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard, exact: true },
-  { name: "Category", path: "/dashboard/category", icon: Radar },
-  { name: "Ads", path: "/dashboard/ads", icon: Home },
-  { name: "Add Request", path: "/dashboard/add-request", icon: GitPullRequest },
-  { name: "Transaction", path: "/dashboard/transactions", icon: PlayCircleIcon },
-  { name: "Profile", path: "/dashboard/profile", icon: User },
-  { name: "Home", path: "/", icon: FolderRoot },
-];
-
 const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const user: Record<string, any> = useAppSelector((state) => state.auth);
+
+  if (!user?.role) return <SidebarSkeleton />;
+
+  const isAdmin = user.role === "admin";
+
+  const links = [
+    { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard, exact: true, visible: isAdmin },
+    { name: "Category", path: "/dashboard/category", icon: Radar, visible: isAdmin },
+    { name: "Ads", path: "/dashboard/ads", icon: Home, visible: true },
+    { name: "Add Request", path: "/dashboard/add-request", icon: GitPullRequest, visible: true },
+    { name: "Transaction", path: "/dashboard/transactions", icon: PlayCircleIcon, visible: isAdmin },
+    { name: "Profile", path: "/dashboard/profile", icon: User, visible: true },
+    { name: "Home", path: "/", icon: FolderRoot, visible: true },
+  ];
 
   return (
     <aside
@@ -60,32 +66,39 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
 
       {/* Navigation */}
       <nav className='flex flex-col gap-1 p-4'>
-        {links.map((link) => {
-          const Icon = link.icon;
-          return (
-            <NavLink
-              key={link.name}
-              to={link.path}
-              end={link.exact}
-              className={({ isActive }) =>
-                `flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                }`
-              }
-              onClick={() => setOpen(false)}
-            >
-              <Icon size={18} />
-              {link.name}
-            </NavLink>
-          );
-        })}
+        {links
+          .filter((link) => link.visible)
+          .map((link) => {
+            const Icon = link.icon;
+            return (
+              <NavLink
+                key={link.name}
+                to={link.path}
+                end={link.exact}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  }`
+                }
+                onClick={() => setOpen(false)}
+              >
+                <Icon size={18} />
+                {link.name}
+              </NavLink>
+            );
+          })}
       </nav>
 
       {/* Logout */}
       <div className='absolute bottom-4 w-full px-4'>
-        <Button variant='destructive' size='sm' className='w-full' onClick={() => logout(dispatch, navigate)}>
+        <Button
+          variant='destructive'
+          size='sm'
+          className='w-full flex items-center justify-center gap-2'
+          onClick={() => logout(dispatch, navigate)}
+        >
           <LogOut size={18} /> Logout
         </Button>
       </div>

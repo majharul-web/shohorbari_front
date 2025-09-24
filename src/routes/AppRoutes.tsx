@@ -23,6 +23,7 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy"; // ✅ fixed swap
 import ProfilePage from "@/pages/Profile";
 import Register from "@/pages/Register";
 import MyOrdersPage from "@/pages/Rents/MyOrdersPage";
+import RentAdvanceDetails from "@/pages/Rents/RentAdvancDetails";
 import RentDetails from "@/pages/Rents/RentDetails";
 import Rents from "@/pages/Rents/Rents";
 import ResendActivation from "@/pages/ResendActivation";
@@ -53,6 +54,7 @@ const AppRoutes: React.FC = () => {
         <Route path='terms' element={<TermsOfService />} />
         {/* Protected payment routes */}
         <Route element={<PrivateRoute />}>
+          {/* <Route path='ads/advance/:id' element={<RentAdvanceDetails />} /> */}
           <Route path='/wishlist' element={<WishList />} />
           <Route path='/my-requests' element={<MyRequestsPage />} />
           <Route path='/my-orders' element={<MyOrdersPage />} />
@@ -71,6 +73,7 @@ const AppRoutes: React.FC = () => {
           <Route path='category' element={<CategoryPage />} />
           <Route path='ads' element={<AdminAddList />} />
           <Route path='ads/:id' element={<RentDetails />} />
+          <Route path='ads/advance/:id' element={<RentAdvanceDetails />} />
           <Route path='add-request' element={<AdRequestPage />} />
           <Route path='transactions' element={<Transaction />} />
           <Route path='profile' element={<ProfilePage />} />

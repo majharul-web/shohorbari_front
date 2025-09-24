@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Alert } from "../ui/alert/Alert";
 import { Button } from "../ui/button";
 import NoDataFound from "../ui/error/NoDataFound";
-import Loader from "../ui/loader/Loader";
+import SkeletonRentList from "./SkeletonRentList";
 
 interface IProps {
   title?: string;
@@ -36,7 +36,7 @@ const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query 
   const [addToWishlist] = useAddToWishlistMutation();
   const [addingId, setAddingId] = useState<number | null>(null); // track item being added
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <SkeletonRentList clsses='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16' />;
   if (dataList.length === 0) return <NoDataFound />;
 
   const handleWishlist = async (id: number) => {

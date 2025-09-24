@@ -1,6 +1,6 @@
 import Avater from "@/layouts/Avater";
 import { useAppSelector } from "@/redux/hooks";
-import { Menu } from "lucide-react";
+import { Loader, Menu } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
 
@@ -26,9 +26,13 @@ const Navbar: React.FC<NavbarProps> = ({ setOpen }) => {
         </Button>
 
         {/* Logo / Title */}
-        <p className='text-lg font-bold text-primary'>
-          {user.role === "admin" ? "Admin Dashboard" : "User Dashboard"}
-        </p>
+        {user?.role ? (
+          <p className='text-lg font-bold text-primary'>
+            {user?.role === "admin" ? "Admin Dashboard" : "User Dashboard"}
+          </p>
+        ) : (
+          <Loader className='h-4 w-4 animate-spin' />
+        )}
 
         {/* Right side */}
         <div className='flex items-center gap-4'>

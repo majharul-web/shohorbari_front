@@ -1,30 +1,29 @@
 import RentRequestModal from "@/components/rents/RentRequestModal";
 import ReviewModal from "@/components/rents/ReviewModal";
 import ReviewSlider from "@/components/rents/ReviewSlider";
+import SkeletonRentDetails from "@/components/rents/SkeletonRentDetails";
 import { Alert } from "@/components/ui/alert/Alert";
 import { Button } from "@/components/ui/button";
 import NoDataFound from "@/components/ui/error/NoDataFound";
-import Loader from "@/components/ui/loader/Loader";
 import { authKey } from "@/constant/storageKey";
-import { useGetAdByIdQuery, useGetProductReviewsQuery } from "@/redux/api/adsApi";
+import { useGetAdByIdQuery } from "@/redux/api/adsApi";
 import { useAddToWishlistMutation } from "@/redux/api/authApi";
+import { useAppSelector } from "@/redux/hooks";
 import { getFromCookie } from "@/utils/cookie";
 import { motion } from "framer-motion";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 
 const RentDetails = () => {
+  const user = useAppSelector((state) => state.auth);
   const { id } = useParams<{ id: string }>();
   const { data: adData, isLoading } = useGetAdByIdQuery({ id: Number(id) }, { skip: !id });
-  const { data: reviews, isLoading: loadingReviews } = useGetProductReviewsQuery(
-    { adId: Number(id) },
-    { skip: !id }
-  );
+
   const [addToWishlist, { isLoading: adding }] = useAddToWishlistMutation();
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <SkeletonRentDetails />;
   if (!adData) return <NoDataFound />;
 
   const handleWishlist = async (id: number) => {
@@ -38,9 +37,7 @@ const RentDetails = () => {
     }
   };
 
-  const images = adData.images?.length ? adData.images : [`/hero1.jpg`];
-
-  console.log("adData", adData);
+  const images = adData.images?.length ? adData.images?.map((img: any) => img.image) : [`/hero1.jpg`];
 
   const sliderSettings = {
     infinite: true,
@@ -72,7 +69,7 @@ const RentDetails = () => {
             <img
               src={img}
               alt={`${adData.title}-${idx}`}
-              className='w-full h-96 object-cover rounded-lg shadow-md'
+              className='w-full h-96 object-contain rounded-lg shadow-md'
             />
           </motion.div>
         ))}
@@ -89,6 +86,15 @@ const RentDetails = () => {
         <p className='text-muted-foreground text-sm md:text-base'>{adData.location}</p>
         <p className='text-2xl md:text-3xl font-semibold text-primary'>৳ {adData.price}/month</p>
         <p className='text-gray-700 text-sm md:text-base'>{adData.description}</p>
+        {user?.userId === adData?.owner?.id && (
+          <div className=''>
+            <span className='text-gray-700  italic'>You are the owner of this advertisement. </span>
+            <Link className='text-blue-500 hover:underline' to={`/dashboard/ads/advance/${adData.id}/`}>
+              {" "}
+              See Advance Details
+            </Link>
+          </div>
+        )}
       </motion.div>
 
       {/* Action Buttons */}
