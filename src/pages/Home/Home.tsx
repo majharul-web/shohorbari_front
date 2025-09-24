@@ -1,53 +1,34 @@
 import Hero from "@/components/rents/Hero";
 import RentList from "@/components/rents/RentList";
 import ReviewSlider from "@/components/rents/ReviewSlider";
+import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
 
-// Demo categories
-const categories = [
-  { id: 1, name: "Apartment", icon: "🏢" },
-  { id: 2, name: "Villa", icon: "🏡" },
-  { id: 3, name: "Studio", icon: "🏠" },
-  { id: 4, name: "Office", icon: "🏬" },
-];
-
-// Hero slider demo
-const heroSlides = [
-  { id: 1, image: "/home1.jpg", title: "Find your dream home" },
-  { id: 2, image: "/home1.jpg", title: "Best rentals in town" },
-  { id: 3, image: "/home1.jpg", title: "Comfortable living awaits" },
-];
-
-const demoListings = [1, 2, 3, 4, 5, 6];
+// Static icons
+const staticIcons = ["🏢", "🏡", "🏠", "🏬"];
 
 const HomePage: React.FC = () => {
+  const { data } = useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
+  const cats = data?.results || [];
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
-  const handleSearch = () => {
-    const params: any = {};
-    if (search) params.q = search;
-    if (selectedCategory) params.category = selectedCategory;
-    navigate({
-      pathname: "/rents",
-      search: new URLSearchParams(params).toString(),
-    });
-  };
+  // Assign static icons to dynamic categories
+  const categoriesWithIcons = useMemo(() => {
+    return cats.map((cat: any, idx: any) => ({
+      ...cat,
+      icon: staticIcons[idx % staticIcons.length], // cycle through static icons
+    }));
+  }, [cats]);
 
-  // Slider settings
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 600,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 5000,
+  // Take only last 4 categories
+  const topCategories = useMemo(() => categoriesWithIcons.slice(-4), [categoriesWithIcons]);
+
+  const handleCategoryClick = (catId: number) => {
+    setSelectedCategory(catId);
+    navigate(`/rents?category=${catId}`);
   };
 
   return (
@@ -59,12 +40,12 @@ const HomePage: React.FC = () => {
       <section className='max-w-7xl mx-auto px-6 py-16'>
         <h2 className='text-2xl md:text-3xl font-bold mb-8 text-center'>Top Categories</h2>
         <div className='grid grid-cols-2 sm:grid-cols-4 gap-6 md:gap-8'>
-          {categories.map((cat) => (
+          {topCategories.map((cat) => (
             <motion.div
               key={cat.id}
               whileHover={{ scale: 1.05 }}
-              className={`flex flex-col items-center justify-center p-6 rounded-xl cursor-pointer border border-border bg-card hover:bg-primary hover:text-white transition`}
-              onClick={() => setSelectedCategory(cat.id)}
+              className='flex flex-col items-center justify-center p-6 rounded-xl cursor-pointer border border-border bg-card hover:bg-primary hover:text-white transition'
+              onClick={() => handleCategoryClick(cat.id)}
             >
               <span className='text-4xl mb-2'>{cat.icon}</span>
               <span className='font-semibold text-center'>{cat.name}</span>
@@ -97,25 +78,6 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      {/* <section className='max-w-7xl mx-auto px-6 py-16'>
-        <h2 className='text-2xl md:text-3xl font-bold mb-12 text-center'>What Our Users Say</h2>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-          {[
-            { name: "Masud Rana", comment: "Found my dream home in 2 days!" },
-            { name: "Sadia Khan", comment: "Easy to use and reliable service." },
-          ].map((testimonial, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ scale: 1.02 }}
-              className='p-6 border border-border rounded-lg bg-card'
-            >
-              <p className='mb-4 text-muted-foreground'>"{testimonial.comment}"</p>
-              <p className='font-semibold'>{testimonial.name}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section> */}
       <ReviewSlider />
 
       {/* Call to Action */}
