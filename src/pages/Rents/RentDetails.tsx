@@ -38,7 +38,9 @@ const RentDetails = () => {
     }
   };
 
-  const images = adData.images?.length ? adData.images : [`/hero1.jpg`, `/hero1.jpg`];
+  const images = adData.images?.length ? adData.images : [`/hero1.jpg`];
+
+  console.log("adData", adData);
 
   const sliderSettings = {
     infinite: true,
