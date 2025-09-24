@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import NoDataFound from "@/components/ui/error/NoDataFound";
 import Loader from "@/components/ui/loader/Loader";
 import { authKey } from "@/constant/storageKey";
-import { useGetAdByIdQuery, useGiveReviewMutation } from "@/redux/api/adsApi";
+import { useGetAdByIdQuery, useGetProductReviewsQuery } from "@/redux/api/adsApi";
 import { useAddToWishlistMutation } from "@/redux/api/authApi";
 import { getFromCookie } from "@/utils/cookie";
 import { motion } from "framer-motion";
@@ -18,7 +18,10 @@ import "slick-carousel/slick/slick.css";
 const RentDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { data: adData, isLoading } = useGetAdByIdQuery({ id: Number(id) }, { skip: !id });
-  const [giveReview] = useGiveReviewMutation();
+  const { data: reviews, isLoading: loadingReviews } = useGetProductReviewsQuery(
+    { adId: Number(id) },
+    { skip: !id }
+  );
   const [addToWishlist, { isLoading: adding }] = useAddToWishlistMutation();
 
   if (isLoading) return <Loader />;
@@ -109,9 +112,7 @@ const RentDetails = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
       >
-        <ReviewSlider
-        // reviews={adData.reviews}
-        />
+        <ReviewSlider reviews={adData.reviews} />
         <div className='flex justify-center'>
           <ReviewModal adId={adData.id} />
         </div>

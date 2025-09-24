@@ -13,7 +13,7 @@ interface Review {
   avatar: string;
 }
 
-const reviews: Review[] = [
+const staticReviews: Review[] = [
   {
     id: 1,
     name: "Leslie Alexander",
@@ -52,7 +52,11 @@ const reviews: Review[] = [
   },
 ];
 
-const ReviewSlider: React.FC = () => {
+interface ReviewSliderProps {
+  reviews?: Record<string, any> | Review[];
+}
+
+const ReviewSlider: React.FC<ReviewSliderProps> = ({ reviews = staticReviews }) => {
   const settings = {
     infinite: true,
     speed: 500,
@@ -85,34 +89,42 @@ const ReviewSlider: React.FC = () => {
       <h2 className='text-2xl md:text-3xl font-bold mb-2'>People Love Living with Realton</h2>
       <p className='text-gray-500 mb-8'>Aliquam lacinia diam quis lacus euismod</p>
 
-      <Slider {...settings}>
-        {reviews.map((review) => (
-          <div key={review.id} className='p-3'>
-            <div className='bg-white rounded-xl shadow-md p-6 flex flex-col justify-between h-full'>
-              <div>
-                <h4 className='font-semibold mb-2'>Great Work</h4>
-                <p className='text-gray-700 mb-4'>{review.comment}</p>
-                <div className='flex space-x-1 mb-4'>
-                  {Array(review.rating)
-                    .fill(0)
-                    .map((_, idx) => (
-                      <span key={idx} className='text-yellow-500'>
-                        ★
-                      </span>
-                    ))}
-                </div>
-              </div>
-              <div className='flex items-center gap-3 mt-4'>
-                <img src={review.avatar} alt={review.name} className='w-10 h-10 rounded-full object-cover' />
+      {reviews.length > 0 ? (
+        <Slider {...settings}>
+          {reviews.map((review: Record<string, any>) => (
+            <div key={review.id} className='p-3'>
+              <div className='bg-white rounded-xl shadow-md p-6 flex flex-col justify-between h-full'>
                 <div>
-                  <p className='font-semibold'>{review.name}</p>
-                  <p className='text-gray-500 text-sm'>{review.role}</p>
+                  <h4 className='font-semibold mb-2'>Great Work</h4>
+                  <p className='text-gray-700 mb-4'>{review.comment}</p>
+                  <div className='flex space-x-1 mb-4'>
+                    {Array(review.rating)
+                      .fill(0)
+                      .map((_, idx) => (
+                        <span key={idx} className='text-yellow-500'>
+                          ★
+                        </span>
+                      ))}
+                  </div>
+                </div>
+                <div className='flex items-center gap-3 mt-4'>
+                  <img
+                    src={review.user?.profile_image || review.avatar}
+                    alt={review.name}
+                    className='w-10 h-10 rounded-full object-cover'
+                  />
+                  <div>
+                    <p className='font-semibold capitalize'>{review?.user?.name}</p>
+                    <p className='text-gray-500 text-sm capitalize'>{review?.user?.role}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </Slider>
+          ))}
+        </Slider>
+      ) : (
+        <p className='text-center text-gray-500'>No reviews available.</p>
+      )}
     </div>
   );
 };

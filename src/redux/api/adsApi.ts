@@ -41,6 +41,27 @@ export const adsApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.ads_requests],
     }),
 
+    // reviews
+    giveReview: build.mutation({
+      query: ({ adId, ...payload }) => ({
+        url: `${BASE_URL}/${adId}/reviews/`,
+        method: "POST",
+        data: payload,
+      }),
+      invalidatesTags: [tagTypes.ads],
+    }),
+
+    getProductReviews: build.query({
+      query: (args) => {
+        return {
+          url: `${BASE_URL}/${args.adId}/reviews/`,
+          method: "GET",
+          params: args,
+        };
+      },
+      providesTags: [tagTypes.reviews, tagTypes.ads],
+    }),
+
     // ads
 
     createAd: build.mutation({
@@ -86,14 +107,7 @@ export const adsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.ads],
     }),
-    giveReview: build.mutation({
-      query: ({ adId, ...payload }) => ({
-        url: `${BASE_URL}/${adId}/reviews/`,
-        method: "POST",
-        data: payload,
-      }),
-      invalidatesTags: [tagTypes.ads],
-    }),
+
     approveAd: build.mutation({
       query: (id) => ({
         url: `${BASE_URL}/${id}/approve/`,
@@ -127,4 +141,5 @@ export const {
   useDeleteAdRequestMutation,
   useUpdateAdsStatusMutation,
   useCreateAdRequestMutation,
+  useGetProductReviewsQuery,
 } = adsApi;

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/ui/loader/Loader";
-import { useGetAllUserPaymentsQuery } from "@/redux/api/paymentsApi";
 import { formatDate, toCapitalizeString } from "@/utils/common";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { getStatusClass } from "../Admin/Transaction";
+import { useGetAllUserPaymentsQuery } from "@/redux/api/paymentsApi";
 
 const MyOrdersPage: React.FC = () => {
   const navigate = useNavigate();

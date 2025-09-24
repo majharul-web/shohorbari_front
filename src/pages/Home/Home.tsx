@@ -2,8 +2,9 @@ import Hero from "@/components/rents/Hero";
 import RentList from "@/components/rents/RentList";
 import ReviewSlider from "@/components/rents/ReviewSlider";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
+import { useGetAllReviewsQuery } from "@/redux/api/commonApi";
 import { motion } from "framer-motion";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Static icons
@@ -13,7 +14,6 @@ const HomePage: React.FC = () => {
   const { data } = useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
   const cats = data?.results || [];
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
   // Assign static icons to dynamic categories
   const categoriesWithIcons = useMemo(() => {
@@ -27,9 +27,13 @@ const HomePage: React.FC = () => {
   const topCategories = useMemo(() => categoriesWithIcons.slice(-4), [categoriesWithIcons]);
 
   const handleCategoryClick = (catId: number) => {
-    setSelectedCategory(catId);
     navigate(`/rents?category=${catId}`);
   };
+
+  const { data: reviews, isLoading: loadingReviews } = useGetAllReviewsQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
 
   return (
     <div className='w-full min-h-screen bg-background text-foreground'>
@@ -78,7 +82,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      <ReviewSlider />
+      <ReviewSlider reviews={reviews?.results} />
 
       {/* Call to Action */}
       <section className='bg-primary text-white py-16 text-center'>
