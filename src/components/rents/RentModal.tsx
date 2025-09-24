@@ -86,6 +86,7 @@ const RentModal: React.FC<RentModalProps> = ({ mode, initialData }) => {
   return (
     <>
       <CustomModal
+        requireAuth={true}
         triggerLabel={mode === "add" ? "Add Rent" : "Edit Rent"}
         title={mode === "add" ? "Add New Rent" : "Edit Rent"}
       >

@@ -1,7 +1,6 @@
-import { authKey } from "@/constant/storageKey";
 import { useGetAllAdsQuery } from "@/redux/api/adsApi";
 import { useAddToWishlistMutation } from "@/redux/api/authApi";
-import { getFromCookie } from "@/utils/cookie";
+import { useAppSelector } from "@/redux/hooks";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +25,8 @@ export interface IRentListItem {
 }
 
 const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query }) => {
+  const isLoggedIn = useAppSelector((state) => state.auth.userId);
+
   const { data, isLoading } = useGetAllAdsQuery(query, {
     refetchOnMountOrArgChange: true,
   });
@@ -39,9 +40,12 @@ const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query 
   if (dataList.length === 0) return <NoDataFound />;
 
   const handleWishlist = async (id: number) => {
-    const auth = getFromCookie(authKey);
-    if (!auth) {
-      Alert({ type: "error", message: "Please login to add to wishlist ❤" });
+    if (!isLoggedIn) {
+      Alert({
+        type: "error",
+        message: "You must be logged in to perform this action.",
+      });
+      navigate("/login"); // optional redirect
       return;
     }
     try {

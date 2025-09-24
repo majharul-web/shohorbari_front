@@ -54,7 +54,7 @@ const RentRequestModal: React.FC<RentRequestModalProps> = ({ adId }) => {
   };
 
   return (
-    <CustomModal triggerLabel='Request for Get' title='Create Rent Request'>
+    <CustomModal triggerLabel='Request for Get' title='Create Rent Request' requireAuth={true}>
       {({ closeModal }) => (
         <Formik
           initialValues={{ message: "" }}
