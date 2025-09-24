@@ -1,9 +1,9 @@
+import SkeletonMyRequests from "@/components/rents/SkeletonMyRequests";
 import { Alert } from "@/components/ui/alert/Alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import NoDataFound from "@/components/ui/error/NoDataFound";
-import Loader from "@/components/ui/loader/Loader";
 import { useGetAllAddRequestsQuery, useUpdateAdsStatusMutation } from "@/redux/api/adsApi";
 import { toCapitalizeString } from "@/utils/common";
 import { motion } from "framer-motion";
@@ -20,7 +20,7 @@ const MyRequestsPage = () => {
   const [removingIds, setRemovingIds] = useState<string[]>([]);
   const navigate = useNavigate();
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <SkeletonMyRequests />;
   if (error) return <NoDataFound message='Failed to load rent request.' />;
   if (!data || data?.results?.length === 0) return <NoDataFound message='Your rent request is empty.' />;
 
@@ -44,7 +44,7 @@ const MyRequestsPage = () => {
   };
 
   // Map status to badge styles
-   const statusVariant = (status: string) => {
+  const statusVariant = (status: string) => {
     switch (status) {
       case "accepted":
         return "bg-green-100 text-green-700 border-green-300";

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useInitiatePaymentMutation } from "@/redux/api/paymentsApi";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import SkeletonInitiatePayment from "./SkeletonInitiatePayment";
 
 const InitiatePaymentPage = () => {
   const location = useLocation();
@@ -41,6 +42,8 @@ const InitiatePaymentPage = () => {
       handlePayment();
     }
   }, [amount, orderId]);
+
+  if (isLoading) return <SkeletonInitiatePayment />;
 
   return (
     <div className='max-w-lg mx-auto mt-16 p-6 bg-white rounded-2xl shadow-md text-center'>
