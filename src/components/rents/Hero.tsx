@@ -9,7 +9,8 @@ import "slick-carousel/slick/slick.css";
 
 const heroSlides = [
   { id: 1, image: "/hero1.jpg", title: "Find your dream home" },
-  { id: 2, image: "/home1.jpg", title: "Best rentals in town" },
+  { id: 2, image: "/hero2.jpg", title: "Best rentals in town" },
+  { id: 3, image: "/hero3.jpg", title: "Comfort & Convenience" },
 ];
 
 const Hero = () => {

@@ -20,7 +20,7 @@ export interface IRentListItem {
   title: string;
   price: number;
   location: string;
-  imageUrl: string;
+  images: { image: string }[];
   description: string;
 }
 
@@ -72,7 +72,11 @@ const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query 
               whileHover={{ scale: 1.03 }}
               className='border border-border rounded-lg overflow-hidden bg-card flex flex-col'
             >
-              <img src={`/hero1.jpg`} alt={`House ${item.id}`} className='w-full h-48 md:h-56 object-cover' />
+              <img
+                src={item?.images?.[0]?.image ?? "/hero1.jpg"}
+                alt={`House ${item.id}`}
+                className='w-full h-48 md:h-56 object-cover'
+              />
               <div className='p-4 flex-1 flex flex-col'>
                 <h3 className='font-semibold text-lg mb-1'>{item.title}</h3>
                 <p className='text-sm text-muted-foreground mb-2'>{item.location}</p>
