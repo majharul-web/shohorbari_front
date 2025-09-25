@@ -9,14 +9,14 @@ import TextAreaField from "../ui/form/TextAreaField";
 import CustomModal from "../ui/modal/CustomModal";
 
 interface RentRequestModalProps {
-  adId: number;
+  add: Record<string, any>;
 }
 
 const RentRequestSchema = Yup.object().shape({
   message: Yup.string().min(1, "Message is required").required("Message is required"),
 });
 
-const RentRequestModal: React.FC<RentRequestModalProps> = ({ adId }) => {
+const RentRequestModal: React.FC<RentRequestModalProps> = ({ add }) => {
   const [createAdRequest, { isLoading }] = useCreateAdRequestMutation();
   const navigate = useNavigate();
 
@@ -33,14 +33,14 @@ const RentRequestModal: React.FC<RentRequestModalProps> = ({ adId }) => {
     }
   ) => {
     try {
-      const res = await createAdRequest({ message: values.message, add_id: adId }).unwrap();
+      const res = await createAdRequest({ message: values.message, add_id: add.id }).unwrap();
       Alert({
         type: "success",
         message: res?.data?.message || `Rent request "${res?.name || values.message}" created successfully`,
       });
       resetForm();
       closeModal();
-      navigate(`/payment-initiate/${res.id}`);
+      navigate(`/payment-initiate?amount=${add.price}&orderId=${res.id}`);
     } catch (err: any) {
       console.error("Error:", err);
       const errorMessage = err?.data?.detail || "Rent request failed";

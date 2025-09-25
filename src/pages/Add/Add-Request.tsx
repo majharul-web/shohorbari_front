@@ -180,17 +180,20 @@ const AdRequestPage: React.FC = () => {
                       )}
 
                       {/* Delete Button */}
-                      <ConfirmDialog
-                        triggerLabel={
-                          isDeleting && loadingId === req.id.toString() ? "Deleting..." : "Delete"
-                        }
-                        title='Delete Ad Request'
-                        description={`Are you sure you want to delete request for "${req.advertisement.title}"? This action cannot be undone.`}
-                        onConfirm={() => handleDelete(req.id, req.advertisement.id)}
-                        loading={isDeleting && loadingId === req.id.toString()}
-                        variant='destructive'
-                        confirmLabel='Confirm Delete'
-                      />
+
+                      {req.status === "accepted" || req.status === "advanced" ? null : (
+                        <ConfirmDialog
+                          triggerLabel={
+                            isDeleting && loadingId === req.id.toString() ? "Deleting..." : "Delete"
+                          }
+                          title='Delete Ad Request'
+                          description={`Are you sure you want to delete request for "${req.advertisement.title}"? This action cannot be undone.`}
+                          onConfirm={() => handleDelete(req.id, req.advertisement.id)}
+                          loading={isDeleting && loadingId === req.id.toString()}
+                          variant='destructive'
+                          confirmLabel='Confirm Delete'
+                        />
+                      )}
 
                       {/* Details */}
                       <Button

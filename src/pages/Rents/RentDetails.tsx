@@ -107,7 +107,7 @@ const RentDetails = () => {
         <Button onClick={() => handleWishlist(adData.id)} disabled={adding}>
           ❤ Wishlist
         </Button>
-        <RentRequestModal adId={adData.id} />
+        <RentRequestModal add={adData} />
         {/* <Button variant='outline' className='flex-1'>
           Request for Get
         </Button> */}
