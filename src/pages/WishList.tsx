@@ -2,12 +2,12 @@ import { Alert } from "@/components/ui/alert/Alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import NoDataFound from "@/components/ui/error/NoDataFound";
-import Loader from "@/components/ui/loader/Loader";
 import { useGetWishlistQuery, useRemoveFromWishlistMutation } from "@/redux/api/authApi";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router";
 
+import SkeletonMyRequests from "@/components/rents/SkeletonMyRequests";
 import { useState } from "react";
 
 const WishList = () => {
@@ -16,7 +16,7 @@ const WishList = () => {
   const [removingIds, setRemovingIds] = useState<number[]>([]); // track IDs being removed
   const navigate = useNavigate();
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <SkeletonMyRequests />;
   if (error) return <NoDataFound message='Failed to load wishlist.' />;
   if (!data || data?.results?.length === 0) return <NoDataFound message='Your wishlist is empty.' />;
 
