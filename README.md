@@ -1,7 +1,3 @@
-# React + ShadCN + Vite Template
-
-This template provides a minimal setup to get React working with ShadCN.
-
 # 🏠 Shohorbari - A Full-Stack Rental Management Application
 
 Shohorbari is a comprehensive **full-stack rental management platform** built using **React.js (frontend)** and **Django Rest Framework (backend)**.  
@@ -37,9 +33,7 @@ It provides a robust system for managing rental advertisements, user accounts, a
 - **Environment Variables** management with Vite
 - **Client-Side Routing** with React Router
 - **Styling** with Tailwind CSS
--
-
----
+- ***
 
 ## 🖥️ Frontend
 
@@ -68,11 +62,6 @@ It provides a robust system for managing rental advertisements, user accounts, a
 
 - **GitHub Repo**: https://github.com/majharul-web/shohorbari_drf
 - **Live API**: https://shohorbari-drf.vercel.app/
-
-### 🔑 Django Admin Panel Credentials
-
-- Email: `admin@gmail.com`
-- Password: `12345`
 
 ---
 
