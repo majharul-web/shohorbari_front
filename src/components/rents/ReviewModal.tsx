@@ -59,14 +59,15 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ adId }) => {
           validationSchema={ReviewSchema}
           onSubmit={(values, formikHelpers) => handleSubmit(values, { ...formikHelpers, closeModal })}
         >
-          {({ isSubmitting, values, handleChange }) => (
+          {({ isSubmitting, values, setFieldValue }) => (
             <Form className='space-y-4'>
               <TextAreaField label='Comment' name='comment' rows={4} placeholder='Write your review...' />
 
               <SelectField
                 label='Rating'
                 value={values.rating}
-                onChange={handleChange("rating")}
+                // onChange={handleChange("rating")}
+                onChange={(val) => setFieldValue("rating", val)}
                 options={ratingOptions}
               />
 
