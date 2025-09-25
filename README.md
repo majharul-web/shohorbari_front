@@ -77,7 +77,6 @@ Change the directory
 
 ```bash
 cd shohorbari_front
-cd shohorbari_front
 ```
 
 Install Dependencies
@@ -92,8 +91,6 @@ Run the project
 npm run dev
 ```
 
-````
-
 ## Contributing
 
 Contributions are welcome! Please follow these steps to contribute:
@@ -102,8 +99,8 @@ Contributions are welcome! Please follow these steps to contribute:
 2. Create a new branch for your feature or bug fix:
 
    ```bash
-   git checkout -b feature/your-feature-name
-````
+    git checkout -b feature/your-feature-name
+   ```
 
 3. Make your changes and commit them:
    ```bash
