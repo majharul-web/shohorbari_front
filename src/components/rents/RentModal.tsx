@@ -51,6 +51,8 @@ const RentModal: React.FC<RentModalProps> = ({ mode, initialData }) => {
 
   const navigate = useNavigate();
 
+  console.log("Initial Data:", initialData);
+
   const handleSubmit = async (
     values: { category: string; title: string; description: string; price: number },
     {
@@ -102,13 +104,13 @@ const RentModal: React.FC<RentModalProps> = ({ mode, initialData }) => {
               handleSubmit({ ...values, price: Number(values.price) }, { ...formikHelpers, closeModal })
             }
           >
-            {({ isSubmitting, values, setFieldValue }) => (
+            {({ isSubmitting, values, setFieldValue, isValid, dirty }) => (
               <Form className='space-y-4'>
                 <SelectField
                   label='Category'
                   options={categories}
                   value={values.category}
-                  onChange={(val) => setFieldValue("category", val)}
+                  onChange={(val) => setFieldValue("category", val)} // val is string
                 />
 
                 <InputField label='Title' name='title' type='text' />
@@ -121,7 +123,7 @@ const RentModal: React.FC<RentModalProps> = ({ mode, initialData }) => {
                 <InputField label='Price' name='price' type='number' />
 
                 <div className='flex justify-end'>
-                  <Button type='submit' disabled={isSubmitting || isLoading}>
+                  <Button type='submit' disabled={isSubmitting || isLoading || !isValid || !dirty}>
                     {isSubmitting || isLoading
                       ? mode === "add"
                         ? "Creating..."

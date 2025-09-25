@@ -42,7 +42,7 @@ const InputField: React.FC<InputFieldProps> = ({ label, type = "text", name, onC
 
         {/* Show/hide toggle for password */}
         {isPassword && (
-          <span onClick={() => setShowPassword(!showPassword)} className='absolute top-2 right-2 z-10'>
+          <span onClick={() => setShowPassword(!showPassword)} className='absolute top-0 right-2 z-10'>
             <Icon
               path={showPassword ? mdiEyeOutline : mdiEyeOffOutline}
               w='w-10'

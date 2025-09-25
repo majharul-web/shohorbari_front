@@ -15,13 +15,13 @@ import "slick-carousel/slick/slick.css";
 
 import RentModal from "@/components/rents/RentModal";
 import ReviewModal from "@/components/rents/ReviewModal";
+import SkeletonRentDetails from "@/components/rents/SkeletonRentDetails";
 import UploadImagesModal from "@/components/rents/UploadImagesModal";
 import ConfirmDialog from "@/components/ui/alert/ConfirmDialog";
 import { Button } from "@/components/ui/button";
 import { formatDate, toCapitalizeString } from "@/utils/common";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import SkeletonRentDetails from "@/components/rents/SkeletonRentDetails";
 
 const RentAdvanceDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -157,7 +157,16 @@ const RentAdvanceDetails = () => {
 
         {/* Actions */}
         <div className='flex flex-wrap gap-3 mt-4 items-center'>
-          <RentModal mode='edit' initialData={adData} />
+          <RentModal
+            mode='edit'
+            initialData={{
+              id: adData.id,
+              category: adData.category.id.toString(),
+              title: adData.title,
+              description: adData.description,
+              price: adData.price,
+            }}
+          />
           <ConfirmDialog
             triggerLabel={isDeleting && loadingId === adData.id ? "Deleting..." : "Delete"}
             title='Delete Ad'
