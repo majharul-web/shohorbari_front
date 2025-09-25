@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router";
 
-import SkeletonMyRequests from "@/components/rents/SkeletonMyRequests";
+import SkeletonWishList from "@/components/rents/SkeletonWishList";
 import { useState } from "react";
 
 const WishList = () => {
@@ -16,7 +16,7 @@ const WishList = () => {
   const [removingIds, setRemovingIds] = useState<number[]>([]); // track IDs being removed
   const navigate = useNavigate();
 
-  if (isLoading) return <SkeletonMyRequests />;
+  if (isLoading) return <SkeletonWishList />;
   if (error) return <NoDataFound message='Failed to load wishlist.' />;
   if (!data || data?.results?.length === 0) return <NoDataFound message='Your wishlist is empty.' />;
 
