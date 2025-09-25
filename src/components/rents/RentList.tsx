@@ -13,6 +13,7 @@ interface IProps {
   title?: string;
   clsses?: string;
   query?: Record<string, any>;
+  limit?: number;
 }
 
 export interface IRentListItem {
@@ -24,13 +25,13 @@ export interface IRentListItem {
   description: string;
 }
 
-const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query }) => {
+const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query, limit }) => {
   const isLoggedIn = useAppSelector((state) => state.auth.userId);
 
   const { data, isLoading } = useGetAllAdsQuery(query, {
     refetchOnMountOrArgChange: true,
   });
-  const dataList = data?.results || [];
+  const dataList = limit ? data?.results.slice(0, limit) : data?.results || [];
   const navigate = useNavigate();
 
   const [addToWishlist] = useAddToWishlistMutation();
