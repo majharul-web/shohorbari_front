@@ -33,10 +33,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
   const isAdmin = user.role === "admin";
 
   const links = [
-    { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard, exact: true, visible: isAdmin },
+    { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard, exact: true, visible: true },
     { name: "Category", path: "/dashboard/category", icon: Radar, visible: isAdmin },
-    { name: "Ads", path: "/dashboard/ads", icon: Home, visible: true },
-    { name: "Add Request", path: "/dashboard/add-request", icon: GitPullRequest, visible: true },
+    { name: "Rent Advertisement", path: "/dashboard/ads", icon: Home, visible: true },
+    { name: "Rent Request", path: "/dashboard/add-request", icon: GitPullRequest, visible: true },
     { name: "Transaction", path: "/dashboard/transactions", icon: PlayCircleIcon, visible: isAdmin },
     { name: "Profile", path: "/dashboard/profile", icon: User, visible: true },
     { name: "Home", path: "/", icon: FolderRoot, visible: true },
