@@ -1,5 +1,6 @@
 // components/dashboard/Sidebar.tsx
 import { APP_CONFIG } from "@/helpers/config/appconfig";
+import { useGetAllAddRequestsQuery } from "@/redux/api/adsApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logout } from "@/services/auth.services";
 import {
@@ -24,6 +25,10 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
+  const { data, isLoading, isError } = useGetAllAddRequestsQuery(
+    { page: 1, limit: 10, type: "received" },
+    { refetchOnMountOrArgChange: true }
+  );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user: Record<string, any> = useAppSelector((state) => state.auth);
@@ -36,7 +41,12 @@ const Sidebar: React.FC<SidebarProps> = ({ open, setOpen }) => {
     { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard, exact: true, visible: true },
     { name: "Category", path: "/dashboard/category", icon: Radar, visible: isAdmin },
     { name: "Rent Advertisement", path: "/dashboard/ads", icon: Home, visible: true },
-    { name: "Rent Request", path: "/dashboard/add-request", icon: GitPullRequest, visible: true },
+    {
+      name: "Rent Request",
+      path: "/dashboard/add-request",
+      icon: GitPullRequest,
+      visible: data?.results?.length > 0,
+    },
     { name: "Transaction", path: "/dashboard/transactions", icon: PlayCircleIcon, visible: isAdmin },
     { name: "Profile", path: "/dashboard/profile", icon: User, visible: true },
     { name: "Home", path: "/", icon: FolderRoot, visible: true },
