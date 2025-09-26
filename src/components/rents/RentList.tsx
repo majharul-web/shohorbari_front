@@ -27,8 +27,9 @@ export interface IRentListItem {
 
 const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query, limit }) => {
   const isLoggedIn = useAppSelector((state) => state.auth.userId);
+  const safeQuery = { ...(query || {}), user: true };
 
-  const { data, isLoading } = useGetAllAdsQuery(query, {
+  const { data, isLoading } = useGetAllAdsQuery(safeQuery, {
     refetchOnMountOrArgChange: true,
   });
   const dataList = limit ? data?.results.slice(0, limit) : data?.results || [];

@@ -1,3 +1,4 @@
+import RentModal from "@/components/rents/RentModal";
 import { APP_CONFIG } from "@/helpers/config/appconfig";
 import { useAppSelector } from "@/redux/hooks";
 import { Heart, Menu, X } from "lucide-react";
@@ -14,6 +15,7 @@ export const Navbar = () => {
     { name: "Rents", path: "/rents", visible: true },
     { name: "About", path: "/about", visible: true },
     { name: "Contact", path: "/contact-us", visible: true },
+    { name: "Rent", component: <RentModal mode='add' />, visible: !!user?.userId }, // 👈 Added after Contact
     { name: "Login", path: "/login", visible: !user?.userId },
     { name: "Register", path: "/register", visible: !user?.userId },
     { name: "", icon: <Heart />, path: "/wishlist", visible: !!user?.userId },
@@ -31,22 +33,26 @@ export const Navbar = () => {
         <div className='hidden md:flex items-center gap-8'>
           {links
             .filter((link) => link.visible)
-            .map((link) => (
-              <NavLink
-                key={link.name}
-                to={link.path}
-                className={({ isActive }) =>
-                  `relative text-sm font-medium transition-colors hover:text-primary ${
-                    isActive
-                      ? "text-primary after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-primary after:rounded-full"
-                      : "text-gray-600"
-                  }`
-                }
-              >
-                {link?.name}
-                {link?.icon && link.icon}
-              </NavLink>
-            ))}
+            .map((link, i) =>
+              link.component ? (
+                <div key={i}>{link.component}</div>
+              ) : (
+                <NavLink
+                  key={link.name || i}
+                  to={link.path!}
+                  className={({ isActive }) =>
+                    `relative text-sm font-medium transition-colors hover:text-primary ${
+                      isActive
+                        ? "text-primary after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-primary after:rounded-full"
+                        : "text-gray-600"
+                    }`
+                  }
+                >
+                  {link?.name}
+                  {link?.icon && link.icon}
+                </NavLink>
+              )
+            )}
           {user?.userId && <Avater />}
         </div>
 
@@ -64,20 +70,24 @@ export const Navbar = () => {
         <div className='md:hidden bg-white border-t shadow-md px-4 py-3 space-y-2 animate-in slide-in-from-top'>
           {links
             .filter((link) => link.visible)
-            .map((link) => (
-              <NavLink
-                key={link.name}
-                to={link.path}
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  `block rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-gray-50 ${
-                    isActive ? "text-primary bg-gray-50" : "text-gray-700"
-                  }`
-                }
-              >
-                {link.name}
-              </NavLink>
-            ))}
+            .map((link, i) =>
+              link.component ? (
+                <div key={i}>{link.component}</div>
+              ) : (
+                <NavLink
+                  key={link.name || i}
+                  to={link.path!}
+                  onClick={() => setOpen(false)}
+                  className={({ isActive }) =>
+                    `block rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-gray-50 ${
+                      isActive ? "text-primary bg-gray-50" : "text-gray-700"
+                    }`
+                  }
+                >
+                  {link.name}
+                </NavLink>
+              )
+            )}
           {user?.userId && <Avater />}
         </div>
       )}
