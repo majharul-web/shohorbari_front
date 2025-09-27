@@ -33,10 +33,10 @@ export const adsApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.ads_requests],
     }),
     createAdRequest: build.mutation({
-      query: (payload: Record<string, any>) => ({
-        url: `${BASE_URL}/${payload.add_id}/requests/`,
+      query: ({ add_id, ...rest }: Record<string, any>) => ({
+        url: `${BASE_URL}/${add_id}/requests/`,
         method: "POST",
-        data: { message: payload.message },
+        data: rest,
       }),
       invalidatesTags: [tagTypes.ads_requests],
     }),

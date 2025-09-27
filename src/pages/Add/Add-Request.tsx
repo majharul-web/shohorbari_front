@@ -201,7 +201,7 @@ const AdRequestPage: React.FC = () => {
                         size='sm'
                         onClick={() => navigate(`/dashboard/ads/${req.advertisement.id}`)}
                       >
-                        Details
+                        Rent Details
                       </Button>
                     </div>
                   </td>
