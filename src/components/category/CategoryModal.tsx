@@ -5,15 +5,17 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Alert } from "../ui/alert/Alert";
 import InputField from "../ui/form/InputField";
+import SelectField from "../ui/form/SelectField";
 import CustomModal from "../ui/modal/CustomModal";
 
 const CategorySchema = Yup.object().shape({
   name: Yup.string().min(1, "Name is required").required("Name is required"),
+  status: Yup.string().oneOf(["active", "inactive"], "Invalid status").required("Status is required"),
 });
 
 interface CategoryModalProps {
   mode: "add" | "edit";
-  initialData?: { id: string; name: string };
+  initialData?: { id: string; name: string; status: string };
 }
 
 const CategoryModal: React.FC<CategoryModalProps> = ({ mode, initialData }) => {
@@ -71,14 +73,23 @@ const CategoryModal: React.FC<CategoryModalProps> = ({ mode, initialData }) => {
     >
       {({ closeModal }) => (
         <Formik
-          initialValues={{ name: initialData?.name || "" }}
+          initialValues={{ name: initialData?.name || "", status: initialData?.status || "active" }}
           enableReinitialize
           validationSchema={CategorySchema}
           onSubmit={(values, formikHelpers) => handleSubmit(values, { ...formikHelpers, closeModal })}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, values, setFieldValue }) => (
             <Form className='space-y-4'>
               <InputField label='Name' name='name' type='text' />
+              <SelectField
+                label='Status'
+                value={values.status}
+                onChange={(val) => setFieldValue("status", val)}
+                options={[
+                  { value: "active", label: "Active" },
+                  { value: "inactive", label: "Inactive" },
+                ]}
+              />
 
               <div className='flex justify-end'>
                 <Button type='submit' disabled={isSubmitting || isLoading}>

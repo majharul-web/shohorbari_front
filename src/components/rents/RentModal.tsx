@@ -36,7 +36,13 @@ interface RentModalProps {
 const RentModal: React.FC<RentModalProps> = ({ mode, initialData }) => {
   const [createRent, { isLoading: creating }] = useCreateAdMutation();
   const [updateRent, { isLoading: updating }] = useUpdateAdMutation();
-  const { data, isLoading: catLoading } = useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
+  const { data, isLoading: catLoading } = useGetAllCategoriesQuery(
+    {
+      status: "active",
+      page_size: 100,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
 
   const categories = useMemo(
     () =>

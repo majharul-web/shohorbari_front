@@ -1,4 +1,3 @@
-// components/ui/table-pagination.tsx
 import {
   Pagination,
   PaginationContent,
@@ -8,6 +7,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import clsx from "clsx";
 import * as React from "react";
 
 interface TablePaginationProps {
@@ -24,7 +24,6 @@ const TablePagination: React.FC<TablePaginationProps> = ({
   onChangePage,
 }) => {
   const totalPages = Math.ceil(rowCount / rowsPerPage);
-
   if (totalPages <= 1) return null;
 
   const renderPages = () => {
@@ -46,12 +45,13 @@ const TablePagination: React.FC<TablePaginationProps> = ({
   };
 
   return (
-    <Pagination className='py-4'>
-      <PaginationContent>
-        {/* Prev button */}
+    <Pagination className='py-4 flex justify-center'>
+      <PaginationContent className='flex items-center gap-2'>
+        {/* Previous button */}
         <PaginationItem>
           <PaginationPrevious
             href='#'
+            className='border border-border rounded-md hover:bg-muted transition'
             onClick={(e) => {
               e.preventDefault();
               if (currentPage > 1) onChangePage(currentPage - 1);
@@ -63,11 +63,16 @@ const TablePagination: React.FC<TablePaginationProps> = ({
         {renderPages().map((page, idx) => (
           <PaginationItem key={idx}>
             {page === "ellipsis" ? (
-              <PaginationEllipsis />
+              <PaginationEllipsis className='px-3 text-muted-foreground' />
             ) : (
               <PaginationLink
                 href='#'
-                isActive={page === currentPage}
+                className={clsx(
+                  "px-3 py-1.5 rounded-md border border-border text-sm font-medium transition-colors",
+                  page === currentPage
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "hover:bg-muted"
+                )}
                 onClick={(e) => {
                   e.preventDefault();
                   onChangePage(page);
@@ -83,6 +88,7 @@ const TablePagination: React.FC<TablePaginationProps> = ({
         <PaginationItem>
           <PaginationNext
             href='#'
+            className='border border-border rounded-md hover:bg-muted transition'
             onClick={(e) => {
               e.preventDefault();
               if (currentPage < totalPages) onChangePage(currentPage + 1);

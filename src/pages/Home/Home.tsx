@@ -13,7 +13,10 @@ import { useNavigate } from "react-router-dom";
 const staticIcons = ["🏢", "🏡", "🏠", "🏬"];
 
 const HomePage: React.FC = () => {
-  const { data, isLoading } = useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
+  const { data, isLoading } = useGetAllCategoriesQuery(
+    { status: "active", page_size: 4 },
+    { refetchOnMountOrArgChange: true }
+  );
   const cats = data?.results || [];
   const navigate = useNavigate();
 

@@ -15,10 +15,11 @@ export const categoryApi = baseApi.injectEndpoints({
     }),
 
     getAllCategories: build.query({
-      query: () => {
+      query: (args: Record<string, any>) => {
         return {
           url: `${BASE_URL}/`,
           method: "GET",
+          params: args,
         };
       },
       providesTags: [tagTypes.category],
