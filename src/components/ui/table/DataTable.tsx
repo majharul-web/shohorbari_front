@@ -33,52 +33,54 @@ export function DataTable<T>({
   renderActions,
 }: DataTableProps<T>) {
   return (
-    <div className='rounded-lg border bg-card shadow-sm overflow-hidden'>
-      <table className='w-full border-collapse text-left'>
-        <TableHeader className='bg-muted'>
-          <TableRow>
-            {columns.map((col) => (
-              <TableHead key={col.key.toString()} className={col.className}>
-                {col.label}
-              </TableHead>
-            ))}
-            {renderActions && <TableHead>Action</TableHead>}
-          </TableRow>
-        </TableHeader>
+    <div>
+      <div className='rounded-lg border bg-card shadow-sm overflow-hidden'>
+        <table className='w-full border-collapse text-left'>
+          <TableHeader className='bg-muted'>
+            <TableRow>
+              {columns.map((col) => (
+                <TableHead key={col.key.toString()} className={col.className}>
+                  {col.label}
+                </TableHead>
+              ))}
+              {renderActions && <TableHead>Action</TableHead>}
+            </TableRow>
+          </TableHeader>
 
-        <TableBody>
-          {isLoading ? (
-            <TableRow>
-              <TableCell colSpan={columns.length + 1} className='text-center py-6'>
-                <Loader />
-              </TableCell>
-            </TableRow>
-          ) : isError ? (
-            <TableRow>
-              <TableCell colSpan={columns.length + 1} className='text-center text-destructive py-6'>
-                Failed to load data
-              </TableCell>
-            </TableRow>
-          ) : data.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={columns.length + 1} className='text-center text-muted-foreground py-6'>
-                No data found
-              </TableCell>
-            </TableRow>
-          ) : (
-            data.map((item, idx) => (
-              <TableRow key={idx} className='hover:bg-muted/50'>
-                {columns.map((col) => (
-                  <TableCell key={col.key.toString()}>
-                    {col.render ? col.render(item, idx) : (item as any)[col.key]}
-                  </TableCell>
-                ))}
-                {renderActions && <TableCell>{renderActions(item)}</TableCell>}
+          <TableBody>
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={columns.length + 1} className='text-center py-6'>
+                  <Loader />
+                </TableCell>
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </table>
+            ) : isError ? (
+              <TableRow>
+                <TableCell colSpan={columns.length + 1} className='text-center text-destructive py-6'>
+                  Failed to load data
+                </TableCell>
+              </TableRow>
+            ) : data.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={columns.length + 1} className='text-center text-muted-foreground py-6'>
+                  No data found
+                </TableCell>
+              </TableRow>
+            ) : (
+              data.map((item, idx) => (
+                <TableRow key={idx} className='hover:bg-muted/50'>
+                  {columns.map((col) => (
+                    <TableCell key={col.key.toString()}>
+                      {col.render ? col.render(item, idx) : (item as any)[col.key]}
+                    </TableCell>
+                  ))}
+                  {renderActions && <TableCell>{renderActions(item)}</TableCell>}
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </table>
+      </div>
 
       {/* Use your TablePagination here */}
       <TablePagination

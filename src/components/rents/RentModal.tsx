@@ -57,8 +57,6 @@ const RentModal: React.FC<RentModalProps> = ({ mode, initialData }) => {
 
   const navigate = useNavigate();
 
-  console.log("Initial Data:", initialData);
-
   const handleSubmit = async (
     values: { category: string; title: string; description: string; price: number },
     {

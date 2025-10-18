@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
-import Loader from "@/components/ui/loader/Loader";
+import StatusBadge from "@/components/ui/staus/StatusBadge";
+import { DataTable } from "@/components/ui/table/DataTable";
+import { useDebounced } from "@/hooks/useDebounced";
 import { useGetAllPaymentsQuery } from "@/redux/api/paymentsApi";
-import { formatDate, toCapitalizeString } from "@/utils/common";
+import { formatDate } from "@/utils/common";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -23,86 +25,119 @@ export const getStatusClass = (status: string) => {
 };
 
 const TransactionPage: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [statusFilter, setStatusFilter] = useState<string>("");
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useGetAllPaymentsQuery(
-    { page, limit: rowsPerPage },
-    { refetchOnMountOrArgChange: true }
-  );
+  // Debounced search (to avoid API spam)
+  const debouncedTerm = useDebounced({ searchQuery, delay: 600 });
+
+  const query: Record<string, any> = {
+    page,
+    page_size: rowsPerPage,
+  };
+
+  if (debouncedTerm) query["search"] = debouncedTerm;
+  if (statusFilter) query["status"] = statusFilter;
+
+  const { data, isLoading, isError } = useGetAllPaymentsQuery(query, {
+    refetchOnMountOrArgChange: true,
+  });
 
   const payments = data?.results || [];
+  const pagination = data?.pagination || {};
+  const totalCount = pagination.count || payments.length;
+  const currentPage = pagination.current_page || 1;
+
+  const columns = [
+    {
+      key: "index",
+      label: "#",
+      render: (_: any, idx: number) => (currentPage - 1) * rowsPerPage + idx + 1,
+      className: "w-[50px]",
+    },
+    {
+      key: "amount",
+      label: "Amount",
+      render: (item: any) => (
+        <span className='text-foreground'>
+          {item.amount} {item.currency}
+        </span>
+      ),
+    },
+    {
+      key: "user",
+      label: "User",
+      render: (item: any) => item.user?.name || "Unknown User",
+    },
+    {
+      key: "status",
+      label: "Status",
+      render: (item: any) => <StatusBadge status={item.status} />,
+    },
+    {
+      key: "transaction_id",
+      label: "Transaction ID",
+    },
+    {
+      key: "created_at",
+      label: "Created At",
+      render: (item: any) => formatDate(item.created_at),
+    },
+  ];
 
   return (
     <div className='space-y-6'>
-      {/* Header */}
+      {/* Page Header */}
+      <p className='text-xl font-bold text-foreground'>Transaction History</p>
+
+      {/* Filters */}
       <div className='flex items-center justify-between'>
-        <p className='text-xl font-bold text-foreground'>Transaction History</p>
+        <div className='flex gap-x-4'>
+          <input
+            type='text'
+            placeholder='Search by user or ID...'
+            className='rounded-md px-3 py-2 shadow-sm border border-border focus:outline-none focus:border-primary transition'
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className='rounded-md px-3 py-2 shadow-sm border border-border focus:outline-none focus:border-primary transition'
+          >
+            <option value=''>All</option>
+            <option value='initiated'>Initiated</option>
+            <option value='pending'>Pending</option>
+            <option value='success'>Success</option>
+            <option value='failed'>Failed</option>
+            <option value='cancelled'>Cancelled</option>
+          </select>
+        </div>
       </div>
 
-      {/* Table */}
-      <div className='overflow-x-auto rounded-lg border bg-card shadow-sm'>
-        <table className='w-full border-collapse text-left'>
-          <thead className='bg-muted'>
-            <tr>
-              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>#</th>
-              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>Amount</th>
-              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>User</th>
-              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>Status</th>
-              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>Transaction ID</th>
-              <th className='px-4 py-2 text-sm font-medium text-muted-foreground'>Created At</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading ? (
-              <tr>
-                <td colSpan={6} className='px-4 py-6 text-center'>
-                  <Loader />
-                </td>
-              </tr>
-            ) : isError ? (
-              <tr>
-                <td colSpan={6} className='px-4 py-6 text-center text-destructive'>
-                  Failed to load transactions
-                </td>
-              </tr>
-            ) : payments.length === 0 ? (
-              <tr>
-                <td colSpan={6} className='px-4 py-6 text-center text-muted-foreground'>
-                  No transactions found
-                </td>
-              </tr>
-            ) : (
-              payments.map((payment: Record<string, any>, idx: number) => (
-                <tr key={payment.id} className='border-t border-border'>
-                  <td className='px-4 py-2'>{(page - 1) * rowsPerPage + idx + 1}</td>
-                  <td className='px-4 py-2 text-foreground'>
-                    {payment.amount} {payment.currency}
-                  </td>
-                  <td className='px-4 py-2 text-foreground'>{payment.user?.name || "Unknown User"}</td>
-                  <td className={`px-4 py-2 capitalize ${getStatusClass(payment.status)}`}>
-                    {toCapitalizeString(payment.status)}
-                  </td>
-
-                  <td className='px-4 py-2 text-foreground'>{payment.transaction_id}</td>
-                  <td className='px-4 py-2 text-foreground'>{formatDate(payment.created_at)}</td>
-                  <td className='px-4 py-2 text-foreground'>
-                    <div className='flex gap-x-2'>
-                      <Button
-                        variant='outline'
-                        onClick={() => navigate(`/rents/${payment?.rent_request?.advertisement?.id}`)}
-                      >
-                        View Details
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+      {/* Data Table */}
+      <DataTable
+        columns={columns}
+        data={payments}
+        page={currentPage}
+        totalCount={totalCount}
+        rowsPerPage={rowsPerPage}
+        isLoading={isLoading}
+        isError={isError}
+        onChangePage={(newPage) => setPage(newPage)}
+        renderActions={(item: any) => (
+          <div className='flex gap-x-2'>
+            <Button
+              variant='outline'
+              onClick={() => navigate(`/rents/${item?.rent_request?.advertisement?.id}`)}
+            >
+              View Details
+            </Button>
+          </div>
+        )}
+      />
     </div>
   );
 };

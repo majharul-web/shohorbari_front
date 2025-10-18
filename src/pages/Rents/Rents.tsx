@@ -16,7 +16,13 @@ const Rents = () => {
   const [search, setSearch] = useState(initialSearch);
   const [category, setCategory] = useState(initialCategory);
 
-  const { data } = useGetAllCategoriesQuery({}, { refetchOnMountOrArgChange: true });
+  const { data } = useGetAllCategoriesQuery(
+    {
+      status: "active",
+      page_size: 100,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
   const cats = data?.results || [];
 
   const query: Record<string, any> = {};

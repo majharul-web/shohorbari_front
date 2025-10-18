@@ -24,8 +24,8 @@ const TablePagination: React.FC<TablePaginationProps> = ({
   onChangePage,
 }) => {
   const totalPages = Math.ceil(rowCount / rowsPerPage);
-  if (totalPages <= 1) return null;
 
+  // Don't return null — always render, even if 1 page
   const renderPages = () => {
     const pages: (number | "ellipsis")[] = [];
     const maxVisible = 5;
@@ -51,7 +51,10 @@ const TablePagination: React.FC<TablePaginationProps> = ({
         <PaginationItem>
           <PaginationPrevious
             href='#'
-            className='border border-border rounded-md hover:bg-muted transition'
+            className={clsx(
+              "border border-border rounded-md transition",
+              currentPage === 1 && "opacity-50 cursor-not-allowed"
+            )}
             onClick={(e) => {
               e.preventDefault();
               if (currentPage > 1) onChangePage(currentPage - 1);
@@ -75,7 +78,7 @@ const TablePagination: React.FC<TablePaginationProps> = ({
                 )}
                 onClick={(e) => {
                   e.preventDefault();
-                  onChangePage(page);
+                  if (page !== currentPage) onChangePage(page);
                 }}
               >
                 {page}
@@ -88,7 +91,10 @@ const TablePagination: React.FC<TablePaginationProps> = ({
         <PaginationItem>
           <PaginationNext
             href='#'
-            className='border border-border rounded-md hover:bg-muted transition'
+            className={clsx(
+              "border border-border rounded-md transition",
+              currentPage === totalPages && "opacity-50 cursor-not-allowed"
+            )}
             onClick={(e) => {
               e.preventDefault();
               if (currentPage < totalPages) onChangePage(currentPage + 1);

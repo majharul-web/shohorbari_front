@@ -6,10 +6,11 @@ const BASE_URL = "/payments";
 export const PaymentsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllPayments: build.query({
-      query: () => {
+      query: (arg: Record<string, any>) => {
         return {
           url: `${BASE_URL}/`,
           method: "GET",
+          params: arg,
         };
       },
       providesTags: [tagTypes.payments],
