@@ -3,10 +3,11 @@ import { Alert } from "@/components/ui/alert/Alert";
 import NoDataFound from "@/components/ui/error/NoDataFound";
 import Loader from "@/components/ui/loader/Loader";
 import {
-  useApproveAdMutation,
   useDeleteAdMutation,
+  useDeleteAdRequestMutation,
   useGetAdByIdQuery,
   useGetAdRequestQuery,
+  useUpdateAdsStatusMutation,
 } from "@/redux/api/adsApi";
 import { motion } from "framer-motion";
 import { useParams } from "react-router-dom";
@@ -19,7 +20,7 @@ import SkeletonRentDetails from "@/components/rents/SkeletonRentDetails";
 import UploadImagesModal from "@/components/rents/UploadImagesModal";
 import ConfirmDialog from "@/components/ui/alert/ConfirmDialog";
 import { Button } from "@/components/ui/button";
-import { formatDate, toCapitalizeString } from "@/utils/common";
+import { formatDate, isSuccess, toCapitalizeString } from "@/utils/common";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -43,53 +44,56 @@ const RentAdvanceDetails = () => {
     }
   );
 
-  console.log("adRequests", adRequests);
+  // console.log("adRequests", adRequests);
 
-  // ✅ Handle delete
-  const handleDelete = async (id: string) => {
+  const [deleteAd, { isLoading: isDeleting }] = useDeleteAdRequestMutation();
+  const [approveAd, { isLoading: isApproving }] = useUpdateAdsStatusMutation();
+  const [deleteAdMutation, { isLoading: isDeletingAd }] = useDeleteAdMutation();
+
+  const handleDeleteMutation = async (id: string) => {
     try {
       setLoadingId(id);
-      await deleteAd(id).unwrap();
-      Alert({
-        type: "success",
-        message: "Ad deleted successfully",
-      });
+      await deleteAdMutation(id).unwrap();
+      Alert({ type: "success", message: "Ad deleted successfully" });
     } catch (err: any) {
       const errorMessage = err?.data?.detail || "Ad deletion failed";
-      Alert({
-        type: "error",
-        message: toCapitalizeString(errorMessage),
-      });
+      Alert({ type: "error", message: toCapitalizeString(errorMessage) });
     } finally {
       setLoadingId(null);
     }
   };
 
-  // ✅ Handle approve
-  const handleApprove = async (id: string) => {
+  // ✅ Delete handler
+  const handleDelete = async (id: number, adId: number) => {
     try {
-      setLoadingId(id);
-      await approveAd(id).unwrap();
-      Alert({
-        type: "success",
-        message: "Ad approved successfully",
-      });
+      setLoadingId(id.toString());
+      const res = await deleteAd({ id, add_id: adId }).unwrap();
+      if (isSuccess(res?.status)) {
+        Alert({ type: "success", message: "Ad request deleted successfully" });
+      }
     } catch (err: any) {
-      const errorMessage = err?.data?.detail || "Ad approval failed";
-      Alert({
-        type: "error",
-        message: toCapitalizeString(errorMessage),
-      });
+      const errorMessage = err?.data?.detail || "Ad request deletion failed";
+      Alert({ type: "error", message: toCapitalizeString(errorMessage) });
+    } finally {
+      setLoadingId(null);
+    }
+  };
+
+  // ✅ Approve handler
+  const handleApprove = async (id: number, adId: number) => {
+    try {
+      setLoadingId(id.toString());
+      await approveAd({ id, add_id: adId, status: "accepted" }).unwrap();
+      Alert({ type: "success", message: "Request accepted successfully" });
+    } catch (err: any) {
+      const errorMessage = err?.data?.detail || "Request approval failed";
+      Alert({ type: "error", message: toCapitalizeString(errorMessage) });
     } finally {
       setLoadingId(null);
     }
   };
 
   const images = adData?.images?.length ? adData.images?.map((img: any) => img.image) : [`/hero1.jpg`];
-
-  // ✅ move these up before any return
-  const [deleteAd, { isLoading: isDeleting }] = useDeleteAdMutation();
-  const [approveAd, { isLoading: isApproving }] = useApproveAdMutation();
 
   if (isLoading) return <SkeletonRentDetails />;
   if (!adData) return <NoDataFound />;
@@ -171,7 +175,7 @@ const RentAdvanceDetails = () => {
             triggerLabel={isDeleting && loadingId === adData.id ? "Deleting..." : "Delete"}
             title='Delete Ad'
             description={`Are you sure you want to delete "${adData.title}"? This action cannot be undone.`}
-            onConfirm={() => handleDelete(adData.id)}
+            onConfirm={() => handleDeleteMutation(adData.id)}
             loading={isDeleting && loadingId === adData.id}
             variant='destructive'
             confirmLabel='Confirm Delete'
@@ -225,18 +229,31 @@ const RentAdvanceDetails = () => {
                       <td className='px-4 py-2'>{formatDate(req.created_at)}</td>
                       <td className='px-4 py-2'>
                         <div className='flex gap-2 flex-wrap'>
-                          {req.status !== "accepted" && (
-                            <Button size='sm' onClick={() => console.log("approve req", req.id)}>
-                              Accept
+                          {/* ✅ Approve */}
+                          {req.status === "accepted" || req.status === "advanced" ? null : (
+                            <Button
+                              size='sm'
+                              onClick={() => handleApprove(req.id, req.advertisement.id)}
+                              disabled={isApproving && loadingId === req.id.toString()}
+                            >
+                              {isApproving && loadingId === req.id.toString() ? "Accepting..." : "Accept"}
                             </Button>
                           )}
-                          <ConfirmDialog
-                            triggerLabel='Delete'
-                            title='Delete Request'
-                            description={`Delete request from "${req.sender.name}"?`}
-                            onConfirm={() => console.log("delete req", req.id)}
-                            variant='destructive'
-                          />
+
+                          {/* ✅ Delete */}
+                          {req.status === "accepted" || req.status === "advanced" ? null : (
+                            <ConfirmDialog
+                              triggerLabel={
+                                isDeleting && loadingId === req.id.toString() ? "Deleting..." : "Delete"
+                              }
+                              title='Delete Ad Request'
+                              description={`Are you sure you want to delete request for "${req.advertisement.title}"?`}
+                              onConfirm={() => handleDelete(req.id, req.advertisement.id)}
+                              loading={isDeleting && loadingId === req.id.toString()}
+                              variant='destructive'
+                              confirmLabel='Confirm Delete'
+                            />
+                          )}
                         </div>
                       </td>
                     </tr>

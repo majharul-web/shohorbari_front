@@ -128,7 +128,16 @@ const AdminAdsPage: React.FC = () => {
             confirmLabel='Confirm Delete'
           />
 
-          <RentModal mode='edit' initialData={ad} />
+          <RentModal
+            mode='edit'
+            initialData={{
+              id: ad?.id,
+              category: ad?.category.id.toString(),
+              title: ad?.title,
+              description: ad?.description,
+              price: ad?.price,
+            }}
+          />
 
           <button
             className='px-3 py-1.5 rounded-md border border-border text-sm'
