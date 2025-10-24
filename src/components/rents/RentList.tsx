@@ -105,7 +105,14 @@ const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query,
                   <Button onClick={() => navigate(`/rents/${item.id}`)} variant='outline' className='w-1/2'>
                     Details
                   </Button>
-                  <Button onClick={() => handleWishlist(item.id)} disabled={isAdding} className='w-1/2'>
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleWishlist(item.id);
+                    }}
+                    disabled={isAdding}
+                    className='w-1/2'
+                  >
                     {isAdding ? "Adding..." : "❤ Wishlist"}
                   </Button>
                 </div>
