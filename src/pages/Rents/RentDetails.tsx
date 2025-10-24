@@ -100,13 +100,10 @@ const RentDetails = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
       >
-        <Button onClick={() => handleWishlist(adData.id)} disabled={adding}>
+        <RentRequestModal add={adData} />
+        <Button onClick={() => handleWishlist(adData.id)} disabled={adding} variant='outline'>
           ❤ Wishlist
         </Button>
-        <RentRequestModal add={adData} />
-        {/* <Button variant='outline' className='flex-1'>
-          Request for Get
-        </Button> */}
       </motion.div>
 
       {/* Reviews */}

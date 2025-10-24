@@ -46,7 +46,7 @@ const HomePage: React.FC = () => {
       <Hero />
 
       {/* Categories */}
-      <section className='max-w-7xl mx-auto sm:px-4 py-16'>
+      <section className='max-w-7xl mx-auto sm:px-4 pb-16 pt-8'>
         <h2 className='text-2xl md:text-3xl font-bold mb-8 text-center'>Top Categories</h2>
         {isLoading ? (
           <SkeletonTopCategories />
