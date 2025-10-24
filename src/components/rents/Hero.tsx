@@ -48,7 +48,7 @@ const Hero = () => {
   };
 
   return (
-    <section className='relative w-full h-[62vh] md:h-[62vh] overflow-hidden'>
+    <section className='relative w-full h-[63vh] md:h-[63vh] overflow-hidden'>
       <Slider {...sliderSettings}>
         {heroSlides.map((slide) => (
           <div key={slide.id} className='relative w-full h-[60vh] md:h-[60vh]'>

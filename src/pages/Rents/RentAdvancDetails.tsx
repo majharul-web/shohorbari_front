@@ -180,7 +180,7 @@ const RentAdvanceDetails = () => {
             variant='destructive'
             confirmLabel='Confirm Delete'
           />
-          <Button variant='outline' size='sm' onClick={() => navigate(`/dashboard/ads/${adData.id}`)}>
+          <Button variant='outline' onClick={() => navigate(`/dashboard/ads/${adData.id}`)}>
             Details
           </Button>
         </div>

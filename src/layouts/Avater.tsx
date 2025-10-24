@@ -38,7 +38,7 @@ const Avater: React.FC = () => {
               className='cursor-pointer hover:bg-accent hover:text-accent-foreground'
               onClick={() => navigate("/")}
             >
-              <LayoutDashboardIcon className='mr-2 h-4 w-4' />
+              <LayoutDashboardIcon className=' hover:text-accent-foreground' />
               Home
             </DropdownMenuItem>
           ) : (
@@ -46,7 +46,7 @@ const Avater: React.FC = () => {
               className='cursor-pointer hover:bg-accent hover:text-accent-foreground'
               onClick={() => navigate("/dashboard")}
             >
-              <LayoutDashboardIcon className='mr-2 h-4 w-4' />
+              <LayoutDashboardIcon className='mr-2 h-4 w-4 hover:text-accent-foreground' />
               Dashboard
             </DropdownMenuItem>
           )}
@@ -55,14 +55,14 @@ const Avater: React.FC = () => {
             className='cursor-pointer hover:bg-accent hover:text-accent-foreground'
             onClick={() => navigate("/my-requests")}
           >
-            <User className='mr-2 h-4 w-4' />
+            <User className='mr-2 h-4 w-4 hover:text-accent-foreground' />
             My Request
           </DropdownMenuItem>
           <DropdownMenuItem
             className='cursor-pointer hover:bg-accent hover:text-accent-foreground'
             onClick={() => navigate("/my-orders")}
           >
-            <User className='mr-2 h-4 w-4' />
+            <User className='mr-2 h-4 w-4 hover:text-accent-foreground' />
             My Order
           </DropdownMenuItem>
 
@@ -70,7 +70,7 @@ const Avater: React.FC = () => {
             className='cursor-pointer hover:bg-accent hover:text-accent-foreground'
             onClick={() => navigate("/profile")}
           >
-            <User className='mr-2 h-4 w-4' />
+            <User className='mr-2 h-4 w-4 hover:text-accent-foreground' />
             Profile
           </DropdownMenuItem>
 

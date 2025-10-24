@@ -31,7 +31,7 @@ const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query,
   const rowsPerPage = 10;
 
   const isLoggedIn = useAppSelector((state) => state.auth.userId);
-  const safeQuery = { ...(query || {}), user: true };
+  const safeQuery = { ...(query || {}), user: true, page, page_size: rowsPerPage };
 
   const { data, isLoading } = useGetAllAdsQuery(safeQuery, {
     refetchOnMountOrArgChange: true,
