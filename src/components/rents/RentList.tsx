@@ -87,7 +87,8 @@ const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query,
             <motion.div
               key={item.id}
               whileHover={{ scale: 1.03 }}
-              className='border border-border rounded-lg overflow-hidden bg-card flex flex-col'
+              className='border border-border rounded-lg overflow-hidden bg-card flex flex-col cursor-pointer'
+              onClick={() => navigate(`/rents/${item.id}`)}
             >
               <img
                 src={item?.images?.[0]?.image ?? "/hero1.jpg"}
