@@ -63,7 +63,10 @@ export function DataTable<T>({
             ) : data.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={columns.length + 1} className='text-center text-muted-foreground py-6'>
-                  No data found
+                  <div className='flex justify-center items-center flex-col gap-4 py-16'>
+                    <img className='w-[160px]' src='/no-data.svg' alt='' />
+                    <p className=''>No data found!</p>
+                  </div>
                 </TableCell>
               </TableRow>
             ) : (

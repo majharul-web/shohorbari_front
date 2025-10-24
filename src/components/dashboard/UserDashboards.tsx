@@ -14,8 +14,8 @@ const UserDashboards: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className='text-3xl md:text-4xl font-bold text-foreground'>Welcome to Your Dashboard</h1>
-        <p className='text-muted-foreground mt-2'>
+        <h1 className='text-3xl md:text-3xl font-bold text-foreground'>Welcome to Your Dashboard</h1>
+        <p className='text-muted-foreground mt-4'>
           Here you can manage your ads, view requests, and update your profile.
         </p>
       </motion.div>

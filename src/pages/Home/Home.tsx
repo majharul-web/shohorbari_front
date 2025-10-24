@@ -91,7 +91,9 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {loadingReviews ? <SkeletonReviewSlider count={3} /> : <ReviewSlider reviews={reviews?.results} />}
+      <div className='py-16'>
+        {loadingReviews ? <SkeletonReviewSlider count={3} /> : <ReviewSlider reviews={reviews?.results} />}
+      </div>
 
       {/* Call to Action */}
       <section className='bg-primary text-white py-16 text-center max-w-7xl mx-auto px-6 md:px-0 rounded-2xl mb-16'>

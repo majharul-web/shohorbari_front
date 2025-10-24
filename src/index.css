@@ -19,7 +19,7 @@
 
   --radius: 0.625rem;
 
-  /* 🌟 Yellow Theme Light Mode */
+  /* 💙 Blue Theme (Primary: #567DF2) */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -27,39 +27,39 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
 
-  --primary: oklch(0.85 0.19 90); /* yellow-500 */
-  --primary-foreground: oklch(0.2 0.02 90);
+  --primary: #567df2;
+  --primary-foreground: #ffffff;
 
-  --secondary: oklch(0.95 0.1 90); /* soft yellow */
-  --secondary-foreground: oklch(0.2 0.02 90);
+  --secondary: #e3ebff;
+  --secondary-foreground: #1e3a8a;
 
-  --muted: oklch(0.97 0.05 90);
-  --muted-foreground: oklch(0.45 0.05 90);
+  --muted: #f3f6ff;
+  --muted-foreground: #4b5563;
 
-  --accent: oklch(0.9 0.15 90);
-  --accent-foreground: oklch(0.2 0.02 90);
+  --accent: #7fa2f8;
+  --accent-foreground: #ffffff;
 
-  --destructive: oklch(0.6 0.25 27.325);
+  --destructive: #e11d48;
 
-  --border: oklch(0.9 0.02 90);
-  --input: oklch(0.9 0.02 90);
-  --ring: oklch(0.75 0.05 90);
+  --border: #e0e7ff;
+  --input: #e0e7ff;
+  --ring: #567df2;
 
-  /* optional chart + sidebar */
-  --chart-1: oklch(0.85 0.19 90);
-  --chart-2: oklch(0.7 0.15 120);
-  --chart-3: oklch(0.65 0.2 200);
-  --chart-4: oklch(0.85 0.15 40);
-  --chart-5: oklch(0.9 0.18 60);
+  /* Charts + Sidebar */
+  --chart-1: #567df2;
+  --chart-2: #3b82f6;
+  --chart-3: #1e40af;
+  --chart-4: #93c5fd;
+  --chart-5: #2563eb;
 
-  --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.85 0.19 90);
-  --sidebar-primary-foreground: oklch(0.2 0.02 90);
-  --sidebar-accent: oklch(0.95 0.1 90);
-  --sidebar-accent-foreground: oklch(0.2 0.02 90);
-  --sidebar-border: oklch(0.9 0.02 90);
-  --sidebar-ring: oklch(0.75 0.05 90);
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1e293b;
+  --sidebar-primary: #567df2;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e3ebff;
+  --sidebar-accent-foreground: #1e3a8a;
+  --sidebar-border: #e0e7ff;
+  --sidebar-ring: #567df2;
 }
 
 /* a {
@@ -80,6 +80,12 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+/* table customization */
+th,
+td {
+  padding: 12px 20px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -147,7 +153,7 @@ h1 {
     @apply bg-gray-50;
   }
   .bg-gradient {
-    background: linear-gradient(90deg, #534e3b, #eab308, #ca8a04);
+    background: linear-gradient(90deg, #065f46, #10b981, #16a34a);
     background-size: 200% 200%;
     animation: gradientAnimation 5s ease infinite;
   }

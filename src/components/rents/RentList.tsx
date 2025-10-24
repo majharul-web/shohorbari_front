@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Alert } from "../ui/alert/Alert";
 import { Button } from "../ui/button";
 import NoDataFound from "../ui/error/NoDataFound";
+import TablePagination from "../ui/table/TablePagination";
 import SkeletonRentList from "./SkeletonRentList";
 
 interface IProps {
@@ -26,6 +27,9 @@ export interface IRentListItem {
 }
 
 const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query, limit }) => {
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+
   const isLoggedIn = useAppSelector((state) => state.auth.userId);
   const safeQuery = { ...(query || {}), user: true };
 
@@ -35,11 +39,15 @@ const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query,
   const dataList = limit ? data?.results.slice(0, limit) : data?.results || [];
   const navigate = useNavigate();
 
+  const pagination = data?.pagination || {};
+  const totalCount = pagination.count || dataList?.length;
+  const currentPage = pagination.current_page || 1;
+
   const [addToWishlist] = useAddToWishlistMutation();
   const [addingId, setAddingId] = useState<number | null>(null); // track item being added
 
   if (isLoading) return <SkeletonRentList clsses='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16' />;
-  if (dataList.length === 0) return <NoDataFound />;
+  if (dataList?.length === 0) return <NoDataFound />;
 
   const handleWishlist = async (id: number) => {
     if (!isLoggedIn) {
@@ -64,7 +72,14 @@ const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query,
 
   return (
     <section className={clsses}>
-      <h2 className='text-2xl md:text-3xl font-bold mb-8'>{title}</h2>
+      <div className='flex'>
+        <h2 className='text-2xl md:text-3xl font-bold mb-8'>{title}</h2>
+        {title == "Featured Rentals" && (
+          <Button variant='outline' className='ml-auto' onClick={() => navigate("/rents")}>
+            View All
+          </Button>
+        )}
+      </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8'>
         {dataList?.map((item: IRentListItem) => {
           const isAdding = addingId === item.id; // only this item shows loading
@@ -98,6 +113,14 @@ const RentList: React.FC<IProps> = ({ title = "Featured Rentals", clsses, query,
           );
         })}
       </div>
+      {title !== "Featured Rentals" && (
+        <TablePagination
+          currentPage={currentPage}
+          rowCount={totalCount}
+          rowsPerPage={rowsPerPage}
+          onChangePage={(newPage) => setPage(newPage)}
+        />
+      )}
     </section>
   );
 };

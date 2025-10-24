@@ -66,11 +66,7 @@ const RentDetails = () => {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
-            <img
-              src={img}
-              alt={`${adData.title}-${idx}`}
-              className='w-full h-96 object-contain rounded-lg shadow-md'
-            />
+            <img src={img} alt={`${adData.title}-${idx}`} className='w-full h-96 rounded-lg shadow-md' />
           </motion.div>
         ))}
       </Slider>

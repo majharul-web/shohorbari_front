@@ -61,7 +61,7 @@ const Login: React.FC = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <img src='/login.png' alt='Login Illustration' className='w-fit h-auto' />
+        <img src='/login.png' alt='Login Illustration' className='w-1/2 object-contain' />
       </motion.div>
 
       {/* Login Card with animation */}

@@ -41,7 +41,7 @@ const AdminAdsPage: React.FC = () => {
     { refetchOnMountOrArgChange: true }
   );
   const categories = useMemo(
-    () => cats?.results?.map((cat: Record<string, any>) => ({ label: cat.name, value: cat.id.toString() })),
+    () => cats?.results?.map((cat: Record<string, any>) => ({ label: cat?.name, value: cat?.id.toString() })),
     [cats]
   );
 
@@ -108,22 +108,22 @@ const AdminAdsPage: React.FC = () => {
                 <Button
                   variant='default'
                   size='sm'
-                  onClick={() => handleApprove(ad.id)}
-                  disabled={(isApproving && loadingId === ad.id) || ad.approved}
+                  onClick={() => handleApprove(ad?.id)}
+                  disabled={(isApproving && loadingId === ad?.id) || ad?.approved}
                 >
                   {" "}
-                  {isApproving && loadingId === ad.id ? "Approving..." : "Approve"}{" "}
+                  {isApproving && loadingId === ad?.id ? "Approving..." : "Approve"}{" "}
                 </Button>
               )}{" "}
             </>
           )}
 
           <ConfirmDialog
-            triggerLabel={isDeleting && loadingId === ad.id ? "Deleting..." : "Delete"}
+            triggerLabel={isDeleting && loadingId === ad?.id ? "Deleting..." : "Delete"}
             title='Delete Ad'
-            description={`Are you sure you want to delete "${ad.title}"? This action cannot be undone.`}
-            onConfirm={() => handleDelete(ad.id)}
-            loading={isDeleting && loadingId === ad.id}
+            description={`Are you sure you want to delete "${ad?.title}"? This action cannot be undone.`}
+            onConfirm={() => handleDelete(ad?.id)}
+            loading={isDeleting && loadingId === ad?.id}
             variant='destructive'
             confirmLabel='Confirm Delete'
           />
@@ -132,7 +132,7 @@ const AdminAdsPage: React.FC = () => {
             mode='edit'
             initialData={{
               id: ad?.id,
-              category: ad?.category.id.toString(),
+              category: ad?.category?.id.toString(),
               title: ad?.title,
               description: ad?.description,
               price: ad?.price,
@@ -141,7 +141,7 @@ const AdminAdsPage: React.FC = () => {
 
           <button
             className='px-3 py-1.5 rounded-md border border-border text-sm'
-            onClick={() => navigate(`/dashboard/ads/advance/${ad.id}`)}
+            onClick={() => navigate(`/dashboard/ads/advance/${ad?.id}`)}
           >
             Details
           </button>

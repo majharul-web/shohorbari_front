@@ -27,7 +27,7 @@ const Navbar: React.FC<NavbarProps> = ({ setOpen }) => {
 
         {/* Logo / Title */}
         {user?.role ? (
-          <p className='text-lg font-bold text-primary'>
+          <p className='text-lg font-bold text-primary text-center'>
             {user?.role === "admin" ? "Admin Dashboard" : "User Dashboard"}
           </p>
         ) : (

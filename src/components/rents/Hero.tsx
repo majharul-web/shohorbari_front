@@ -41,19 +41,17 @@ const Hero = () => {
     autoplay: true,
     autoplaySpeed: 5000,
     arrows: true,
-    appendDots: (dots: React.ReactNode) => (
-      <div className='absolute bottom-5 w-full flex justify-center gap-2'>{dots}</div>
-    ),
+    appendDots: (dots: React.ReactNode) => <div className='mt-4 flex justify-center'>{dots}</div>,
     customPaging: (i: number) => (
-      <div className='w-3 h-3 rounded-full bg-white/50 hover:bg-white transition' />
+      <motion.button className='w-3 h-3 rounded-full bg-gray-300 mx-1' whileHover={{ scale: 1.3 }} />
     ),
   };
 
   return (
-    <section className='relative w-full h-[80vh] md:h-[90vh] overflow-hidden'>
+    <section className='relative w-full h-[62vh] md:h-[62vh] overflow-hidden'>
       <Slider {...sliderSettings}>
         {heroSlides.map((slide) => (
-          <div key={slide.id} className='relative w-full h-[80vh] md:h-[90vh]'>
+          <div key={slide.id} className='relative w-full h-[60vh] md:h-[60vh]'>
             <img src={slide.image} alt={slide.title} className='w-full h-full object-cover brightness-75' />
             <motion.div
               initial={{ opacity: 0, y: 30 }}

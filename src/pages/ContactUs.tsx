@@ -147,7 +147,7 @@ const Contact: React.FC = () => {
                 variant='default'
                 size='lg'
                 className='w-full font-bold'
-                disabled={!isValid || !dirty || isSubmitting}
+                disabled={isSubmitting}
               >
                 {isSubmitting ? "Sending..." : "Send Message"}
               </Button>

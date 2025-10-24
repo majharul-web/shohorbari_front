@@ -74,7 +74,7 @@ const TablePagination: React.FC<TablePaginationProps> = ({
                   "px-3 py-1.5 rounded-md border border-border text-sm font-medium transition-colors",
                   page === currentPage
                     ? "bg-primary text-primary-foreground border-primary"
-                    : "hover:bg-muted"
+                    : "hover:bg-muted hover:!text-primary"
                 )}
                 onClick={(e) => {
                   e.preventDefault();

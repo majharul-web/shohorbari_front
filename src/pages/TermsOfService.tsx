@@ -3,7 +3,7 @@ import React from "react";
 
 const TermsOfService: React.FC = () => {
   return (
-    <div className='min-h-screen bg-gray  px-4 md:px-20 py-12 my-4'>
+    <div className='min-h-screen bg-gray rounded-lg px-4 md:px-20 py-12 my-4'>
       <motion.div
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}

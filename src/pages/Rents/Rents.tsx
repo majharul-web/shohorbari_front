@@ -33,10 +33,13 @@ const Rents = () => {
   });
 
   if (debouncedTerm) {
-    query["title"] = debouncedTerm;
+    query["search"] = debouncedTerm;
   }
 
-  if (category) query.category = category;
+  if (category) {
+    query["category"] = category;
+    console.log("qq", query);
+  }
 
   const categories = useMemo(
     () => cats.map((cat: Record<string, any>) => ({ label: cat.name, value: cat.id.toString() })),
