@@ -52,7 +52,7 @@ const RentDetails = () => {
 
   return (
     <motion.div
-      className='max-w-5xl mx-auto py-10 px-4 space-y-8'
+      className='max-w-7xl mx-auto py-10 space-y-8'
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -78,7 +78,7 @@ const RentDetails = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        <h1 className='text-3xl md:text-4xl font-bold'>{adData.title}</h1>
+        <p className='text-3xl md:text-4xl font-bold'>{adData.title}</p>
         <p className='text-muted-foreground text-sm md:text-base'>{adData.location}</p>
         <p className='text-2xl md:text-3xl font-semibold text-primary'>৳ {adData.price}/month</p>
         <p className='text-gray-700 text-sm md:text-base'>{adData.description}</p>
@@ -101,7 +101,12 @@ const RentDetails = () => {
         transition={{ delay: 0.4 }}
       >
         <RentRequestModal add={adData} />
-        <Button onClick={() => handleWishlist(adData.id)} disabled={adding} variant='outline'>
+        <Button
+          onClick={() => handleWishlist(adData.id)}
+          loading={adding}
+          disabled={adding}
+          variant='outline'
+        >
           ❤ Wishlist
         </Button>
       </motion.div>
