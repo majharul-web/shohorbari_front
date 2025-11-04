@@ -1,3 +1,4 @@
+import { APP_CONFIG } from "@/helpers/config/appconfig";
 import { motion } from "framer-motion";
 import React from "react";
 
@@ -13,8 +14,8 @@ const PrivacyPolicy: React.FC = () => {
         <p className='text-lg md:!text-3xl font-bold text-primary'>Privacy Policy</p>
         <p className='text-muted-foreground'>
           Your privacy is important to us. This Privacy Policy explains how{" "}
-          <span className='font-medium text-foreground'>HomeEase</span> collects, uses, and protects your
-          information when you use our website and services.
+          <span className='font-medium text-foreground'>{APP_CONFIG.APP_NAME}</span> collects, uses, and
+          protects your information when you use our website and services.
         </p>
 
         <div className='space-y-6'>

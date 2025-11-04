@@ -1,3 +1,4 @@
+import { APP_CONFIG } from "@/helpers/config/appconfig";
 import { motion } from "framer-motion";
 import React from "react";
 
@@ -12,9 +13,9 @@ const TermsOfService: React.FC = () => {
       >
         <p className='text-lg md:!text-3xl font-bold text-primary'>Terms of Service</p>
         <p className='text-muted-foreground'>
-          Welcome to <span className='font-medium text-foreground'>HomeEase</span>. By using our website and
-          services, you agree to comply with and be bound by the following Terms of Service. Please read them
-          carefully.
+          Welcome to <span className='font-medium text-foreground'>{APP_CONFIG.APP_NAME}</span>. By using our
+          website and services, you agree to comply with and be bound by the following Terms of Service.
+          Please read them carefully.
         </p>
 
         <div className='space-y-6'>
