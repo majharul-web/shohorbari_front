@@ -52,7 +52,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className='min-h-[calc(100vh-10rem)] flex flex-col md:flex-row items-center justify-between px-4 md:px-0 py-12 gap-10'>
+    <div className='min-h-[calc(100vh-10rem)] flex flex-col md:flex-row items-center justify-between py-12 gap-10'>
       {/* Company Info Section */}
       <motion.div
         className='w-full md:w-1/2 space-y-6'
@@ -60,7 +60,7 @@ const Contact: React.FC = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h2 className='text-4xl font-bold text-primary'>Get in Touch</h2>
+        <p className='text-3xl md:text-5xl font-bold text-primary'>Get in Touch</p>
         <p className='text-gray-600 max-w-md'>
           Have questions, feedback, or partnership ideas? Reach out to us — we’d love to hear from you!
         </p>

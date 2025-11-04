@@ -42,7 +42,7 @@ const ReviewSlider: React.FC<ReviewSliderProps> = ({ reviews = [] }) => {
   };
 
   return (
-    <div className='max-w-7xl mx-auto px-6 md:px-0'>
+    <div className='max-w-7xl mx-auto px-4 md:px-0'>
       <h2 className='text-2xl md:text-3xl font-bold mb-2 text-[#567DF2]'>
         What Our Residents Say About Realton
       </h2>

@@ -46,7 +46,7 @@ const HomePage: React.FC = () => {
       <Hero />
 
       {/* Categories */}
-      <section className='max-w-7xl mx-auto sm:px-4 pb-16 pt-8'>
+      <section className='max-w-7xl mx-auto px-4 pb-16 pt-8'>
         <h2 className='text-2xl md:text-3xl font-bold mb-8 text-center'>Top Categories</h2>
         {isLoading ? (
           <SkeletonTopCategories />
@@ -68,10 +68,10 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Featured Listings */}
-      <RentList limit={3} clsses='max-w-7xl mx-auto m:px-4 lg:px-8 pb-16' />
+      <RentList limit={3} clsses='max-w-7xl mx-auto px-4 lg:px-8 pb-16' />
 
       {/* How it Works Section */}
-      <section className='bg-muted p-16'>
+      <section className='bg-muted py-6 px-4 md:p-16'>
         <h2 className='text-2xl md:text-3xl font-bold mb-12 text-center'>How It Works</h2>
         <div className='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8'>
           {[
@@ -96,7 +96,7 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* Call to Action */}
-      <section className='bg-primary text-white py-16 text-center max-w-7xl mx-auto px-6 md:px-0 rounded-2xl mb-16'>
+      <section className='bg-primary text-white py-16 text-center max-w-7xl md:mx-auto mx-4 px-4 md:px-0 rounded-2xl mb-16'>
         <h2 className='text-3xl md:text-4xl font-bold mb-4'>List Your Property Today</h2>
         <p className='mb-6'>Reach thousands of potential renters in minutes</p>
         <button

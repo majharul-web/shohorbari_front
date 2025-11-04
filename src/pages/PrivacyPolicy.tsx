@@ -3,7 +3,7 @@ import React from "react";
 
 const PrivacyPolicy: React.FC = () => {
   return (
-    <div className='min-h-screen bg-gray px-4 md:px-20 py-12 my-4 rounded-lg'>
+    <div className='min-h-screen bg-gray md:px-20 py-12 my-4 rounded-lg'>
       <motion.div
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}

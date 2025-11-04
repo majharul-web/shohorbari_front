@@ -11,7 +11,7 @@ const SkeletonReviewSlider: React.FC<SkeletonReviewSliderProps> = ({ count = 3 }
   const skeletonCards = Array.from({ length: count }, (_, index) => index);
 
   return (
-    <div className='max-w-7xl mx-auto py-16 px-6 md:px-0'>
+    <div className='max-w-7xl mx-auto py-16 md:px-0'>
       {/* Skeleton for heading */}
       <Skeleton width={300} height={30} className='mb-2' />
       <Skeleton width={200} height={20} className='mb-8' />

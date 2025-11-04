@@ -71,7 +71,7 @@ const PasswordResetConfirm: React.FC = () => {
   };
 
   return (
-    <div className='min-h-[calc(100vh-10rem)] flex flex-col-reverse md:flex-row items-center px-4 py-10 md:py-4 gap-10 bg-background'>
+    <div className='min-h-[calc(100vh-10rem)] flex flex-col-reverse md:flex-row items-center py-10 md:py-4 gap-10 bg-background'>
       {/* Left Image Section with animation */}
       <motion.div
         className='flex-1 hidden md:flex justify-center'

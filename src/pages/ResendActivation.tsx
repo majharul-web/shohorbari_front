@@ -43,7 +43,7 @@ const ResendActivation: React.FC = () => {
   };
 
   return (
-    <div className='min-h-[calc(100vh-10rem)] flex flex-col-reverse md:flex-row items-center px-4 py-10 md:py-0 gap-10'>
+    <div className='min-h-[calc(100vh-10rem)] flex flex-col-reverse md:flex-row items-center py-10 md:py-0 gap-10'>
       {/* Left Image Section */}
       <motion.div
         className='hidden md:block w-1/2'

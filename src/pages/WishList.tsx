@@ -34,7 +34,7 @@ const WishList = () => {
   };
 
   return (
-    <div className='max-w-7xl mx-auto py-10 px-4'>
+    <div className='max-w-7xl mx-auto py-10'>
       <p className='text-lg md:text-3xl font-bold mb-8 '>My Wishlist</p>
 
       <motion.div

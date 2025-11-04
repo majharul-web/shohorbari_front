@@ -11,7 +11,7 @@ const SkeletonWishList: React.FC<SkeletonWishListProps> = ({ count = 4 }) => {
   const skeletonCards = Array.from({ length: count }, (_, i) => i);
 
   return (
-    <div className='max-w-7xl mx-auto py-10 px-4'>
+    <div className='max-w-7xl mx-auto py-10'>
       {/* Page Title Skeleton */}
       <Skeleton width={200} height={28} className='mb-8' />
 

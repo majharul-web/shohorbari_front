@@ -11,7 +11,7 @@ const SkeletonMyRequests: React.FC<SkeletonMyRequestsProps> = ({ count = 4 }) =>
   const skeletonCards = Array.from({ length: count }, (_, i) => i);
 
   return (
-    <div className='max-w-7xl mx-auto py-10 px-4'>
+    <div className='max-w-7xl mx-auto py-10'>
       <Skeleton width={250} height={30} className='mb-8' /> {/* Page title */}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
         {skeletonCards.map((index) => (

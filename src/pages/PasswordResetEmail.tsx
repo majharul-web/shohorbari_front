@@ -46,7 +46,7 @@ const PasswordResetEmail: React.FC = () => {
   };
 
   return (
-    <div className='min-h-[calc(100vh-10rem)] flex items-center px-4 py-10 md:py-0 bg-background'>
+    <div className='min-h-[calc(100vh-10rem)] flex items-center py-10 md:py-0 bg-background'>
       {/* Left Image Section */}
       <motion.div
         className='hidden md:block w-1/2'

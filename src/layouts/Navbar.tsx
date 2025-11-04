@@ -84,7 +84,8 @@ export const Navbar = () => {
                     }`
                   }
                 >
-                  {link.name}
+                  {link?.name}
+                  {link?.icon && link.icon}
                 </NavLink>
               )
             )}

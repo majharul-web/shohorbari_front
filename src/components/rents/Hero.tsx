@@ -48,10 +48,10 @@ const Hero = () => {
   };
 
   return (
-    <section className='relative w-full h-[63vh] md:h-[63vh] overflow-hidden'>
+    <section className='relative w-full h-[80vh] md:h-[63vh] overflow-hidden'>
       <Slider {...sliderSettings}>
         {heroSlides.map((slide) => (
-          <div key={slide.id} className='relative w-full h-[60vh] md:h-[60vh]'>
+          <div key={slide.id} className='relative w-full h-[75vh] md:h-[60vh]'>
             <img src={slide.image} alt={slide.title} className='w-full h-full object-cover brightness-75' />
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -60,7 +60,7 @@ const Hero = () => {
               className='absolute inset-0 flex flex-col items-center justify-center text-center px-4'
             >
               <p className='text-white text-center mb-1'>THE BEST WAY TO</p>
-              <h1 className='text-3xl md:text-5xl font-bold text-white mb-4'>{slide.title}</h1>
+              <p className='text-2xl md:text-5xl font-bold text-white mb-4'>{slide.title}</p>
               <p className='text-white text-center mb-6'>We’ve more than 745,000 apartments, place & plot.</p>
 
               {/* Search & Category */}

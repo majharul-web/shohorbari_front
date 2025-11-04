@@ -7,7 +7,7 @@ const About: React.FC = () => {
   const url2 = "https://i.pravatar.cc/41";
   const url3 = "https://i.pravatar.cc/42";
   return (
-    <div className='min-h-screen flex flex-col items-center px-4 md:px-0 py-12 space-y-16'>
+    <div className='min-h-screen flex flex-col items-center md:px-0 py-12 space-y-16'>
       {/* Hero Section */}
       <motion.div
         className='flex flex-col md:flex-row items-center gap-10 w-full'
@@ -16,7 +16,7 @@ const About: React.FC = () => {
         transition={{ duration: 0.8 }}
       >
         <div className='md:w-1/2 space-y-6'>
-          <h1 className='text-4xl md:text-5xl font-bold text-primary'>About Our House Rent Service</h1>
+          <p className='text-3xl md:text-5xl font-bold text-primary'>About Our House Rent Service</p>
           <p className='text-gray-600 text-lg leading-relaxed'>
             We provide a trusted platform for finding your next home. Whether you’re looking to rent, lease,
             or list a property, our mission is to make the process simple, secure, and reliable.

@@ -8,7 +8,7 @@ const SkeletonRentDetails: React.FC = () => {
   const skeletonReviews = Array.from({ length: 3 }, (_, i) => i); // mimic review cards
 
   return (
-    <div className='max-w-5xl mx-auto py-10 px-4 space-y-8'>
+    <div className='max-w-5xl mx-auto py-10 space-y-8'>
       {/* Images Slider Skeleton */}
       <div className='space-y-4'>
         <Skeleton className='rounded-lg' width='100%' height={384} />
