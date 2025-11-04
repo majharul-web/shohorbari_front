@@ -68,7 +68,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Featured Listings */}
-      <RentList limit={3} clsses='max-w-7xl mx-auto px-4 lg:px-8 pb-16' />
+      <RentList limit={3} clsses='max-w-7xl mx-auto lg:px-4 pb-16' />
 
       {/* How it Works Section */}
       <section className='bg-muted py-6 px-4 md:p-16'>
