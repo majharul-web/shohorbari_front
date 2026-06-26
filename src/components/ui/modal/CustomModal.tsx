@@ -10,9 +10,18 @@ interface CustomModalProps {
   title: string;
   children: (props: { closeModal: () => void }) => React.ReactNode;
   requireAuth?: boolean; // Optional flag for login check
+  needProfile?: boolean; // Optional flag for profile check
+  isProfileComplete?: boolean; // Optional flag for profile completeness check
 }
 
-const CustomModal: React.FC<CustomModalProps> = ({ triggerLabel, title, children, requireAuth = false }) => {
+const CustomModal: React.FC<CustomModalProps> = ({
+  triggerLabel,
+  title,
+  children,
+  requireAuth = false,
+  needProfile = false,
+  isProfileComplete = false,
+}) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -29,6 +38,14 @@ const CustomModal: React.FC<CustomModalProps> = ({ triggerLabel, title, children
         message: "You must be logged in to perform this action.",
       });
       navigate("/login"); // optional redirect
+      return;
+    }
+    if (needProfile && !isProfileComplete) {
+      Alert({
+        type: "error",
+        message: "You must complete your profile to perform this action.",
+      });
+      navigate("/profile"); // optional redirect
       return;
     }
     setOpen(true);

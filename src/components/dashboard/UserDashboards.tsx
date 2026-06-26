@@ -54,7 +54,7 @@ const UserDashboards: React.FC = () => {
               Review incoming rent requests and approve or reject them.
             </p>
           </div>
-          <Button variant='outline' className='mt-4' onClick={() => navigate("/dashboard/ad-request")}>
+          <Button variant='outline' className='mt-4' onClick={() => navigate("/dashboard/add-request")}>
             View Requests
           </Button>
         </motion.div>

@@ -25,6 +25,7 @@ const RentRequestModal: React.FC<RentRequestModalProps> = ({ add }) => {
   const [createAdRequest, { isLoading }] = useCreateAdRequestMutation();
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.auth);
+  const isProfileComplete = !!user?.userName && !!user?.phone && !!user?.address;
 
   const handleSubmit = async (
     values: { message: string; name: string; phone: string; address: string },
@@ -36,7 +37,7 @@ const RentRequestModal: React.FC<RentRequestModalProps> = ({ add }) => {
       resetForm: () => void;
       setSubmitting: (isSubmitting: boolean) => void;
       closeModal: () => void;
-    }
+    },
   ) => {
     const payload: {
       message: string;
@@ -80,7 +81,13 @@ const RentRequestModal: React.FC<RentRequestModalProps> = ({ add }) => {
   };
 
   return (
-    <CustomModal triggerLabel='Request for Get' title='Create Rent Request' requireAuth={true}>
+    <CustomModal
+      triggerLabel='Request for Get'
+      title='Create Rent Request'
+      requireAuth={true}
+      needProfile={true}
+      isProfileComplete={isProfileComplete}
+    >
       {({ closeModal }) => (
         <Formik
           initialValues={{

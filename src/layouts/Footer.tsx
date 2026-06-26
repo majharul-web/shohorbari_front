@@ -67,7 +67,7 @@ const Footer: React.FC = () => {
             Terms of Service
           </a>
           <Separator orientation='vertical' className='h-4 hidden md:block' />
-          <a href='/contact' className='hover:text-primary transition-colors'>
+          <a href='/contact-us' className='hover:text-primary transition-colors'>
             Contact
           </a>
         </div>
